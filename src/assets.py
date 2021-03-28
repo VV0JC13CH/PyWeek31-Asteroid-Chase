@@ -63,3 +63,7 @@ button_settings_idle = Button(button_col=0, button_row=10)
 button_settings_hover = Button(button_col=1, button_row=10)
 button_play_idle = Button(button_col=0, button_row=11)
 button_play_hover = Button(button_col=1, button_row=11)
+
+# Cursor
+cursor_hover = arcade.Sprite(filename=path_to_string('gfx', 'cursor_hover.png'))
+cursor_idle = arcade.Sprite(filename=path_to_string('gfx', 'cursor_idle.png'))
