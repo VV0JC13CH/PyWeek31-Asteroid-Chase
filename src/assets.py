@@ -16,3 +16,4 @@ def path_to_string(directory, file):
 
 # Backgrounds
 bg_menu = arcade.load_texture(path_to_string('gfx', 'bg_menu.png'))
+buttons = arcade.load_texture(path_to_string('gfx', 'buttons.png'))

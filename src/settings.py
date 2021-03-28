@@ -6,6 +6,7 @@ Place for SettingsView class.
 
 import arcade
 
+
 class SettingsView(arcade.View):
     def on_show(self):
         arcade.set_background_color(arcade.color.WHITE)
