@@ -88,8 +88,8 @@ class GameView(arcade.View):
 
         # Set up the player
         self.player_sprite = Player()
-        self.player_sprite.center_x = 50
-        self.player_sprite.center_y = 50
+        self.player_sprite.center_x = 400
+        self.player_sprite.center_y = 400
         self.player_list.append(self.player_sprite)
 
         # Add stars
@@ -172,7 +172,6 @@ class GameView(arcade.View):
 
     def on_update(self, delta_time):
         """ Movement and game logic """
-
         # Calculate speed based on the keys pressed
         if self.up_pressed and not self.down_pressed:
             self.player_sprite.accelerate_up()
