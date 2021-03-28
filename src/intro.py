@@ -8,7 +8,7 @@ import arcade
 from game import GameView
 
 
-class GameView(arcade.View):
+class IntroView(arcade.View):
     def on_show(self):
         arcade.set_background_color(arcade.color.WHITE)
 
