@@ -6,6 +6,7 @@ Place for CampaignView class.
 
 import arcade
 from game import GameView
+from pause import PauseView
 
 
 class CampaignView(arcade.View):
@@ -21,6 +22,8 @@ class CampaignView(arcade.View):
                          arcade.color.GRAY, font_size=20, anchor_x="center")
         self.window.fps_counter.on_draw_finish()
 
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        game_view = GameView()
-        self.window.show_view(game_view)
+    def on_key_press(self, key, modifiers):
+        """Called whenever a key is pressed. """
+        if key == arcade.key.ESCAPE:
+            pause_view = PauseView(self)
+            self.window.show_view(pause_view)

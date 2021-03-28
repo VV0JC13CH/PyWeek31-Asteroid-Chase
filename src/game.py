@@ -10,6 +10,7 @@ from arcade.gl import geometry
 import random
 # --- Import internal classes ---
 import data
+from pause import PauseView
 from player import Player
 from particle import Particle
 
@@ -222,7 +223,10 @@ class GameView(arcade.View):
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
 
-        if key == arcade.key.UP:
+        if key == arcade.key.ESCAPE:
+            pause_view = PauseView(self)
+            self.window.show_view(pause_view)
+        elif key == arcade.key.UP:
             self.up_pressed = True
         elif key == arcade.key.DOWN:
             self.down_pressed = True
