@@ -5,8 +5,6 @@ Place for SettingsView class.
 """
 
 import arcade
-from menu import MenuView
-
 
 class SettingsView(arcade.View):
     def on_show(self):
@@ -20,5 +18,4 @@ class SettingsView(arcade.View):
         self.window.fps_counter.on_draw_finish()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        menu_view = MenuView()
-        self.window.show_view(menu_view)
+        pass
