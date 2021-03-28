@@ -67,3 +67,5 @@ button_play_hover = Button(button_col=1, button_row=11)
 # Cursor
 cursor_hover = arcade.Sprite(filename=path_to_string('gfx', 'cursor_hover.png'))
 cursor_idle = arcade.Sprite(filename=path_to_string('gfx', 'cursor_idle.png'))
+cursor_no = arcade.Sprite(filename=path_to_string('gfx', 'cursor_no.png'))
+
