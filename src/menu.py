@@ -5,9 +5,7 @@ Place for MenuView class.
 """
 
 import arcade
-import fps
 from game import GameView
-from fps import FpsCounter
 
 
 class MenuView(arcade.View):
