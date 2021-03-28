@@ -4,17 +4,23 @@ player.py
 Place for Player class.
 """
 
+# --- Import external modules ---
 import arcade
+# --- Import internal classes ---
+import data
+
+# --- Constants ---
+param = data.load_parameters()
 
 # Control the physics of how the player moves
-MAX_HORIZONTAL_MOVEMENT_SPEED = 10
-MAX_VERTICAL_MOVEMENT_SPEED = 5
-HORIZONTAL_ACCELERATION = 0.5
-VERTICAL_ACCELERATION = 0.2
-MOVEMENT_DRAG = 0.08
+MAX_HORIZONTAL_MOVEMENT_SPEED = int(param['PLAYER']['MAX_HORIZONTAL_MOVEMENT_SPEED'])
+MAX_VERTICAL_MOVEMENT_SPEED = int(param['PLAYER']['MAX_VERTICAL_MOVEMENT_SPEED'])
+HORIZONTAL_ACCELERATION = float(param['PLAYER']['HORIZONTAL_ACCELERATION'])
+VERTICAL_ACCELERATION = float(param['PLAYER']['VERTICAL_ACCELERATION'])
+MOVEMENT_DRAG = float(param['PLAYER']['MOVEMENT_DRAG'])
 # Size of the playing field
-PLAYING_FIELD_WIDTH = 5000
-PLAYING_FIELD_HEIGHT = 1000
+LEVEL_WIDTH = int(param['LEVEL']['WIDTH'])
+LEVEL_HEIGHT = int(param['LEVEL']['HEIGHT'])
 
 
 class Player(arcade.SpriteSolidColor):
@@ -74,10 +80,10 @@ class Player(arcade.SpriteSolidColor):
         # Check bounds
         if self.left < 0:
             self.left = 0
-        elif self.right > PLAYING_FIELD_WIDTH - 1:
-            self.right = PLAYING_FIELD_WIDTH - 1
+        elif self.right > LEVEL_WIDTH - 1:
+            self.right = LEVEL_WIDTH - 1
 
         if self.bottom < 0:
             self.bottom = 0
-        elif self.top > PLAYING_FIELD_HEIGHT - 1:
-            self.top = PLAYING_FIELD_HEIGHT - 1
+        elif self.top > LEVEL_HEIGHT - 1:
+            self.top = LEVEL_HEIGHT - 1

@@ -4,29 +4,30 @@ game.py
 Place for GameView class.
 """
 
+# --- Import external modules ---
 import arcade
+from arcade.gl import geometry
 import random
-
+# --- Import internal classes ---
+import data
 from player import Player
 from particle import Particle
 
-# --- Minimap Related ---
-from arcade.gl import geometry
-
-SCREEN_TITLE = "Defender Clone"
+# --- Constants ---
+param = data.load_parameters()
 
 # Size of the playing field
-PLAYING_FIELD_WIDTH = 5000
-PLAYING_FIELD_HEIGHT = 1000
+LEVEL_WIDTH = int(param['LEVEL']['WIDTH'])
+LEVEL_HEIGHT = int(param['LEVEL']['HEIGHT'])
 
 # --- Mini-map related ---
 # Size of the minimap
-MINIMAP_HEIGHT = 200
+MINIMAP_HEIGHT = int(param['MAP']['HEIGHT'])
 
 
 # How far away from the edges do we get before scrolling?
-TOP_VIEWPORT_MARGIN = 30
-DEFAULT_BOTTOM_VIEWPORT = -10
+TOP_VIEWPORT_MARGIN = int(param['VIEWPORT']['MARGIN_TOP'])
+DEFAULT_BOTTOM_VIEWPORT = int(param['VIEWPORT']['DEFAULT_BOTTOM_VIEWPORT'])
 
 
 class GameView(arcade.View):
@@ -94,15 +95,15 @@ class GameView(arcade.View):
         # Add stars
         for i in range(100):
             sprite = arcade.SpriteSolidColor(4, 4, arcade.color.WHITE)
-            sprite.center_x = random.randrange(PLAYING_FIELD_WIDTH)
-            sprite.center_y = random.randrange(PLAYING_FIELD_HEIGHT)
+            sprite.center_x = random.randrange(LEVEL_WIDTH)
+            sprite.center_y = random.randrange(LEVEL_HEIGHT)
             self.star_sprite_list.append(sprite)
 
         # Add enemies
         for i in range(30):
             sprite = arcade.SpriteSolidColor(20, 20, arcade.csscolor.LIGHT_SALMON)
-            sprite.center_x = random.randrange(PLAYING_FIELD_WIDTH)
-            sprite.center_y = random.randrange(PLAYING_FIELD_HEIGHT)
+            sprite.center_x = random.randrange(LEVEL_WIDTH)
+            sprite.center_y = random.randrange(LEVEL_HEIGHT)
             self.enemy_sprite_list.append(sprite)
 
     def on_draw(self):
@@ -117,9 +118,9 @@ class GameView(arcade.View):
         self.mini_map_screen.clear()
 
         arcade.set_viewport(0,
-                            PLAYING_FIELD_WIDTH,
+                            LEVEL_WIDTH,
                             0,
-                            PLAYING_FIELD_HEIGHT)
+                            LEVEL_HEIGHT)
 
         self.enemy_sprite_list.draw()
         self.player_list.draw()
@@ -138,7 +139,7 @@ class GameView(arcade.View):
         self.player_list.draw()
 
         # Draw the ground
-        arcade.draw_line(0, 0, PLAYING_FIELD_WIDTH, 0, arcade.color.WHITE)
+        arcade.draw_line(0, 0, LEVEL_WIDTH, 0, arcade.color.WHITE)
 
         # Draw a background for the minimap
         arcade.draw_rectangle_filled(self.window.width - self.window.width / 2 + self.view_left,
@@ -154,14 +155,14 @@ class GameView(arcade.View):
         self.mini_map_rect.render(self.program)
 
         # Draw a rectangle showing where the screen is
-        width_ratio = self.window.width / PLAYING_FIELD_WIDTH
-        height_ratio = MINIMAP_HEIGHT / PLAYING_FIELD_HEIGHT
+        width_ratio = self.window.width / LEVEL_WIDTH
+        height_ratio = MINIMAP_HEIGHT / LEVEL_HEIGHT
         width = width_ratio * self.window.width
         main_height = self.window.height - MINIMAP_HEIGHT
         height = height_ratio * main_height
 
         x = (self.view_left + self.window.width / 2) * width_ratio + self.view_left
-        y = (self.window.height - MINIMAP_HEIGHT) + self.view_bottom + height / 2 + (main_height / PLAYING_FIELD_HEIGHT) * self.view_bottom
+        y = (self.window.height - MINIMAP_HEIGHT) + self.view_bottom + height / 2 + (main_height / LEVEL_HEIGHT) * self.view_bottom
 
         arcade.draw_rectangle_outline(center_x=x, center_y=y,
                                       width=width, height=height,

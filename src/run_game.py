@@ -7,13 +7,15 @@ Use this file to launch the Asteroid Chase game.
 # --- Import external modules ---
 import arcade
 # --- Import internal classes ---
+import data
 from menu import MenuView
 from fps import FpsCounter
 
 # --- Constants ---
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 800
-SCREEN_TITLE = "Asteroid Chase - work in progress"
+settings = data.load_settings()
+SCREEN_WIDTH = int(settings['VIDEO']['WINDOW_WIDTH'])
+SCREEN_HEIGHT = int(settings['VIDEO']['WINDOW_HEIGHT'])
+SCREEN_TITLE = settings['GAME']['TITLE']
 
 
 class GlobalWindow(arcade.Window):

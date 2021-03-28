@@ -4,10 +4,17 @@ bullet.py
 Place for Bullet class
 """
 
+# --- Import external modules ---
 import arcade
+# --- Import internal classes ---
+import data
+
+# --- Constants ---
+settings = data.load_settings()
+
 
 # How far the bullet travels before disappearing
-SCREEN_WIDTH = 1280
+SCREEN_WIDTH = int(settings['VIDEO']['WINDOW_WIDTH'])
 BULLET_MAX_DISTANCE = SCREEN_WIDTH * 0.75
 
 
