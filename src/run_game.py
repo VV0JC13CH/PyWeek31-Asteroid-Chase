@@ -10,6 +10,7 @@ import arcade
 import data
 from menu import MenuView
 from fps import FpsCounter
+from cursor import Cursor
 
 # --- Constants ---
 settings = data.load_settings()
@@ -28,14 +29,22 @@ class GlobalWindow(arcade.Window):
         # Game logic global variables:
         self.fps_counter = FpsCounter()
         # Arcade engine global variables:
-        self.set_mouse_visible(True)
-        arcade.set_background_color(arcade.color.WHITE_SMOKE)
+        self.set_mouse_visible(False)
+        self.cursor = Cursor()
 
     def on_draw(self):
+        self.cursor.draw()
         self.fps_counter.on_draw(self.height)
 
     def on_update(self, delta_time: float):
         self.fps_counter.on_update(delta_time=delta_time)
+        self.cursor.update()
+
+    def on_mouse_motion(self, x, y, _dx, _dy):
+        """
+        Called whenever the mouse moves.
+        """
+        self.cursor.get_position(x, y)
 
 
 def main():
