@@ -28,7 +28,7 @@ class GlobalWindow(arcade.Window):
         # Game logic global variables:
         self.fps_counter = FpsCounter()
         # Arcade engine global variables:
-        self.set_mouse_visible(False)
+        self.set_mouse_visible(True)
         arcade.set_background_color(arcade.color.WHITE_SMOKE)
 
     def on_draw(self):
