@@ -130,3 +130,6 @@ dmypy.json
 
 # Game logs
 src/logs/*
+
+# Idea editor
+.idea/*
