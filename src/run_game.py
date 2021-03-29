@@ -32,7 +32,7 @@ class GlobalWindow(arcade.Window):
         self.developer_mode = developer_mode
         self.music_enabled = music_enabled
         # Game logic global variables:
-        self.developer_tool = DeveloperTool()
+        self.developer_tool = DeveloperTool(developer_mode)
         # Arcade engine global variables:
         self.set_mouse_visible(False)
         self.cursor = Cursor()
@@ -42,7 +42,7 @@ class GlobalWindow(arcade.Window):
         self.developer_tool.on_draw(self.height)
 
     def on_update(self, delta_time: float):
-        self.developer_tool.on_update(delta_time=delta_time)
+        self.developer_tool.on_update(delta_time=delta_time, enable_tools=self.developer_mode)
         self.cursor.update()
 
     def on_mouse_motion(self, x, y, _dx, _dy):
