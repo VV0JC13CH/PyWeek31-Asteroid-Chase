@@ -88,6 +88,7 @@ class GlobalWindow(arcade.Window):
             else:
                 self.active_view = 0
             log('View switched to ' + str(self.scenes[self.active_view]))
+            arcade.set_viewport(0, self.width, 0, self.height)
             self.show_view(self.scenes[self.active_view])
 
 

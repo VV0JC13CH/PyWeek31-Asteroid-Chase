@@ -1,55 +1,64 @@
 """
-intro.py
+campaign.py
 
-Place for IntroView class.
+Place for CampaignView class.
 """
 
 import arcade
 import assets
 import data
 import pause
+import math
 from button import Button
 from developer import log
 
 # --- Constants ---
 param = data.load_parameters()
-
-# Size of the first level (intro plays only before first level)
-LEVEL_WIDTH = int(param['LEVEL']['DEFAULT_WIDTH'])
-LEVEL_HEIGHT = int(param['LEVEL']['DEFAULT_HEIGHT'])
+RADIANS_PER_FRAME = float(param['CAMPAIGN']['RADIANS_PER_FRAME'])
 
 
 class CampaignView(arcade.View):
     def __init__(self):
         super().__init__()
+        self.angle = 0
+        self.sweep_length = self.window.height * 0.4
         if self.window.pause_view is None:
             self.window.pause_view = pause.PauseView(self)
 
-        self.button_skip = Button(x=self.window.width / 6 * 5,
-                                  y=self.window.height * 1 / 8,
-                                  width=250, height=50,
-                                  texture_idle='skip_intro',
-                                  texture_hover='skip_intro_hover'
-                                  )
-
-    def on_update(self, delta_time: float):
-        self.button_skip.detect_mouse(self.window.cursor)
-
     def on_draw(self):
+        """ Use this function to draw everything to the screen. """
+
+        # Move the angle of the sweep.
+        self.angle += RADIANS_PER_FRAME
+
+        # Calculate the end point of our radar sweep. Using math.
+        x = self.sweep_length * math.sin(self.angle) + (self.window.width // 2)
+        y = self.sweep_length * math.cos(self.angle) + (self.window.height // 2)
+
+        # Start the render. This must happen before any drawing
+        # commands. We do NOT need an stop render command.
         self.window.developer_tool.on_draw_start()
+
         arcade.start_render()
-        # In order to count FPS in proper way, add objects below:
 
         # Draw the background texture
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             self.window.width, self.window.height,
-                                            assets.bg_menu)
+                                            assets.bg_campaign)
 
-        arcade.draw_text("Intro Screen", self.window.width / 2, self.window.height / 2,
-                         arcade.color.WHITE, font_size=50, anchor_x="center")
+        # Draw the radar line
+        arcade.draw_line(self.window.width // 2, self.window.height // 2, x, y, arcade.color.WHITE_SMOKE, 4)
 
-        self.button_skip.draw()
+        # Draw the outline of the radar
+        arcade.draw_circle_outline(self.window.width // 2, self.window.height // 2, self.sweep_length,
+                                   arcade.color.SILVER, 10)
+
         self.window.developer_tool.on_draw_finish()
 
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        pass
+    def on_key_press(self, key, modifiers):
+        """Called whenever a key is pressed. """
+        if key == arcade.key.ESCAPE:
+            log('Scene switched to ' + str(self.window.pause_view))
+            self.window.scenes.append(self.window.pause_view)
+            self.window.show_view(self.window.pause_view)
+
