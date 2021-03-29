@@ -51,6 +51,8 @@ button_dev_on_idle = SimpleButton(button_col=0, button_row=12)
 button_dev_on_hover = SimpleButton(button_col=1, button_row=12)
 button_dev_off_idle = SimpleButton(button_col=0, button_row=13)
 button_dev_off_hover = SimpleButton(button_col=1, button_row=13)
+button_back_camp_idle = SimpleButton(button_col=0, button_row=14)
+button_back_camp_hover = SimpleButton(button_col=1, button_row=14)
 
 button_textures = {"pause": button_pause_idle,
                    "pause_hover": button_pause_hover,
@@ -79,7 +81,9 @@ button_textures = {"pause": button_pause_idle,
                    "dev_on": button_dev_on_idle,
                    "dev_on_hover": button_dev_on_hover,
                    "dev_off": button_dev_off_idle,
-                   "dev_off_hover": button_dev_off_hover
+                   "dev_off_hover": button_dev_off_hover,
+                   "back_camp": button_back_camp_idle,
+                   "back_camp_hover": button_back_camp_hover
                    }
 
 # Cursor

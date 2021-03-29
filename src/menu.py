@@ -56,10 +56,12 @@ class MenuView(arcade.View):
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         if self.button_play.current_state == 'hover':
-            intro_view = IntroView()
-            self.window.show_view(intro_view)
+            self.window.intro_view = IntroView()
+            self.window.scenes.append(self.window.intro_view)
+            self.window.show_view(self.window.intro_view)
         elif self.button_settings.current_state == 'hover':
-            settings_view = SettingsView(self)
-            self.window.show_view(settings_view)
+            self.window.settings_view = SettingsView(self)
+            self.window.scenes.append(self.window.settings_view)
+            self.window.show_view(self.window.settings_view)
         elif self.button_exit.current_state == 'hover':
             self.window.close()

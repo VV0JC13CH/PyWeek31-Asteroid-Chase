@@ -40,6 +40,8 @@ class GlobalWindow(arcade.Window):
         self.cursor = Cursor()
         # Start view
         self.start_view = MenuView()
+        self.active_view = 0
+        self.scenes = [self.start_view]
 
     def on_resize(self, width, height):
         """ This method is automatically called when the window is resized. """
@@ -71,9 +73,22 @@ class GlobalWindow(arcade.Window):
             self.developer_mode = not self.developer_mode
             log('Developer mode turned to ' + str(not self.developer_mode))
         # F2 - fullscreen mode
-        if key == arcade.key.F2 and self.developer_mode:
+        elif key == arcade.key.F2 and self.developer_mode:
             self.set_fullscreen(not self.fullscreen)
+            self.set_viewport(0, self.width, 0, self.height)
             log('Fullscreen mode turned to ' + str(not self.fullscreen))
+        # F3 - turn music on/off
+        elif key == arcade.key.F3 and self.developer_mode:
+            self.music_enabled = not self.music_enabled
+            log('Music turned ' + str(not self.music_enabled))
+        # F4 - switch to all registered views player was before:
+        elif key == arcade.key.F4 and self.developer_mode:
+            if self.active_view < len(self.scenes)-1:
+                self.active_view = self.active_view + 1
+            else:
+                self.active_view = 0
+            log('View switched to ' + str(self.scenes[self.active_view]))
+            self.show_view(self.scenes[self.active_view])
 
 
 def main():

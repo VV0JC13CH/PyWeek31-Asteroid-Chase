@@ -10,6 +10,7 @@ import pymunk
 from arcade.gl import geometry
 import random
 # --- Import internal classes ---
+from developer import log
 import data
 import minimap
 from pause import PauseView
@@ -43,7 +44,9 @@ class GameView(arcade.View):
         # Set up level
         self.level_width = level_width
         self.level_height = level_height
-        
+        # It has to be here in order to create pause view ASAP:
+        self.window.pause_view = PauseView(self)
+
         # pymunk
         self.space = pymunk.Space()
         self.space.iterations = 35
@@ -209,11 +212,11 @@ class GameView(arcade.View):
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
-
         if key == arcade.key.ESCAPE:
             self.reset_viewport()
-            pause_view = PauseView(self)
-            self.window.show_view(pause_view)
+            log('Scene switched to ' + str(self.window.pause_view))
+            self.window.scenes.append(self.window.pause_view)
+            self.window.show_view(self.window.pause_view)
         elif key == arcade.key.UP:
             self.up_pressed = True
         elif key == arcade.key.DOWN:
