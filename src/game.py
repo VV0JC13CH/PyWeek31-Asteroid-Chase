@@ -119,6 +119,9 @@ class GameView(arcade.View):
         # scrolling background images
         self.background_list = ScrollBackground(self.window)
 
+    def on_show_view(self):
+        self.window.cursor.change_state(state='off')
+
     def reset_viewport(self):
         """In order to fix views after quit from gameView"""
         arcade.set_viewport(0, self.window.width, 0, self.window.height)

@@ -29,6 +29,9 @@ class IntroView(arcade.View):
                                   texture_hover='skip_intro_hover'
                                   )
 
+    def on_show_view(self):
+        self.window.cursor.change_state(state='idle')
+
     def on_update(self, delta_time: float):
         self.button_skip.detect_mouse(self.window.cursor)
 

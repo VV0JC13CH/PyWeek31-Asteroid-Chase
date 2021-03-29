@@ -105,4 +105,4 @@ class Player(arcade.Sprite):
         else:
             heading_ind = 1
         self.texture = assets.police_textures[siren_ani_fram][heading_ind]
-        
+

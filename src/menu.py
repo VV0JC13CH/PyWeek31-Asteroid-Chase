@@ -33,6 +33,9 @@ class MenuView(arcade.View):
                                   texture_hover='exit_hover'
                                   )
 
+    def on_show_view(self):
+        self.window.cursor.change_state(state='idle')
+
     def on_update(self, delta_time: float):
         self.button_play.detect_mouse(self.window.cursor)
         self.button_settings.detect_mouse(self.window.cursor)

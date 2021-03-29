@@ -22,7 +22,7 @@ class CampaignView(arcade.View):
     def __init__(self):
         super().__init__()
         self.angle = 0
-        self.choose_level = self.window.levels_unlocked
+        self.selected_level = self.window.levels_unlocked
         self.sweep_length = self.window.height * 0.4
         self.mouse_position = (0, 0)
         # Add stars
@@ -33,6 +33,7 @@ class CampaignView(arcade.View):
         self.level_3 = (self.window.width // 2 * 1.2, self.window.height // 2 * 1.3)
         self.level_2 = (self.window.width // 2 * 0.8, self.window.height // 2 * 0.4)
         self.level_1 = (self.window.width // 2 * 0.8, self.window.height // 2 * 1.1)
+        self.levels = [self.level_1, self.level_2, self.level_3, self.level_4, self.level_5]
         for i in range(100):
             sprite = arcade.SpriteSolidColor(2, 2, arcade.color.WHITE)
             sprite.center_x = random.randrange(self.window.width)
@@ -45,9 +46,20 @@ class CampaignView(arcade.View):
         self.player_list = arcade.SpriteList()
         # Set up the player
         self.player_sprite = Player(level_width=self.window.width, level_height=self.window.height)
-        self.player_sprite.center_x = 400
-        self.player_sprite.center_y = 400
+        self.player_sprite.center_x = int(self.levels[self.selected_level-1][0])+self.player_sprite.width/2
+        self.player_sprite.center_y = int(self.levels[self.selected_level-1][1])+self.player_sprite.height/2
         self.player_list.append(self.player_sprite)
+
+    def on_show_view(self):
+        self.window.cursor.change_state(state='idle')
+
+    def on_update(self, delta_time: float):
+        # Call update to move the sprite
+        self.player_list.update()
+        if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
+            self.window.cursor.change_state(state='no')
+        else:
+            self.window.cursor.change_state(state='idle')
 
     def on_draw(self):
         """ Use this function to draw everything to the screen. """
@@ -73,7 +85,7 @@ class CampaignView(arcade.View):
         # Representation of levels:
         # Level 5:
         if self.window.levels_unlocked >= 5:
-            if self.choose_level >= 4:
+            if self.selected_level >= 4:
                 arcade.draw_line(self.level_5[0], self.level_5[1],
                                  self.level_4[0], self.level_4[1], arcade.color.ROMAN_SILVER,
                                  1)
@@ -81,7 +93,7 @@ class CampaignView(arcade.View):
                                       arcade.color.BROWN, 3)
         if self.window.levels_unlocked >= 4:
             # Level 4:
-            if self.choose_level in range(2, 5):
+            if self.selected_level in range(2, 5):
                 arcade.draw_line(self.level_4[0], self.level_4[1],
                                  self.level_3[0], self.level_3[1], arcade.color.ROMAN_SILVER,
                                  1)
@@ -91,7 +103,7 @@ class CampaignView(arcade.View):
                                       arcade.color.GREEN_YELLOW, 3)
         if self.window.levels_unlocked >= 3:
             # Level 3: Kingdom End
-            if self.choose_level in range(1, 4):
+            if self.selected_level in range(1, 4):
                 arcade.draw_line(self.level_3[0], self.level_3[1],
                                  self.level_2[0], self.level_2[1], arcade.color.ROMAN_SILVER,
                                  1)
@@ -101,7 +113,7 @@ class CampaignView(arcade.View):
                                       arcade.color.RED_DEVIL, 3)
         if self.window.levels_unlocked >= 2:
             # Level 2: Tartolyyn
-            if self.choose_level in range(0, 3):
+            if self.selected_level in range(0, 3):
                 arcade.draw_line(self.level_2[0], self.level_2[1],
                                  self.level_1[0], self.level_1[1], arcade.color.ROMAN_SILVER,
                                  1)
@@ -119,6 +131,7 @@ class CampaignView(arcade.View):
         # Draw the outline of the radar
         arcade.draw_circle_outline(self.window.width // 2, self.window.height // 2, self.sweep_length,
                                    arcade.color.OLD_SILVER, 8)
+        self.player_list.draw()
 
         self.window.developer_tool.on_draw_finish()
 

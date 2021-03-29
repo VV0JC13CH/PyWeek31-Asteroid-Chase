@@ -30,6 +30,9 @@ class PauseView(arcade.View):
                                        width=500, height=100,
                                        texture_idle='back_menu', texture_hover='back_menu_hover')
 
+    def on_show_view(self):
+        self.window.cursor.change_state(state='idle')
+
     def on_update(self, delta_time: float):
         self.button_back_game.detect_mouse(self.window.cursor)
         self.button_back_camp.detect_mouse(self.window.cursor)

@@ -18,12 +18,15 @@ class Cursor(arcade.SpriteList):
         self.append(self.idle)
 
     def change_state(self, state):
+        self.current_state = state
         if state == 'hover':
             self.sprite_list.clear()
             self.append(self.hover)
         elif state == 'no':
             self.sprite_list.clear()
             self.append(self.no)
+        elif state == 'off':
+            self.sprite_list.clear()
         else:
             self.sprite_list.clear()
             self.append(self.idle)
