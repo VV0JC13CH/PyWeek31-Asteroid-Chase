@@ -18,17 +18,17 @@ MAX_VERTICAL_MOVEMENT_SPEED = int(param['PLAYER']['MAX_VERTICAL_MOVEMENT_SPEED']
 HORIZONTAL_ACCELERATION = float(param['PLAYER']['HORIZONTAL_ACCELERATION'])
 VERTICAL_ACCELERATION = float(param['PLAYER']['VERTICAL_ACCELERATION'])
 MOVEMENT_DRAG = float(param['PLAYER']['MOVEMENT_DRAG'])
-# Size of the playing field
-LEVEL_WIDTH = int(param['LEVEL']['WIDTH'])
-LEVEL_HEIGHT = int(param['LEVEL']['HEIGHT'])
+
 
 
 class Player(arcade.SpriteSolidColor):
     """ Player ship """
-    def __init__(self):
+    def __init__(self, level_width, level_height):
         """ Set up player """
         super().__init__(40, 10, arcade.color.SLATE_GRAY)
         self.face_right = True
+        self.level_width = level_width
+        self.level_height = level_height
 
     def accelerate_up(self):
         """ Accelerate player up """
@@ -80,10 +80,10 @@ class Player(arcade.SpriteSolidColor):
         # Check bounds
         if self.left < 0:
             self.left = 0
-        elif self.right > LEVEL_WIDTH - 1:
-            self.right = LEVEL_WIDTH - 1
+        elif self.right > self.level_width - 1:
+            self.right = self.level_width - 1
 
         if self.bottom < 0:
             self.bottom = 0
-        elif self.top > LEVEL_HEIGHT - 1:
-            self.top = LEVEL_HEIGHT - 1
+        elif self.top > self.level_height - 1:
+            self.top = self.level_height - 1

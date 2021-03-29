@@ -6,8 +6,16 @@ Place for IntroView class.
 
 import arcade
 import assets
+import data
 from game import GameView
 from button import Button
+
+# --- Constants ---
+param = data.load_parameters()
+
+# Size of the first level (intro plays only before first level)
+LEVEL_WIDTH = int(param['LEVEL']['DEFAULT_WIDTH'])
+LEVEL_HEIGHT = int(param['LEVEL']['DEFAULT_HEIGHT'])
 
 
 class IntroView(arcade.View):
@@ -41,5 +49,5 @@ class IntroView(arcade.View):
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         if self.button_skip.current_state == 'hover':
-            game_view = GameView()
+            game_view = GameView(LEVEL_WIDTH, LEVEL_HEIGHT)
             self.window.show_view(game_view)
