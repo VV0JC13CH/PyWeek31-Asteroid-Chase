@@ -20,7 +20,8 @@ bg_menu = arcade.load_texture(path_to_string('gfx', 'bg_menu.png'))
 
 # Buttons
 buttons_sprites = path_to_string('gfx', 'buttons.png')
-
+# List of all buttons used to iterate over all in order to reset position after fullscreen switch
+button_register = []
 
 button_pause_idle = SimpleButton(button_col=0, button_row=0)
 button_pause_hover = SimpleButton(button_col=1, button_row=0)

@@ -13,9 +13,9 @@ class SettingsView(arcade.View):
     def __init__(self, previous_view):
         super().__init__()
         self.previous_view = previous_view
-        full_resolution_mode_state = self.previous_view.window.fullscreen
-        developer_mode_state = self.previous_view.window.developer_mode
-        music_mode_state = self.previous_view.window.music_enabled
+        full_resolution_mode_state = self.window.fullscreen
+        developer_mode_state = self.window.developer_mode
+        music_mode_state = self.window.music_enabled
 
         if full_resolution_mode_state:
             self.button_full_resolution = Button(x=self.window.width/2, y=self.window.height * 4 / 6,
@@ -68,21 +68,24 @@ class SettingsView(arcade.View):
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         if self.button_full_resolution.current_state == 'hover':
-            self.previous_view.window.set_fullscreen(not self.previous_view.window.fullscreen)
-            self.previous_view.window.set_viewport(0, self.previous_view.window.width, 0, self.previous_view.window.height)
-            if self.previous_view.window.fullscreen:
+            self.window.set_fullscreen(not self.window.fullscreen)
+            width, height = self.window.get_size()
+            self.window.set_viewport(0, width, 0, height)
+            for button in assets.button_register:
+                button.center_horizontally(self.window)
+            if self.window.fullscreen:
                 self.button_full_resolution.replace_textures('full_off', 'full_off_hover')
             else:
                 self.button_full_resolution.replace_textures('full_on', 'full_on_hover')
         if self.button_music_enabled.current_state == 'hover':
-            self.previous_view.window.music_enabled = not self.previous_view.window.music_enabled
-            if self.previous_view.window.music_enabled:
+            self.window.music_enabled = not self.window.music_enabled
+            if self.window.music_enabled:
                 self.button_music_enabled.replace_textures('music_off', 'music_off_hover')
             else:
                 self.button_music_enabled.replace_textures('music_on', 'music_on_hover')
         if self.button_developer_mode.current_state == 'hover':
-            self.previous_view.window.developer_mode = not self.previous_view.window.developer_mode
-            if self.previous_view.window.developer_mode:
+            self.window.developer_mode = not self.window.developer_mode
+            if self.window.developer_mode:
                 self.button_developer_mode.replace_textures('dev_off', 'dev_off_hover')
             else:
                 self.button_developer_mode.replace_textures('dev_on', 'dev_on_hover')

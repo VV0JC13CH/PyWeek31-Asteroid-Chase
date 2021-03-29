@@ -25,6 +25,7 @@ class Button(arcade.SpriteList):
                  ):
 
         super().__init__()
+        assets.button_register.append(self)
         self.x = x
         self.y = y
         self.width = width
@@ -66,6 +67,10 @@ class Button(arcade.SpriteList):
         self.idle.center_y = previous_y
         self.hover.center_x = previous_x_hover
         self.hover.center_y = previous_y_hover
+
+    def center_horizontally(self, global_window):
+        self.idle.center_x = global_window.width / 2
+        self.hover.center_x = global_window.width / 2
 
     def detect_mouse(self, mouse_instance):
         if arcade.check_for_collision_with_list(self[0], mouse_instance):
