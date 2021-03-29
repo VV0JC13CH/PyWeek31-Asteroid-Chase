@@ -8,6 +8,7 @@ Place for Player class.
 import arcade
 # --- Import internal classes ---
 import data
+import assets
 
 # --- Constants ---
 param = data.load_parameters()
@@ -21,14 +22,18 @@ MOVEMENT_DRAG = float(param['PLAYER']['MOVEMENT_DRAG'])
 
 
 
-class Player(arcade.SpriteSolidColor):
+class Player(arcade.Sprite):
     """ Player ship """
     def __init__(self, level_width, level_height):
         """ Set up player """
-        super().__init__(40, 10, arcade.color.SLATE_GRAY)
+        super().__init__()
         self.face_right = True
         self.level_width = level_width
         self.level_height = level_height
+        
+        self.siren_ani = 0
+        self.texture = assets.police_textures[0][0]
+        self.scale = 1.0
 
     def accelerate_up(self):
         """ Accelerate player up """
@@ -87,3 +92,18 @@ class Player(arcade.SpriteSolidColor):
             self.bottom = 0
         elif self.top > self.level_height - 1:
             self.top = self.level_height - 1
+        
+        # update textures
+        self.siren_ani += 1
+        if self.siren_ani > 10:
+            self.siren_ani = 0
+        if self.siren_ani < 5:
+            siren_ani_fram = 0
+        else:
+            siren_ani_fram = 1
+        if self.face_right:
+            heading_ind = 0
+        else:
+            heading_ind = 1
+        self.texture = assets.police_textures[siren_ani_fram][heading_ind]
+        

@@ -87,3 +87,30 @@ cursor_hover = arcade.Sprite(filename=path_to_string('gfx', 'cursor_hover.png'))
 cursor_idle = arcade.Sprite(filename=path_to_string('gfx', 'cursor_idle.png'))
 cursor_no = arcade.Sprite(filename=path_to_string('gfx', 'cursor_no.png'))
 
+# Player Police Car
+police_textures = []
+police_textures.append([])
+police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship001.png')))
+police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship001.png'),flipped_horizontally=True))
+police_textures.append([])
+police_textures[-1]
+police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship002.png')))
+police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship002.png'),flipped_horizontally=True))
+
+# laser explosion sprites
+explode_textures = []
+explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast001.png')))
+explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast002.png')))
+explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast003.png')))
+explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast004.png')))
+explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast005.png')))
+explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast006.png')))
+
+# bullet/laser textures
+bullet_textures = []
+bullet_textures.append(arcade.load_texture(path_to_string('gfx', 'laser001.png')))
+bullet_textures.append(arcade.load_texture(path_to_string('gfx', 'laser001.png'),flipped_horizontally=True))
+
+# Background texture
+background_texture = arcade.load_texture(path_to_string('gfx', 'background.png'))
+

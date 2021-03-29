@@ -14,6 +14,8 @@ import minimap
 from pause import PauseView
 from player import Player
 from particle import Particle
+from bullet import Bullet
+from scroll_background import ScrollBackground
 
 # --- Constants ---
 param = data.load_parameters()
@@ -85,6 +87,10 @@ class GameView(arcade.View):
             sprite.center_x = random.randrange(self.level_width)
             sprite.center_y = random.randrange(self.level_height)
             self.enemy_sprite_list.append(sprite)
+        
+        # scrolling background images
+        self.background_list = ScrollBackground(self.window)
+        
 
     def reset_viewport(self):
         """In order to fix views after quit from gameView"""
@@ -100,7 +106,8 @@ class GameView(arcade.View):
                             self.window.width + self.view_left,
                             self.view_bottom,
                             self.window.height + self.view_bottom)
-
+        
+        self.background_list.draw()
         self.star_sprite_list.draw()
         self.enemy_sprite_list.draw()
         self.bullet_sprite_list.draw()
@@ -131,7 +138,7 @@ class GameView(arcade.View):
             for enemy in enemy_hit_list:
                 enemy.remove_from_sprite_lists()
                 for i in range(10):
-                    particle = Particle(4, 4, arcade.color.RED)
+                    particle = Particle(4, 4, arcade.color.GRAY)
                     while particle.change_y == 0 and particle.change_x == 0:
                         particle.change_y = random.randrange(-2, 3)
                         particle.change_x = random.randrange(-2, 3)
@@ -157,6 +164,9 @@ class GameView(arcade.View):
 
         self.view_left = int(self.view_left)
         self.view_bottom = int(self.view_bottom)
+        
+        # Update scrolling background
+        self.background_list.update_scroll(self.view_left, self.view_bottom)
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -175,14 +185,7 @@ class GameView(arcade.View):
             self.right_pressed = True
         elif key == arcade.key.SPACE:
             # Shoot out a bullet/laser
-            bullet = arcade.SpriteSolidColor(35, 3, arcade.color.WHITE)
-            bullet.center_x = self.player_sprite.center_x
-            bullet.center_y = self.player_sprite.center_y
-            bullet.change_x = max(12, abs(self.player_sprite.change_x) + 10)
-
-            if not self.player_sprite.face_right:
-                bullet.change_x *= -1
-
+            bullet = Bullet(self.player_sprite)
             self.bullet_sprite_list.append(bullet)
 
     def on_key_release(self, key, modifiers):
