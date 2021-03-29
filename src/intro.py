@@ -7,9 +7,22 @@ Place for IntroView class.
 import arcade
 import assets
 from game import GameView
+from button import Button
 
 
 class IntroView(arcade.View):
+    def __init__(self):
+        super().__init__()
+        self.button_skip = Button(x=self.window.width / 6 * 5,
+                                  y=self.window.height * 1 / 8,
+                                  width=250, height=50,
+                                  texture_idle='skip_intro',
+                                  texture_hover='skip_intro_hover'
+                                  )
+
+    def on_update(self, delta_time: float):
+        self.button_skip.detect_mouse(self.window.cursor)
+
     def on_draw(self):
         self.window.developer_tool.on_draw_start()
         arcade.start_render()
@@ -22,10 +35,11 @@ class IntroView(arcade.View):
 
         arcade.draw_text("Intro Screen", self.window.width / 2, self.window.height / 2,
                          arcade.color.WHITE, font_size=50, anchor_x="center")
-        arcade.draw_text("Click to start a game", self.window.width / 2, self.window.height / 2 - 75,
-                         arcade.color.WHITE_SMOKE, font_size=20, anchor_x="center")
+
+        self.button_skip.draw()
         self.window.developer_tool.on_draw_finish()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        game_view = GameView()
-        self.window.show_view(game_view)
+        if self.button_skip.current_state == 'hover':
+            game_view = GameView()
+            self.window.show_view(game_view)
