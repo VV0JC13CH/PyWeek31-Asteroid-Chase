@@ -46,6 +46,10 @@ button_settings_idle = SimpleButton(button_col=0, button_row=10)
 button_settings_hover = SimpleButton(button_col=1, button_row=10)
 button_play_idle = SimpleButton(button_col=0, button_row=11)
 button_play_hover = SimpleButton(button_col=1, button_row=11)
+button_dev_on_idle = SimpleButton(button_col=0, button_row=12)
+button_dev_on_hover = SimpleButton(button_col=1, button_row=12)
+button_dev_off_idle = SimpleButton(button_col=0, button_row=13)
+button_dev_off_hover = SimpleButton(button_col=1, button_row=13)
 
 button_textures = {"pause": button_pause_idle,
                    "pause_hover": button_pause_hover,
