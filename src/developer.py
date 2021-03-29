@@ -1,5 +1,5 @@
 """
-fps.py
+developer.py
 
 Place for fps related methods
 """
@@ -8,7 +8,7 @@ import timeit
 import arcade
 
 
-class FpsCounter:
+class DeveloperTool:
     def __init__(self):
         self.start_time = 0
         self.processing_time = 0

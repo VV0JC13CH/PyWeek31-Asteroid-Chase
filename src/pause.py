@@ -15,13 +15,13 @@ class PauseView(arcade.View):
         self.paused_view = paused_view
 
     def on_draw(self):
-        self.window.fps_counter.on_draw_start()
+        self.window.developer_tool.on_draw_start()
         arcade.start_render()
         arcade.draw_text("Pause Screen", self.window.width/2, self.window.height/2,
                          arcade.color.BLACK, font_size=50, anchor_x="center")
         arcade.draw_text("You can pause the game in game and campaign screens.", self.window.width / 2, self.window.height / 2 - 75,
                          arcade.color.GRAY, font_size=20, anchor_x="center")
-        self.window.fps_counter.on_draw_finish()
+        self.window.developer_tool.on_draw_finish()
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """

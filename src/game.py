@@ -109,7 +109,7 @@ class GameView(arcade.View):
 
     def on_draw(self):
         """ Render the screen. """
-        self.window.fps_counter.on_draw_start()
+        self.window.developer_tool.on_draw_start()
         # This command has to happen before we start drawing
         arcade.start_render()
 
@@ -169,7 +169,7 @@ class GameView(arcade.View):
         arcade.draw_rectangle_outline(center_x=x, center_y=y,
                                       width=width, height=height,
                                       color=arcade.color.WHITE)
-        self.window.fps_counter.on_draw_finish()
+        self.window.developer_tool.on_draw_finish()
 
     def on_update(self, delta_time):
         """ Movement and game logic """

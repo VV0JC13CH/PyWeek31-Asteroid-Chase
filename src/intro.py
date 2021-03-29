@@ -11,7 +11,7 @@ from game import GameView
 
 class IntroView(arcade.View):
     def on_draw(self):
-        self.window.fps_counter.on_draw_start()
+        self.window.developer_tool.on_draw_start()
         arcade.start_render()
         # In order to count FPS in proper way, add objects below:
 
@@ -24,7 +24,7 @@ class IntroView(arcade.View):
                          arcade.color.WHITE, font_size=50, anchor_x="center")
         arcade.draw_text("Click to start a game", self.window.width / 2, self.window.height / 2 - 75,
                          arcade.color.WHITE_SMOKE, font_size=20, anchor_x="center")
-        self.window.fps_counter.on_draw_finish()
+        self.window.developer_tool.on_draw_finish()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         game_view = GameView()

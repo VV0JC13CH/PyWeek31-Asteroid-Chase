@@ -39,7 +39,7 @@ class MenuView(arcade.View):
         self.button_exit.detect_mouse(self.window.cursor)
 
     def on_draw(self):
-        self.window.fps_counter.on_draw_start()
+        self.window.developer_tool.on_draw_start()
         arcade.start_render()
         # In order to count FPS in proper way, add objects below:
 
@@ -52,7 +52,7 @@ class MenuView(arcade.View):
         self.button_settings.draw()
         self.button_exit.draw()
 
-        self.window.fps_counter.on_draw_finish()
+        self.window.developer_tool.on_draw_finish()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         if self.button_play.current_state == 'hover':

@@ -9,7 +9,7 @@ import arcade
 # --- Import internal classes ---
 import data
 from menu import MenuView
-from fps import FpsCounter
+from developer import DeveloperTool
 from cursor import Cursor
 # --- Constants ---
 settings = data.load_settings()
@@ -32,17 +32,17 @@ class GlobalWindow(arcade.Window):
         self.developer_mode = developer_mode
         self.music_enabled = music_enabled
         # Game logic global variables:
-        self.fps_counter = FpsCounter()
+        self.developer_tool = DeveloperTool()
         # Arcade engine global variables:
         self.set_mouse_visible(False)
         self.cursor = Cursor()
 
     def on_draw(self):
         self.cursor.draw()
-        self.fps_counter.on_draw(self.height)
+        self.developer_tool.on_draw(self.height)
 
     def on_update(self, delta_time: float):
-        self.fps_counter.on_update(delta_time=delta_time)
+        self.developer_tool.on_update(delta_time=delta_time)
         self.cursor.update()
 
     def on_mouse_motion(self, x, y, _dx, _dy):

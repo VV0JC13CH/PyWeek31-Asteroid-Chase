@@ -14,13 +14,13 @@ class CampaignView(arcade.View):
         arcade.set_background_color(arcade.color.WHITE)
 
     def on_draw(self):
-        self.window.fps_counter.on_draw_start()
+        self.window.developer_tool.on_draw_start()
         arcade.start_render()
         arcade.draw_text("Campaign Screen", self.window.width/2, self.window.height/2,
                          arcade.color.BLACK, font_size=50, anchor_x="center")
         arcade.draw_text("Choose one from unlocked levels.", self.window.width / 2, self.window.height / 2 - 75,
                          arcade.color.GRAY, font_size=20, anchor_x="center")
-        self.window.fps_counter.on_draw_finish()
+        self.window.developer_tool.on_draw_finish()
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """

@@ -51,7 +51,7 @@ class SettingsView(arcade.View):
         self.button_back_menu.detect_mouse(self.window.cursor)
 
     def on_draw(self):
-        self.window.fps_counter.on_draw_start()
+        self.window.developer_tool.on_draw_start()
         arcade.start_render()
 
         # Draw the background texture
@@ -64,7 +64,7 @@ class SettingsView(arcade.View):
         self.button_developer_mode.draw()
         self.button_back_menu.draw()
 
-        self.window.fps_counter.on_draw_finish()
+        self.window.developer_tool.on_draw_finish()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         if self.button_full_resolution.current_state == 'hover':
