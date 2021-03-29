@@ -8,6 +8,7 @@ Use this file to launch the Asteroid Chase game.
 import arcade
 # --- Import internal classes ---
 import data
+import assets
 from menu import MenuView
 from developer import DeveloperTool
 from cursor import Cursor
@@ -18,6 +19,7 @@ SCREEN_WIDTH = int(settings['VIDEO']['WINDOW_WIDTH'])
 SCREEN_HEIGHT = int(settings['VIDEO']['WINDOW_HEIGHT'])
 # --- Variables ---
 full_resolution = False if settings['VIDEO']['FULL_RESOLUTION'] == 'False' else True
+screen_resizeable = False if settings['VIDEO']['WINDOW_RESIZEABLE'] == 'False' else True
 developer_mode = False if settings['GAME']['DEVELOPER_MODE'] == 'False' else True
 music_enabled = False if settings['AUDIO']['MUSIC_ON'] == 'False' else True
 
@@ -28,7 +30,7 @@ class GlobalWindow(arcade.Window):
     def __init__(self):
         """ Initializer """
         # Call the parent class initializer
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, full_resolution)
+        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, full_resolution, resizable=screen_resizeable)
         self.developer_mode = developer_mode
         self.music_enabled = music_enabled
         # Game logic global variables:
@@ -38,6 +40,14 @@ class GlobalWindow(arcade.Window):
         self.cursor = Cursor()
         # Start view
         self.start_view = MenuView()
+
+    def on_resize(self, width, height):
+        """ This method is automatically called when the window is resized. """
+        # Call the parent. Failing to do this will mess up the coordinates, and default to 0,0 at the center and the
+        # edges being -1 to 1.
+        super().on_resize(width, height)
+        for button in assets.button_register:
+            button.center_horizontally(self)
 
     def on_draw(self):
         self.cursor.draw()
