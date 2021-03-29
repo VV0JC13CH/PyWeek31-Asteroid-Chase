@@ -6,6 +6,7 @@ Place for GameView class.
 
 # --- Import external modules ---
 import arcade
+import pymunk
 from arcade.gl import geometry
 import random
 # --- Import internal classes ---
@@ -14,8 +15,9 @@ import minimap
 from pause import PauseView
 from player import Player
 from particle import Particle
-from bullet import Bullet
+from bullet import Bullet, Explosion
 from scroll_background import ScrollBackground
+from asteroid import Asteroid
 
 # --- Constants ---
 param = data.load_parameters()
@@ -41,12 +43,30 @@ class GameView(arcade.View):
         # Set up level
         self.level_width = level_width
         self.level_height = level_height
-
+        
+        # pymunk
+        self.space = pymunk.Space()
+        self.space.iterations = 35
+        self.space.gravity = (0.0, 0.0)
+        self.static_lines = []
+        
+        # Create pymunk walls around level
+        #walls = [[0, 80, 700, 80],[0, 600, 700, 600],[0, 80, 0, 600],[700, 80, 700, 600]]
+        walls = [[0, 0, level_width, 0],[0, level_height, level_width, level_height],[0, 0, 0, level_height],[level_width, 0, level_width, level_height]]
+        for wall in walls:
+            body = pymunk.Body(body_type=pymunk.Body.STATIC)
+            shape = pymunk.Segment(body, [wall[0], wall[1]], [wall[2], wall[3]], 0.0)
+            shape.elasticity = 0.99
+            shape.friction = 10
+            self.space.add(shape, body)
+            self.static_lines.append(shape)
+        
         # Variables that will hold sprite lists
         self.player_list = None
         self.star_sprite_list = None
-        self.enemy_sprite_list = None
+        self.asteroid_sprite_list = None
         self.bullet_sprite_list = None
+        self.particle_sprite_list = None
 
         # Set up the player info
         self.player_sprite = None
@@ -65,8 +85,9 @@ class GameView(arcade.View):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.star_sprite_list = arcade.SpriteList()
-        self.enemy_sprite_list = arcade.SpriteList()
+        self.asteroid_sprite_list = arcade.SpriteList()
         self.bullet_sprite_list = arcade.SpriteList()
+        self.particle_sprite_list = arcade.SpriteList()
 
         # Set up the player
         self.player_sprite = Player(level_width=self.level_width, level_height=self.level_height)
@@ -80,17 +101,20 @@ class GameView(arcade.View):
             sprite.center_x = random.randrange(self.level_width)
             sprite.center_y = random.randrange(self.level_height)
             self.star_sprite_list.append(sprite)
-
-        # Add enemies
-        for i in range(30):
-            sprite = arcade.SpriteSolidColor(20, 20, arcade.csscolor.LIGHT_SALMON)
-            sprite.center_x = random.randrange(self.level_width)
-            sprite.center_y = random.randrange(self.level_height)
-            self.enemy_sprite_list.append(sprite)
+            
+        # Add Asteroids
+        for i in range(100):
+            x = random.randrange(self.level_width)
+            y = random.randrange(self.level_height)
+            #x = random.randrange(700)
+            #y = random.randrange(600)
+            vx = random.randrange(100)-50
+            vy = random.randrange(100)-50
+            sprite = Asteroid(self,self.space,x,y,vx,vy,type=['small','large'][int(random.random()>0.5)])
+            self.asteroid_sprite_list.append(sprite)
         
         # scrolling background images
         self.background_list = ScrollBackground(self.window)
-        
 
     def reset_viewport(self):
         """In order to fix views after quit from gameView"""
@@ -109,14 +133,29 @@ class GameView(arcade.View):
         
         self.background_list.draw()
         self.star_sprite_list.draw()
-        self.enemy_sprite_list.draw()
+        self.asteroid_sprite_list.draw()
         self.bullet_sprite_list.draw()
+        self.particle_sprite_list.draw()
         self.player_list.draw()
+        
+        """
+        # Draw walls (testing)
+        for line in self.static_lines:
+            body = line.body
+            pv1 = body.position + line.a.rotated(body.angle)
+            pv2 = body.position + line.b.rotated(body.angle)
+            arcade.draw_line(pv1.x, pv1.y, pv2.x, pv2.y, arcade.color.WHITE, 2)
+        """
+        
         minimap.draw_minimap(self, MINIMAP_HEIGHT, self.level_width, self.level_height)
 
         self.window.developer_tool.on_draw_finish()
 
     def on_update(self, delta_time):
+        
+        # Update pymunk physics
+        self.space.step(1 / 60.0)
+        
         """ Movement and game logic """
         # Calculate speed based on the keys pressed
         if self.up_pressed and not self.down_pressed:
@@ -132,20 +171,20 @@ class GameView(arcade.View):
         # Call update to move the sprite
         self.player_list.update()
         self.bullet_sprite_list.update()
-
+        self.asteroid_sprite_list.update()
+        self.particle_sprite_list.update()
+        
         for bullet in self.bullet_sprite_list:
-            enemy_hit_list = arcade.check_for_collision_with_list(bullet, self.enemy_sprite_list)
-            for enemy in enemy_hit_list:
-                enemy.remove_from_sprite_lists()
-                for i in range(10):
-                    particle = Particle(4, 4, arcade.color.GRAY)
-                    while particle.change_y == 0 and particle.change_x == 0:
-                        particle.change_y = random.randrange(-2, 3)
-                        particle.change_x = random.randrange(-2, 3)
-                        particle.center_x = enemy.center_x
-                        particle.center_y = enemy.center_y
-                        self.bullet_sprite_list.append(particle)
-
+            if bullet.death_to < 20: # bullet currently acting as explosion
+                continue
+            asteroid_hit_list = arcade.check_for_collision_with_list(bullet, self.asteroid_sprite_list)
+            if len(asteroid_hit_list) > 0:
+                explosion = Explosion(bullet)
+                self.bullet_sprite_list.append(explosion)
+                bullet.remove_from_sprite_lists()
+            for asteroid in asteroid_hit_list:
+                asteroid.hit(bullet)
+        
         # Scroll left
         left_boundary = self.view_left + (self.window.width / 2 - 50)
         if self.player_sprite.left < left_boundary:

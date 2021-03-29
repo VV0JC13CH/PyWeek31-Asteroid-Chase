@@ -6,6 +6,7 @@ Place for Player class.
 
 # --- Import external modules ---
 import arcade
+import pymunk
 # --- Import internal classes ---
 import data
 import assets
@@ -19,8 +20,6 @@ MAX_VERTICAL_MOVEMENT_SPEED = int(param['PLAYER']['MAX_VERTICAL_MOVEMENT_SPEED']
 HORIZONTAL_ACCELERATION = float(param['PLAYER']['HORIZONTAL_ACCELERATION'])
 VERTICAL_ACCELERATION = float(param['PLAYER']['VERTICAL_ACCELERATION'])
 MOVEMENT_DRAG = float(param['PLAYER']['MOVEMENT_DRAG'])
-
-
 
 class Player(arcade.Sprite):
     """ Player ship """

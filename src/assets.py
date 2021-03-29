@@ -114,3 +114,13 @@ bullet_textures.append(arcade.load_texture(path_to_string('gfx', 'laser001.png')
 # Background texture
 background_texture = arcade.load_texture(path_to_string('gfx', 'background.png'))
 
+# Asteroid Textures
+asteroid_textures = {}
+asteroid_textures['small'] = []
+asteroid_textures['small'].append(arcade.load_texture(path_to_string('gfx', 'asteroid_small.png')))
+asteroid_textures['small'].append(arcade.load_texture(path_to_string('gfx', 'asteroid_small_f.png')))
+asteroid_textures['large'] = []
+asteroid_textures['large'].append(arcade.load_texture(path_to_string('gfx', 'asteroid_large.png')))
+asteroid_textures['large'].append(arcade.load_texture(path_to_string('gfx', 'asteroid_large_f.png')))
+
+
