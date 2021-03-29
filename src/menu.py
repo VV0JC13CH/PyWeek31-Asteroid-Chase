@@ -59,7 +59,7 @@ class MenuView(arcade.View):
             intro_view = IntroView()
             self.window.show_view(intro_view)
         elif self.button_settings.current_state == 'hover':
-            settings_view = SettingsView()
+            settings_view = SettingsView(self)
             self.window.show_view(settings_view)
         elif self.button_exit.current_state == 'hover':
             self.window.close()

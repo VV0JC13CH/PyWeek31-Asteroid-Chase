@@ -11,12 +11,15 @@ import data
 from menu import MenuView
 from fps import FpsCounter
 from cursor import Cursor
-
 # --- Constants ---
 settings = data.load_settings()
+SCREEN_TITLE = settings['GAME']['TITLE']
 SCREEN_WIDTH = int(settings['VIDEO']['WINDOW_WIDTH'])
 SCREEN_HEIGHT = int(settings['VIDEO']['WINDOW_HEIGHT'])
-SCREEN_TITLE = settings['GAME']['TITLE']
+# --- Variables ---
+full_resolution = False if settings['VIDEO']['FULL_RESOLUTION'] == 'False' else True
+developer_mode = False if settings['GAME']['DEVELOPER_MODE'] == 'False' else True
+music_enabled = False if settings['AUDIO']['MUSIC_ON'] == 'False' else True
 
 
 class GlobalWindow(arcade.Window):
@@ -25,7 +28,9 @@ class GlobalWindow(arcade.Window):
     def __init__(self):
         """ Initializer """
         # Call the parent class initializer
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, full_resolution)
+        self.developer_mode = developer_mode
+        self.music_enabled = music_enabled
         # Game logic global variables:
         self.fps_counter = FpsCounter()
         # Arcade engine global variables:

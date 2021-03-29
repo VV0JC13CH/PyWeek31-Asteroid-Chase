@@ -53,6 +53,20 @@ class Button(arcade.SpriteList):
             self.sprite_list.clear()
             self.append(self.idle)
 
+    def replace_textures(self, texture_idle, texture_hover):
+        previous_x = self.idle.center_x
+        previous_y = self.idle.center_y
+        previous_x_hover = self.hover.center_x
+        previous_y_hover = self.hover.center_y
+
+        self.idle = self.textures[texture_idle]
+        self.hover = self.textures[texture_hover]
+
+        self.idle.center_x = previous_x
+        self.idle.center_y = previous_y
+        self.hover.center_x = previous_x_hover
+        self.hover.center_y = previous_y_hover
+
     def detect_mouse(self, mouse_instance):
         if arcade.check_for_collision_with_list(self[0], mouse_instance):
             self.change_state(state='hover')

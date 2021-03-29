@@ -74,7 +74,11 @@ button_textures = {"pause": button_pause_idle,
                    "settings": button_settings_idle,
                    "settings_hover": button_settings_hover,
                    "play": button_play_idle,
-                   "play_hover": button_play_hover
+                   "play_hover": button_play_hover,
+                   "dev_on": button_dev_on_idle,
+                   "dev_on_hover": button_dev_on_hover,
+                   "dev_off": button_dev_off_idle,
+                   "dev_off_hover": button_dev_off_hover
                    }
 
 # Cursor
