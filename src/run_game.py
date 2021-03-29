@@ -31,10 +31,10 @@ class GlobalWindow(arcade.Window):
         """ Initializer """
         # Call the parent class initializer
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, full_resolution, resizable=screen_resizeable)
-        self.developer_mode = developer_mode
         self.music_enabled = music_enabled
+        self.developer_mode = developer_mode
         # Game logic global variables:
-        self.developer_tool = DeveloperTool(developer_mode)
+        self.developer_tool = DeveloperTool(self.developer_mode)
         # Arcade engine global variables:
         self.set_mouse_visible(False)
         self.cursor = Cursor()
@@ -63,6 +63,17 @@ class GlobalWindow(arcade.Window):
         Called whenever the mouse moves.
         """
         self.cursor.get_position(x, y)
+
+    def on_key_press(self, key, modifiers):
+        """Global keys. Mostly for developer control"""
+        # F1 - developer mode
+        if key == arcade.key.F1:
+            self.developer_mode = not self.developer_mode
+            log('Developer mode turned to ' + str(not self.developer_mode))
+        # F2 - fullscreen mode
+        if key == arcade.key.F2 and self.developer_mode:
+            self.set_fullscreen(not self.fullscreen)
+            log('Fullscreen mode turned to ' + str(not self.fullscreen))
 
 
 def main():
