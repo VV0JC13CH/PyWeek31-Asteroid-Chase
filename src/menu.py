@@ -8,15 +8,35 @@ import arcade
 import assets
 from intro import IntroView
 from settings import SettingsView
+from button import Button
 
 
 class MenuView(arcade.View):
-    def on_show_view(self):
-        """Method is activated only once"""
-        assets.button_play_idle.center_x = self.window.width/2
-        assets.button_play_idle.center_y = self.window.height/2
-        assets.button_play_hover.center_x = self.window.width/2
-        assets.button_play_hover.center_y = self.window.height/2
+    def __init__(self):
+        super().__init__()
+        self.button_play = Button(x=self.window.width/2,
+                                  y=self.window.height*3/6,
+                                  width=500, height=100,
+                                  texture_idle='play',
+                                  texture_hover='play_hover'
+                                  )
+        self.button_settings = Button(x=self.window.width / 2,
+                                      y=self.window.height * 2 / 6,
+                                      width=500, height=100,
+                                      texture_idle='settings',
+                                      texture_hover='settings_hover'
+                                      )
+        self.button_exit = Button(x=self.window.width / 2,
+                                  y=self.window.height * 1 / 6,
+                                  width=500, height=100,
+                                  texture_idle='exit',
+                                  texture_hover='exit_hover'
+                                  )
+
+    def on_update(self, delta_time: float):
+        self.button_play.detect_mouse(self.window.cursor)
+        self.button_settings.detect_mouse(self.window.cursor)
+        self.button_exit.detect_mouse(self.window.cursor)
 
     def on_draw(self):
         self.window.fps_counter.on_draw_start()
@@ -28,15 +48,18 @@ class MenuView(arcade.View):
                                             self.window.width, self.window.height,
                                             assets.bg_menu)
 
-        arcade.draw_text("Menu Screen", self.window.width/2, self.window.height/2,
-                         arcade.color.WHITE, font_size=50, anchor_x="center")
-        arcade.draw_text("Click to start a game", self.window.width/2, self.window.height/2-75,
-                         arcade.color.WHITE_SMOKE, font_size=20, anchor_x="center")
-        assets.button_play_idle.draw()
-        assets.button_play_hover.draw()
+        self.button_play.draw()
+        self.button_settings.draw()
+        self.button_exit.draw()
 
         self.window.fps_counter.on_draw_finish()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        intro_view = IntroView()
-        self.window.show_view(intro_view)
+        if self.button_play.current_state == 'hover':
+            intro_view = IntroView()
+            self.window.show_view(intro_view)
+        elif self.button_settings.current_state == 'hover':
+            settings_view = SettingsView()
+            self.window.show_view(settings_view)
+        elif self.button_exit.current_state == 'hover':
+            self.window.close()

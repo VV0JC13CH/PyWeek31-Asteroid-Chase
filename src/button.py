@@ -15,13 +15,13 @@ BUTTON_HEIGHT = int(param['UI']['BUTTON_SPRITE_SHEET_HEIGHT'])
 
 
 class Button(arcade.SpriteList):
-    def __init__(self, textures,
+    def __init__(self,
                  texture_idle,
                  texture_hover,
-                 width=200,
-                 height=200,
-                 x=200,
-                 y=200,
+                 width=500,
+                 height=100,
+                 x=500,
+                 y=100,
                  ):
 
         super().__init__()
@@ -30,7 +30,7 @@ class Button(arcade.SpriteList):
         self.width = width
         self.height = height
 
-        self.textures = textures
+        self.textures = assets.button_textures
 
         self.idle = self.textures[texture_idle]
         self.hover = self.textures[texture_hover]
