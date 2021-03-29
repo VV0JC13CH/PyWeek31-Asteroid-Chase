@@ -6,6 +6,34 @@ Place for fps related methods
 
 import timeit
 import arcade
+import logging
+import data
+from pathlib import Path
+from datetime import datetime
+# --- Constants ---
+settings = data.load_settings()
+LOG_LEVEL = settings['GAME']['LOGS_LEVEL']
+
+
+def path_to_string(directory, file):
+    return str(Path.cwd().joinpath(directory, file).resolve())
+
+
+def parse_log_level(log_level):
+    if log_level == 'debug':
+        return logging.DEBUG
+    elif log_level == 'warning':
+        return logging.WARNING
+    elif log_level == 'error':
+        return logging.ERROR
+    else:
+        return logging.INFO
+
+
+def log(message):
+    logging.basicConfig(level=parse_log_level(LOG_LEVEL), filename=path_to_string('logs', str(datetime.now()))+'.log',
+                        filemode="a+", format="%(asctime)-15s %(levelname)-8s %(message)s")
+    logging.info(message)
 
 
 class DeveloperTool:

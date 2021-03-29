@@ -10,7 +10,7 @@ import arcade
 import data
 import assets
 from menu import MenuView
-from developer import DeveloperTool
+from developer import DeveloperTool, log
 from cursor import Cursor
 # --- Constants ---
 settings = data.load_settings()
@@ -48,6 +48,7 @@ class GlobalWindow(arcade.Window):
         super().on_resize(width, height)
         for button in assets.button_register:
             button.center_horizontally(self)
+            log(f"Window resized to: {width}, {height}")
 
     def on_draw(self):
         self.cursor.draw()
