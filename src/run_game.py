@@ -36,6 +36,8 @@ class GlobalWindow(arcade.Window):
         # Arcade engine global variables:
         self.set_mouse_visible(False)
         self.cursor = Cursor()
+        # Start view
+        self.start_view = MenuView()
 
     def on_draw(self):
         self.cursor.draw()
@@ -55,8 +57,7 @@ class GlobalWindow(arcade.Window):
 def main():
     """ Main method """
     global_window = GlobalWindow()
-    start_view = MenuView()
-    global_window.show_view(start_view)
+    global_window.show_view(global_window.start_view)
     arcade.run()
 
 
