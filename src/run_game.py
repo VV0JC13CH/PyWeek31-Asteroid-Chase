@@ -31,6 +31,7 @@ class GlobalWindow(arcade.Window):
         """ Initializer """
         # Call the parent class initializer
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, full_resolution, resizable=screen_resizeable)
+        self.levels_unlocked = 5
         self.music_enabled = music_enabled
         self.developer_mode = developer_mode
         # Game logic global variables:
