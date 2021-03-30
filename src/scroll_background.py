@@ -31,7 +31,7 @@ class ScrollBackground(arcade.SpriteList):
         
         self.append(arcade.Sprite())
         self.sprite_list[1].texture = assets.background_texture
-        self.sprite_list[1].center_x = self.width // 2 + 960
+        self.sprite_list[1].center_x = self.width // 2 + 1220
         self.sprite_list[1].center_y = self.height // 2
         self.sprite_list[1].change_x = 0
         
@@ -43,7 +43,7 @@ class ScrollBackground(arcade.SpriteList):
         
         self.append(arcade.Sprite())
         self.sprite_list[3].texture = assets.background_texture
-        self.sprite_list[3].center_x = self.width // 2 + 960
+        self.sprite_list[3].center_x = self.width // 2 + 1220
         self.sprite_list[3].center_y = self.height // 2 + 820
         self.sprite_list[3].change_x = 0
 
@@ -52,9 +52,9 @@ class ScrollBackground(arcade.SpriteList):
         
         for sprite in self.sprite_list:
             if sprite.right <= view_left:
-                sprite.center_x += 2*960
+                sprite.center_x += 2*1220
             if sprite.left >= (view_left+self.width):
-                sprite.center_x -= 2*960
+                sprite.center_x -= 2*1220
             if sprite.top <= view_bottom:
                 sprite.center_y += 2*820
             if sprite.bottom >= (view_bottom+self.height):
