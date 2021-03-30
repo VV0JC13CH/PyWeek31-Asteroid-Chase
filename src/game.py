@@ -99,7 +99,7 @@ class GameView(arcade.View):
         self.structures_sprite_list = arcade.SpriteList()
 
         # Set up the player
-        self.player_sprite = Player(self.level_width, self.level_height, self, self.space, 400, 400)
+        self.player_sprite = Player(self.level_width, self.level_height, self.particle_sprite_list, self.space, 400, 400)
         self.player_list.append(self.player_sprite)
         
         """
