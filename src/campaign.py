@@ -67,9 +67,10 @@ class CampaignView(arcade.View):
     def on_update(self, delta_time: float):
         # Call update to move the sprite
         self.player_list.update()
-        if self.player_sprite.center_x in range(int(self.levels[self.selected_level - 1][0]),
-                                                int(self.levels[self.selected_level - 2][0])) and self.selected_level > 1:
-            self.player_list.move(self.vector_x*self.player_speed, self.vector_y*self.player_speed)
+        if self.selected_level > 1:
+            if abs(self.levels[self.selected_level - 1][0] - self.player_sprite.center_x) > 5:
+                if abs(self.levels[self.selected_level - 1][1] - self.player_sprite.center_y) > 5:
+                    self.player_list.move(self.vector_x*self.player_speed, self.vector_y*self.player_speed)
         if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
             self.window.cursor.change_state(state='no')
         else:
