@@ -13,7 +13,6 @@ import random
 from developer import log
 import data
 import minimap
-from pause import PauseView
 from player import Player
 from particle import Particle
 from bullet import Bullet, Explosion
@@ -51,8 +50,6 @@ class GameView(arcade.View):
         # Set up level
         self.level_width = level_width
         self.level_height = level_height
-        # It has to be here in order to create pause view ASAP:
-        self.window.pause_view = PauseView(self)
 
         # pymunk
         self.space = pymunk.Space()

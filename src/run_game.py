@@ -10,6 +10,9 @@ import arcade
 import data
 import assets
 from menu import MenuView
+from pause import PauseView
+from intro import IntroView
+from campaign import CampaignView
 from developer import DeveloperTool, log
 from cursor import Cursor
 # --- Constants ---
@@ -31,7 +34,8 @@ class GlobalWindow(arcade.Window):
         """ Initializer """
         # Call the parent class initializer
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, full_resolution, resizable=screen_resizeable)
-        self.levels_unlocked = 5
+        # If levels_unlocked = 0 - play intro and add +1:
+        self.levels_unlocked = 0
         self.music_enabled = music_enabled
         self.developer_mode = developer_mode
         # Game logic global variables:
@@ -43,6 +47,13 @@ class GlobalWindow(arcade.Window):
         self.start_view = MenuView()
         self.active_view = 0
         self.scenes = [self.start_view]
+        # Views:
+        self.pause_view = PauseView(self)
+        self.scenes.append(self.pause_view)
+        self.campaign_view = CampaignView()
+        self.scenes.append(self.campaign_view)
+        self.intro_view = IntroView()
+        self.scenes.append(self.intro_view)
 
     def on_resize(self, width, height):
         """ This method is automatically called when the window is resized. """

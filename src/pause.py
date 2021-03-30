@@ -11,7 +11,6 @@ import assets
 
 
 from button import Button
-from campaign import CampaignView
 from developer import log
 
 
@@ -57,8 +56,6 @@ class PauseView(arcade.View):
             self.window.show_view(self.game_view)
             log('Scene switched to ' + str(self.game_view))
         if self.button_back_camp.current_state == 'hover':
-            self.window.campaign_view = CampaignView()
-            self.window.scenes.append(self.window.campaign_view)
             log('Scene switched to ' + str(self.window.campaign_view))
             self.window.show_view(self.window.campaign_view)
         if self.button_back_menu.current_state == 'hover':

@@ -6,9 +6,10 @@ Place for MenuView class.
 
 import arcade
 import assets
-from intro import IntroView
+import campaign
 from settings import SettingsView
 from button import Button
+from developer import log
 
 
 class MenuView(arcade.View):
@@ -59,9 +60,12 @@ class MenuView(arcade.View):
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         if self.button_play.current_state == 'hover':
-            self.window.intro_view = IntroView()
-            self.window.scenes.append(self.window.intro_view)
-            self.window.show_view(self.window.intro_view)
+            if self.window.levels_unlocked == 0:
+                self.window.levels_unlocked = 1
+                self.window.show_view(self.window.intro_view)
+            else:
+                log('Scene switched to ' + str(self.window.campaign_view))
+                self.window.show_view(self.window.campaign_view)
         elif self.button_settings.current_state == 'hover':
             self.window.settings_view = SettingsView(self)
             self.window.scenes.append(self.window.settings_view)

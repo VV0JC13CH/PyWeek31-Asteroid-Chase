@@ -23,7 +23,10 @@ class CampaignView(arcade.View):
     def __init__(self):
         super().__init__()
         self.angle = 0
-        self.selected_level = self.window.levels_unlocked
+        if self.window.levels_unlocked != 0:
+            self.selected_level = self.window.levels_unlocked
+        else:
+            self.selected_level = 1
         self.sweep_length = self.window.height * 0.4
         self.mouse_position = (0, 0)
         self.player_speed = 0.005
@@ -41,8 +44,6 @@ class CampaignView(arcade.View):
             sprite.center_x = random.randrange(self.window.width)
             sprite.center_y = random.randrange(self.window.height)
             self.star_sprite_list.append(sprite)
-        if self.window.pause_view is None:
-            self.window.pause_view = pause.PauseView(self)
 
         # Variables that will hold sprite lists
         self.player_list = arcade.SpriteList()
