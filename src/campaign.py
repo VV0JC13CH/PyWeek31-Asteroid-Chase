@@ -25,6 +25,7 @@ class CampaignView(arcade.View):
         self.selected_level = self.window.levels_unlocked
         self.sweep_length = self.window.height * 0.4
         self.mouse_position = (0, 0)
+        self.player_speed = 0.005
         # Add stars
         self.star_sprite_list = arcade.SpriteList()
         # Setup levels coordinates:
@@ -46,8 +47,18 @@ class CampaignView(arcade.View):
         self.player_list = arcade.SpriteList()
         # Set up the player
         self.player_sprite = Player(level_width=self.window.width, level_height=self.window.height)
-        self.player_sprite.center_x = int(self.levels[self.selected_level-1][0])+self.player_sprite.width/2
-        self.player_sprite.center_y = int(self.levels[self.selected_level-1][1])+self.player_sprite.height/2
+        if self.selected_level > 1:
+            self.player_sprite.center_x = self.levels[self.selected_level-2][0]+self.player_sprite.width/2
+            self.player_sprite.center_y = self.levels[self.selected_level-2][1]+self.player_sprite.height/2
+            self.vector_x = self.levels[self.selected_level - 1][0] - self.levels[self.selected_level - 2][0]
+            self.vector_y = self.levels[self.selected_level - 1][1] - self.levels[self.selected_level - 2][1]
+            if self.vector_x < 0:
+                self.player_sprite.face_right = False
+        else:
+            self.player_sprite.center_x = self.levels[self.selected_level - 1][0] + self.player_sprite.width / 2
+            self.player_sprite.center_y = self.levels[self.selected_level - 1][1] + self.player_sprite.height / 2
+            self.vector_x = 0
+            self.vector_y = 0
         self.player_list.append(self.player_sprite)
 
     def on_show_view(self):
@@ -56,6 +67,9 @@ class CampaignView(arcade.View):
     def on_update(self, delta_time: float):
         # Call update to move the sprite
         self.player_list.update()
+        if self.player_sprite.center_x in range(int(self.levels[self.selected_level - 1][0]),
+                                                int(self.levels[self.selected_level - 2][0])) and self.selected_level > 1:
+            self.player_list.move(self.vector_x*self.player_speed, self.vector_y*self.player_speed)
         if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
             self.window.cursor.change_state(state='no')
         else:
