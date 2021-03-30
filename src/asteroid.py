@@ -33,12 +33,12 @@ class Asteroid(arcade.Sprite):
             self.texture = assets.asteroid_textures['small'][0]
             radius = 25
             mass = 1.0
-            self.health = 1
+            self.health = 3
         else:
             self.texture = assets.asteroid_textures['large'][0]
             radius = 50
             mass = 5.0
-            self.health = 3
+            self.health = 5
                 
         inertia = pymunk.moment_for_circle(mass, 0, radius, (0, 0))
         self.body = pymunk.Body(mass, inertia)
@@ -47,6 +47,7 @@ class Asteroid(arcade.Sprite):
         self.shape = shape = pymunk.Circle(self.body, radius, pymunk.Vec2d(0, 0))
         self.shape.elasticity = 0.99
         self.shape.friction = 0.9
+        self.shape.collision_type = 2
         
         self.space = space
         self.space.add(self.body, self.shape)
@@ -81,9 +82,9 @@ class Asteroid(arcade.Sprite):
                 while particle.change_y == 0 and particle.change_x == 0:
                     particle.change_y = random.randrange(-2, 3)
                     particle.change_x = random.randrange(-2, 3)
-                    particle.center_x = self.center_x
-                    particle.center_y = self.center_y
-                    self.parent.particle_sprite_list.append(particle)
+                particle.center_x = self.center_x
+                particle.center_y = self.center_y
+                self.parent.particle_sprite_list.append(particle)
     
     def update(self):
         self.center_x = self.shape.body.position.x

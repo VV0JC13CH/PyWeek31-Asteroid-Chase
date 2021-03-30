@@ -99,9 +99,11 @@ police_textures.append([])
 police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship001.png')))
 police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship001.png'),flipped_horizontally=True))
 police_textures.append([])
-police_textures[-1]
 police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship002.png')))
 police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship002.png'),flipped_horizontally=True))
+police_textures.append([])
+police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship003.png')))
+police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship003.png'),flipped_horizontally=True))
 
 # laser explosion sprites
 explode_textures = []

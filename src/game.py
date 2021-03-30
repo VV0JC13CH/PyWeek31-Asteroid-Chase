@@ -29,12 +29,15 @@ settings = data.load_settings()
 # Size of the minimap
 MINIMAP_HEIGHT = int(param['MAP']['HEIGHT'])
 
-
 # How far away from the edges do we get before scrolling?
 TOP_VIEWPORT_MARGIN = int(param['VIEWPORT']['MARGIN_TOP'])
 DEFAULT_BOTTOM_VIEWPORT = int(param['VIEWPORT']['DEFAULT_BOTTOM_VIEWPORT'])
 
 MUSIC_VOL = int(settings['AUDIO']['MUSIC_VOL'])
+
+# Collision Types (for pymunk)
+COLLTYPE_POLICECAR = 1
+COLLTYPE_ASTEROID = 2
 
 class GameView(arcade.View):
     """ Main game view. """
@@ -96,9 +99,7 @@ class GameView(arcade.View):
         self.particle_sprite_list = arcade.SpriteList()
 
         # Set up the player
-        self.player_sprite = Player(level_width=self.level_width, level_height=self.level_height)
-        self.player_sprite.center_x = 400
-        self.player_sprite.center_y = 400
+        self.player_sprite = Player(self.level_width, self.level_height, self, self.space, 400, 400)
         self.player_list.append(self.player_sprite)
 
         # Add stars
@@ -112,8 +113,6 @@ class GameView(arcade.View):
         for i in range(100):
             x = random.randrange(self.level_width)
             y = random.randrange(self.level_height)
-            #x = random.randrange(700)
-            #y = random.randrange(600)
             vx = random.randrange(100)-50
             vy = random.randrange(100)-50
             sprite = Asteroid(self,self.space,x,y,vx,vy,type=['small','large'][int(random.random()>0.5)])
@@ -121,6 +120,11 @@ class GameView(arcade.View):
         
         # scrolling background images
         self.background_list = ScrollBackground(self.window)
+        
+        # pymunk collision handlers
+        self.collision_handlers = []
+        self.collision_handlers.append(self.space.add_collision_handler(COLLTYPE_POLICECAR, COLLTYPE_ASTEROID))
+        self.collision_handlers[-1].post_solve=self.player_sprite.playerasteroidcollision_func
         
         # test out some music
         self.music = arcade.Sound(assets.music_path['space_chase'], streaming=True)
