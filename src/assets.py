@@ -129,4 +129,6 @@ asteroid_textures['large'] = []
 asteroid_textures['large'].append(arcade.load_texture(path_to_string('gfx', 'asteroid_large.png')))
 asteroid_textures['large'].append(arcade.load_texture(path_to_string('gfx', 'asteroid_large_f.png')))
 
-
+# Music paths
+music_path = {}
+music_path['space_chase'] = path_to_string('music', 'space_chase.ogg')
