@@ -26,15 +26,16 @@ HORIZONTAL_ACCELERATION = float(param['PLAYER']['HORIZONTAL_ACCELERATION'])
 VERTICAL_ACCELERATION = float(param['PLAYER']['VERTICAL_ACCELERATION'])
 MOVEMENT_DRAG = float(param['PLAYER']['MOVEMENT_DRAG'])
 
+
 class Player(arcade.Sprite):
     """ Player ship """
-    def __init__(self, level_width, level_height, parent, space, x, y):
+    def __init__(self, level_width, level_height, particle_sprite_list=[], space=None, x=0, y=0):
         """ Set up player """
         super().__init__()
         self.face_right = True
         self.level_width = level_width
         self.level_height = level_height
-        self.parent = parent
+        self.particle_sprite_list = particle_sprite_list
         self.space = space
         
         radius = 40
@@ -52,7 +53,8 @@ class Player(arcade.Sprite):
         self.shape.collision_type = 1
         
         self.space = space
-        self.space.add(self.body, self.shape)
+        if self.space is not None:
+            self.space.add(self.body, self.shape)
         
         self.flash_ani = 0
         self.damage_to = 0
@@ -103,7 +105,7 @@ class Player(arcade.Sprite):
                     particle.change_x = random.randrange(-2, 3)
                 particle.center_x = position[0]
                 particle.center_y = position[1]
-                self.parent.particle_sprite_list.append(particle)
+                self.particle_sprite_list.append(particle)
         if rel_velocity > 150:
             self.hit(damage=1)
     

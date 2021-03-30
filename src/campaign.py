@@ -12,7 +12,7 @@ import math
 import random
 import game
 from developer import log
-from player import Player
+from pointer import Pointer
 
 # --- Constants ---
 param = data.load_parameters()
@@ -47,7 +47,8 @@ class CampaignView(arcade.View):
         # Variables that will hold sprite lists
         self.player_list = arcade.SpriteList()
         # Set up the player
-        self.player_sprite = Player(level_width=self.window.width, level_height=self.window.height)
+        self.player_sprite = Pointer(level_width=self.window.width,
+                                     level_height=self.window.height)
         if self.selected_level > 1:
             self.player_sprite.center_x = self.levels[self.selected_level-2][0]+self.player_sprite.width/2
             self.player_sprite.center_y = self.levels[self.selected_level-2][1]+self.player_sprite.height/2
@@ -163,4 +164,13 @@ class CampaignView(arcade.View):
             log('Scene switched to ' + str(self.window.pause_view))
             self.window.scenes.append(self.window.pause_view)
             self.window.show_view(self.window.pause_view)
+        if key == arcade.key.F5 and self.window.developer_mode:
+            if self.window.levels_unlocked < 5:
+                self.window.levels_unlocked += 1
+            else:
+                self.window.levels_unlocked = 1
+            self.window.campaign_view = CampaignView()
+            self.window.scenes.append(self.window.campaign_view)
+            log('Scene switched to ' + str(self.window.campaign_view))
+            self.window.show_view(self.window.campaign_view)
 
