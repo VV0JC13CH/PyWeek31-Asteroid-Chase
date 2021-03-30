@@ -19,9 +19,11 @@ from particle import Particle
 from bullet import Bullet, Explosion
 from scroll_background import ScrollBackground
 from asteroid import Asteroid
+import assets
 
 # --- Constants ---
 param = data.load_parameters()
+settings = data.load_settings()
 
 # --- Mini-map related ---
 # Size of the minimap
@@ -32,6 +34,7 @@ MINIMAP_HEIGHT = int(param['MAP']['HEIGHT'])
 TOP_VIEWPORT_MARGIN = int(param['VIEWPORT']['MARGIN_TOP'])
 DEFAULT_BOTTOM_VIEWPORT = int(param['VIEWPORT']['DEFAULT_BOTTOM_VIEWPORT'])
 
+MUSIC_VOL = int(settings['AUDIO']['MUSIC_VOL'])
 
 class GameView(arcade.View):
     """ Main game view. """
@@ -118,6 +121,10 @@ class GameView(arcade.View):
         
         # scrolling background images
         self.background_list = ScrollBackground(self.window)
+        
+        # test out some music
+        self.music = arcade.Sound(assets.music_path['space_chase'], streaming=True)
+        self.current_player = self.music.play(MUSIC_VOL,loop=True)
 
     def on_show_view(self):
         self.window.cursor.change_state(state='off')
