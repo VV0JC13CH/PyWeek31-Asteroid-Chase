@@ -10,6 +10,7 @@ import data
 import pause
 import math
 import random
+import game
 from developer import log
 from player import Player
 
@@ -149,6 +150,12 @@ class CampaignView(arcade.View):
         self.player_list.draw()
 
         self.window.developer_tool.on_draw_finish()
+
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+        if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
+            new_game = game.GameView(level_width=self.window.width,
+                                     level_height=self.window.height)
+            self.window.show_view(new_game)
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
