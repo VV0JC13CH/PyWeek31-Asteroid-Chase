@@ -31,8 +31,8 @@ class Asteroid(arcade.Sprite):
         self.center_x = x
         self.center_y = y
         self.type = type
-        if self.type == 'small':
-            self.texture = assets.asteroid_textures['small'][0]
+        if self.type in ['small','broken_sat']:
+            self.texture = assets.asteroid_textures[self.type][0]
             radius = 25
             mass = 1.0
             self.health = 3

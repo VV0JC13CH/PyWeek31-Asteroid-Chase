@@ -125,7 +125,10 @@ class GameView(arcade.View):
             y = random.randrange(self.level_height)
             vx = random.randrange(100)-50
             vy = random.randrange(100)-50
-            sprite = Asteroid(self,self.space,x,y,vx,vy,type=['small','large'][int(random.random()>0.5)])
+            type=['small','large'][int(random.random()>0.5)]
+            if type == 'small' and random.random()>0.8:
+                type = 'broken_sat'
+            sprite = Asteroid(self,self.space,x,y,vx,vy,type=type)
             self.asteroid_sprite_list.append(sprite)
         
         # scrolling background images

@@ -130,6 +130,9 @@ asteroid_textures['small'].append(arcade.load_texture(path_to_string('gfx', 'ast
 asteroid_textures['large'] = []
 asteroid_textures['large'].append(arcade.load_texture(path_to_string('gfx', 'asteroid_large.png')))
 asteroid_textures['large'].append(arcade.load_texture(path_to_string('gfx', 'asteroid_large_f.png')))
+asteroid_textures['broken_sat'] = []
+asteroid_textures['broken_sat'].append(arcade.load_texture(path_to_string('gfx', 'broken_sat.png')))
+asteroid_textures['broken_sat'].append(arcade.load_texture(path_to_string('gfx', 'broken_sat_f.png')))
 
 # Music paths
 music_path = {}
