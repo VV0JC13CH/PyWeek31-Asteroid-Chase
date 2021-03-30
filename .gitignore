@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # Game logs
-src/logs/2*
+src/logs/*
 
 # Idea editor
 .idea/*
