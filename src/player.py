@@ -18,6 +18,7 @@ from particle import Particle
 
 # --- Constants ---
 param = data.load_parameters()
+settings = data.load_settings()
 
 # Control the physics of how the player moves
 MAX_HORIZONTAL_MOVEMENT_SPEED = int(param['PLAYER']['MAX_HORIZONTAL_MOVEMENT_SPEED'])
@@ -26,6 +27,7 @@ HORIZONTAL_ACCELERATION = float(param['PLAYER']['HORIZONTAL_ACCELERATION'])
 VERTICAL_ACCELERATION = float(param['PLAYER']['VERTICAL_ACCELERATION'])
 MOVEMENT_DRAG = float(param['PLAYER']['MOVEMENT_DRAG'])
 
+SOUND_VOL = int(settings['AUDIO']['SOUND_VOL'])
 
 class Player(arcade.Sprite):
     """ Player ship """
@@ -97,7 +99,16 @@ class Player(arcade.Sprite):
         rel_vy = a.body.velocity[1]-b.body.velocity[1]
         rel_velocity = math.sqrt(rel_vx*rel_vx+rel_vy*rel_vy)
         position = arbiter.contact_point_set.points[0].point_a
-        if self.flash_ani <= 0 and rel_velocity > 50: # sparks on contact with asteroid
+        hit = False
+        if self.flash_ani <= 0 and rel_velocity > 150:
+            assets.game_sfx['crashbig'].play(SOUND_VOL)
+            self.hit(damage=1)
+            hit = True
+        elif self.flash_ani <= 0 and rel_velocity > 50: # sparks on contact with asteroid
+            assets.game_sfx['crashsmall'][int(random.random()>0.5)].play(SOUND_VOL)
+            self.hit(damage=0)
+            hit = True
+        if hit:
             for i in range(10):
                 particle = Particle(4, 4, arcade.color.YELLOW)
                 while particle.change_y == 0 and particle.change_x == 0:
@@ -106,8 +117,6 @@ class Player(arcade.Sprite):
                 particle.center_x = position[0]
                 particle.center_y = position[1]
                 self.particle_sprite_list.append(particle)
-        if rel_velocity > 150:
-            self.hit(damage=1)
     
     def hit(self, damage=1):
         if self.flash_ani > 0:

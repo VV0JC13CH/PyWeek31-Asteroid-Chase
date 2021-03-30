@@ -134,3 +134,15 @@ asteroid_textures['large'].append(arcade.load_texture(path_to_string('gfx', 'ast
 # Music paths
 music_path = {}
 music_path['space_chase'] = path_to_string('music', 'space_chase.ogg')
+
+# Sounds
+game_sfx = {}
+game_sfx['crashsmall'] = []
+game_sfx['crashsmall'].append(arcade.Sound(path_to_string('sound', 'crashsmall.ogg')))
+game_sfx['crashsmall'].append(arcade.Sound(path_to_string('sound', 'crashsmall2.ogg')))
+game_sfx['crashbig'] = arcade.Sound(path_to_string('sound', 'crashbig.ogg'))
+game_sfx['laser'] = []
+game_sfx['laser'].append(arcade.Sound(path_to_string('sound', 'laser001.ogg')))
+game_sfx['laser'].append(arcade.Sound(path_to_string('sound', 'laser002.ogg')))
+game_sfx['asteroid_break_small'] = arcade.Sound(path_to_string('sound', 'asteroid_break_small.ogg'))
+game_sfx['asteroid_break_big'] = arcade.Sound(path_to_string('sound', 'asteroid_break_big.ogg'))

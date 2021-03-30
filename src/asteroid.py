@@ -19,6 +19,8 @@ from particle import Particle
 settings = data.load_settings()
 SCREEN_WIDTH = int(settings['VIDEO']['WINDOW_WIDTH'])
 
+SOUND_VOL = int(settings['AUDIO']['SOUND_VOL'])
+
 class Asteroid(arcade.Sprite):
     """ Asteroid """
 
@@ -70,6 +72,7 @@ class Asteroid(arcade.Sprite):
             self.space.remove(self.shape, self.body)
             self.remove_from_sprite_lists()
             if self.type == 'large':
+                assets.game_sfx['asteroid_break_big'].play(SOUND_VOL)
                 for i in range(3):
                     vx = random.randrange(-50, 50)
                     vy = random.randrange(-50, 50)
@@ -77,6 +80,8 @@ class Asteroid(arcade.Sprite):
                     y = self.center_y+random.randrange(-10, 10)
                     sprite = Asteroid(self.parent,self.space,x,y,vx,vy,type='small')
                     self.parent.asteroid_sprite_list.append(sprite)
+            else:
+                assets.game_sfx['asteroid_break_small'].play(SOUND_VOL)
             for i in range(10):
                 particle = Particle(4, 4, arcade.color.GRAY)
                 while particle.change_y == 0 and particle.change_x == 0:

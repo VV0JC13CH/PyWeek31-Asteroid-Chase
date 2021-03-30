@@ -11,6 +11,7 @@ import data
 import assets
 
 from math import fabs
+import random
 
 # --- Constants ---
 settings = data.load_settings()
@@ -20,6 +21,7 @@ settings = data.load_settings()
 SCREEN_WIDTH = int(settings['VIDEO']['WINDOW_WIDTH'])
 BULLET_MAX_DISTANCE = SCREEN_WIDTH * 0.75
 
+SOUND_VOL = int(settings['AUDIO']['SOUND_VOL'])
 
 class Bullet(arcade.Sprite):
     """ Bullet """
@@ -36,6 +38,7 @@ class Bullet(arcade.Sprite):
             self.texture = assets.bullet_textures[1]
             self.change_x *= -1
         self.death_to = 20
+        assets.game_sfx['laser'][int(random.random()>0.5)].play(SOUND_VOL)
     
     def update(self):
         self.center_x += self.change_x
