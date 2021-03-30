@@ -18,6 +18,7 @@ from player import Player
 from particle import Particle
 from bullet import Bullet, Explosion
 from scroll_background import ScrollBackground
+from structures import Structure
 from asteroid import Asteroid
 import assets
 
@@ -76,6 +77,7 @@ class GameView(arcade.View):
         self.asteroid_sprite_list = None
         self.bullet_sprite_list = None
         self.particle_sprite_list = None
+        self.structures_sprite_list = None
 
         # Set up the player info
         self.player_sprite = None
@@ -97,18 +99,29 @@ class GameView(arcade.View):
         self.asteroid_sprite_list = arcade.SpriteList()
         self.bullet_sprite_list = arcade.SpriteList()
         self.particle_sprite_list = arcade.SpriteList()
+        self.structures_sprite_list = arcade.SpriteList()
 
         # Set up the player
         self.player_sprite = Player(self.level_width, self.level_height, self, self.space, 400, 400)
         self.player_list.append(self.player_sprite)
-
+        
+        """
         # Add stars
         for i in range(100):
             sprite = arcade.SpriteSolidColor(4, 4, arcade.color.WHITE)
             sprite.center_x = random.randrange(self.level_width)
             sprite.center_y = random.randrange(self.level_height)
             self.star_sprite_list.append(sprite)
-            
+        """
+        
+        # Add static structures
+        structure_verts = [] # TODO: fill this with vertex data for static obstacles
+        #structure_verts.append([[600,600],[600,700],[1000,700],[1200,650],[800,550]])
+        for i in range(len(structure_verts)):
+            verts = structure_verts[i]
+            structure_sprite = Structure(self, self.space, verts, "rock_%d"%(i))
+            self.structures_sprite_list.append(structure_sprite)
+        
         # Add Asteroids
         for i in range(100):
             x = random.randrange(self.level_width)
@@ -150,6 +163,7 @@ class GameView(arcade.View):
         
         self.background_list.draw()
         self.star_sprite_list.draw()
+        self.structures_sprite_list.draw()
         self.asteroid_sprite_list.draw()
         self.bullet_sprite_list.draw()
         self.particle_sprite_list.draw()
