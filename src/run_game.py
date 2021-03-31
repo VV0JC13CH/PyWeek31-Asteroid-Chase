@@ -9,6 +9,7 @@ import arcade
 # --- Import internal classes ---
 import data
 import assets
+import music
 from menu import MenuView
 from pause import PauseView
 from intro import IntroView
@@ -20,6 +21,7 @@ settings = data.load_settings()
 SCREEN_TITLE = settings['GAME']['TITLE']
 SCREEN_WIDTH = int(settings['VIDEO']['WINDOW_WIDTH'])
 SCREEN_HEIGHT = int(settings['VIDEO']['WINDOW_HEIGHT'])
+MUSIC_VOL = int(settings['AUDIO']['MUSIC_VOL'])
 # --- Variables ---
 full_resolution = False if settings['VIDEO']['FULL_RESOLUTION'] == 'False' else True
 screen_resizeable = False if settings['VIDEO']['WINDOW_RESIZEABLE'] == 'False' else True
@@ -36,6 +38,8 @@ class GlobalWindow(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, full_resolution, resizable=screen_resizeable)
         # If levels_unlocked = 0 - play intro and add +1:
         self.levels_unlocked = 0
+        self.music_manager = music.MusicManager(init_volume=MUSIC_VOL)
+        self.music_manager.setup()
         self.music_enabled = music_enabled
         self.developer_mode = developer_mode
         # Game logic global variables:

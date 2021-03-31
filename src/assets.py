@@ -9,6 +9,9 @@ from button import SimpleButton
 
 # we love Windows users:
 from pathlib import Path
+# we love Ubuntu users (bug fix):
+import pygame
+pygame.init()
 
 
 def path_to_string(directory, file):
@@ -160,25 +163,21 @@ asteroid_textures['broken_sat'].append(arcade.load_texture(path_to_string('gfx',
 asteroid_textures['broken_sat'].append(arcade.load_texture(path_to_string('gfx', 'broken_sat_f.png')))
 
 # Music paths
-music_path = {}
-music_path['space_chase'] = path_to_string('music', 'space_chase.ogg')
-music_path['the_drop'] = path_to_string('music', 'the_drop.ogg')
+songs = [path_to_string('music', 'the_drop.ogg'),
+         path_to_string('music', 'the_chase.ogg')]
 
-musics = {}
-for path in music_path:
-    musics[path] = arcade.Sound(music_path[path], streaming=True)
 
 # Sounds
 game_sfx = {}
 game_sfx['crashsmall'] = []
-game_sfx['crashsmall'].append(arcade.Sound(path_to_string('sound', 'crashsmall.ogg')))
-game_sfx['crashsmall'].append(arcade.Sound(path_to_string('sound', 'crashsmall2.ogg')))
-game_sfx['crashbig'] = arcade.Sound(path_to_string('sound', 'crashbig.ogg'))
+game_sfx['crashsmall'].append(pygame.mixer.Sound(path_to_string('sound', 'crashsmall.ogg')))
+game_sfx['crashsmall'].append(pygame.mixer.Sound(path_to_string('sound', 'crashsmall2.ogg')))
+game_sfx['crashbig'] = pygame.mixer.Sound(path_to_string('sound', 'crashbig.ogg'))
 game_sfx['laser'] = []
-game_sfx['laser'].append(arcade.Sound(path_to_string('sound', 'laser001.ogg')))
-game_sfx['laser'].append(arcade.Sound(path_to_string('sound', 'laser002.ogg')))
-game_sfx['asteroid_break_small'] = arcade.Sound(path_to_string('sound', 'asteroid_break_small.ogg'))
-game_sfx['asteroid_break_big'] = arcade.Sound(path_to_string('sound', 'asteroid_break_big.ogg'))
+game_sfx['laser'].append(pygame.mixer.Sound(path_to_string('sound', 'laser001.ogg')))
+game_sfx['laser'].append(pygame.mixer.Sound(path_to_string('sound', 'laser002.ogg')))
+game_sfx['asteroid_break_small'] = pygame.mixer.Sound(path_to_string('sound', 'asteroid_break_small.ogg'))
+game_sfx['asteroid_break_big'] = pygame.mixer.Sound(path_to_string('sound', 'asteroid_break_big.ogg'))
 
 # Structure textures
 structure_textures = {}

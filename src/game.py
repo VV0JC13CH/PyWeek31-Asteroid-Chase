@@ -34,7 +34,6 @@ MINIMAP_HEIGHT = int(param['MAP']['HEIGHT'])
 TOP_VIEWPORT_MARGIN = int(param['VIEWPORT']['MARGIN_TOP'])
 DEFAULT_BOTTOM_VIEWPORT = int(param['VIEWPORT']['DEFAULT_BOTTOM_VIEWPORT'])
 
-MUSIC_VOL = int(settings['AUDIO']['MUSIC_VOL'])
 
 # Collision Types (for pymunk)
 COLLTYPE_POLICECAR = 1
@@ -148,10 +147,7 @@ class GameView(arcade.View):
         self.collision_handlers[-1].post_solve=self.player_sprite.playerasteroidcollision_func
         self.collision_handlers.append(self.space.add_collision_handler(COLLTYPE_POLICECAR, COLLTYPE_STRUCTURE))
         self.collision_handlers[-1].post_solve=self.player_sprite.playerasteroidcollision_func
-        
-        # test out some music
-        #self.music = arcade.Sound(assets.music_path['the_drop'], streaming=True)
-        self.current_player = assets.musics['space_chase'].play(MUSIC_VOL,loop=True)
+
 
     def on_show_view(self):
         self.window.cursor.change_state(state='off')
