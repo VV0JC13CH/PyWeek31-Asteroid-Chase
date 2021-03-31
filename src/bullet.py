@@ -31,7 +31,7 @@ class Bullet(arcade.Sprite):
         self.distance = 0
         self.center_x = player_sprite.center_x
         self.center_y = player_sprite.center_y
-        self.change_x = max(12, abs(player_sprite.change_x) + 10)
+        self.change_x = max(24, abs(player_sprite.change_x) + 10)
         if player_sprite.face_right:
             self.texture = assets.bullet_textures[0]
         else:

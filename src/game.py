@@ -19,6 +19,7 @@ from bullet import Bullet, Explosion
 from scroll_background import ScrollBackground
 from structures import Structure
 from asteroid import Asteroid
+from badguys import BadGuy
 import assets
 
 # --- Constants ---
@@ -76,7 +77,8 @@ class GameView(arcade.View):
         self.bullet_sprite_list = None
         self.particle_sprite_list = None
         self.structures_sprite_list = None
-
+        self.badguys_sprite_list = None
+        
         # Set up the player info
         self.player_sprite = None
 
@@ -98,6 +100,7 @@ class GameView(arcade.View):
         self.bullet_sprite_list = arcade.SpriteList()
         self.particle_sprite_list = arcade.SpriteList()
         self.structures_sprite_list = arcade.SpriteList(use_spatial_hash=True)
+        self.badguys_sprite_list = arcade.SpriteList()
 
         # Set up the player
         self.player_sprite = Player(self.level_width, self.level_height, self.particle_sprite_list, self.space, 400, 400)
@@ -131,6 +134,10 @@ class GameView(arcade.View):
                 type = 'broken_sat'
             sprite = Asteroid(self,self.space,x,y,vx,vy,type=type)
             self.asteroid_sprite_list.append(sprite)
+        
+        # Add Badguy
+        bg_sprite = BadGuy(self, self.level_width, self.level_height, x=700, y=600, type=0)
+        self.badguys_sprite_list.append(bg_sprite)
         
         # scrolling background images
         self.background_list = ScrollBackground(self.window)
@@ -168,6 +175,7 @@ class GameView(arcade.View):
         self.star_sprite_list.draw()
         self.structures_sprite_list.draw()
         self.asteroid_sprite_list.draw()
+        self.badguys_sprite_list.draw()
         self.bullet_sprite_list.draw()
         self.particle_sprite_list.draw()
         self.player_list.draw()
@@ -207,7 +215,18 @@ class GameView(arcade.View):
         self.bullet_sprite_list.update()
         self.asteroid_sprite_list.update()
         self.particle_sprite_list.update()
+        self.badguys_sprite_list.update()
         
+        for bullet in self.bullet_sprite_list:
+            if bullet.death_to < 20: # bullet currently acting as explosion
+                continue
+            badguys_hit_list = arcade.check_for_collision_with_list(bullet, self.badguys_sprite_list)
+            if len(badguys_hit_list) > 0:
+                explosion = Explosion(bullet)
+                self.bullet_sprite_list.append(explosion)
+                bullet.remove_from_sprite_lists()
+            for badguy in badguys_hit_list:
+                badguy.hit(damage=1)
         for bullet in self.bullet_sprite_list:
             if bullet.death_to < 20: # bullet currently acting as explosion
                 continue

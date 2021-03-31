@@ -107,14 +107,28 @@ police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_shi
 
 # Bad guys
 bad_guys = []
-bad_guys.append([])
-bad_guys[-1].append(arcade.load_texture(path_to_string('gfx', 'bandit001.png')))
-bad_guys[-1].append(arcade.load_texture(path_to_string('gfx', 'bandit002.png')))
-bad_guys[-1].append(arcade.load_texture(path_to_string('gfx', 'bandit003.png')))
-bad_guys.append([])
-bad_guys[-1].append(arcade.load_texture(path_to_string('gfx', 'bandita001.png')))
-bad_guys[-1].append(arcade.load_texture(path_to_string('gfx', 'bandita002.png')))
-bad_guys[-1].append(arcade.load_texture(path_to_string('gfx', 'bandita003.png')))
+
+bad_guys.append([]) # first green dude
+bad_guys[-1].append([])
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandit001.png')))
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandit001.png'),flipped_horizontally=True))
+bad_guys[-1].append([])
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandit002.png')))
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandit002.png'),flipped_horizontally=True))
+bad_guys[-1].append([])
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandit003.png')))
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandit003.png'),flipped_horizontally=True))
+
+bad_guys.append([]) # second purple dude :)
+bad_guys[-1].append([])
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita001.png')))
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita001.png'),flipped_horizontally=True))
+bad_guys[-1].append([])
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita002.png')))
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita002.png'),flipped_horizontally=True))
+bad_guys[-1].append([])
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita003.png')))
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita003.png'),flipped_horizontally=True))
 
 # laser explosion sprites
 explode_textures = []
