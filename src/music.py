@@ -16,6 +16,7 @@ class MusicManager:
         self.music_list = []
         self.current_song = 0
         self.music = None
+        self.music_enabled = False
 
     def advance_song(self):
         """ Advance our pointer to the next song. This does NOT start the song. """
@@ -26,23 +27,30 @@ class MusicManager:
     def play_song(self):
         """ Play the song. """
         # Stop what is currently playing.
-        if self.music:
-            self.music.stop()
-
         # Play the next song
+        if self.music and self.music_enabled:
+            self.music.stop(self.current_player)
         self.music = arcade.Sound(self.music_list[self.current_song], streaming=True)
         self.current_player = self.music.play(self.volume)
+        self.music_enabled = True
         time.sleep(0.03)
 
-    def setup(self):
+    def stop_song(self):
+        time.sleep(0.03)
+        self.music.stop(self.current_player)
+        self.music_enabled = False
+
+    def setup(self, music_enabled):
         """ Set up the game here. Call this function to restart the game. """
 
         # List of music
         self.music_list = assets.songs
         # Array index of what to play
         self.current_song = 0
-        # Play the song
-        self.play_song()
+        if music_enabled:
+            # Play the song
+            self.play_song()
+            self.music_enabled = music_enabled
 
     def on_draw(self, screen_height, developer_mode):
         """ Render the screen. """

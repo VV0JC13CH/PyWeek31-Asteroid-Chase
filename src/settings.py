@@ -84,8 +84,10 @@ class SettingsView(arcade.View):
             self.window.music_enabled = not self.window.music_enabled
             if self.window.music_enabled:
                 self.button_music_enabled.replace_textures('music_off', 'music_off_hover')
+                self.window.music_manager.play_song()
             else:
                 self.button_music_enabled.replace_textures('music_on', 'music_on_hover')
+                self.window.music_manager.stop_song()
         if self.button_developer_mode.current_state == 'hover':
             self.window.developer_mode = not self.window.developer_mode
             if self.window.developer_mode:

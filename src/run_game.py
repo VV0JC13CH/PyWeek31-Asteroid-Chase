@@ -39,7 +39,7 @@ class GlobalWindow(arcade.Window):
         # If levels_unlocked = 0 - play intro and add +1:
         self.levels_unlocked = 0
         self.music_manager = music.MusicManager(init_volume=MUSIC_VOL)
-        self.music_manager.setup()
+        self.music_manager.setup(music_enabled)
         self.music_enabled = music_enabled
         self.developer_mode = developer_mode
         # Game logic global variables:
@@ -97,6 +97,10 @@ class GlobalWindow(arcade.Window):
         # F3 - turn music on/off
         elif key == arcade.key.F3 and self.developer_mode:
             self.music_enabled = not self.music_enabled
+            if self.music_enabled:
+                self.music_manager.play_song()
+            else:
+                self.music_manager.stop_song()
             log('Music turned ' + str(not self.music_enabled))
         # F4 - switch to all registered views player was before:
         elif key == arcade.key.F4 and self.developer_mode:
