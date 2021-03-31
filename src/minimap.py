@@ -5,7 +5,7 @@ Place for MiniMap functions.
 """
 import arcade
 import data
-
+import developer
 # --- Constants ---
 param = data.load_parameters()
 
@@ -16,7 +16,6 @@ LEVEL_HEIGHT = int(param['LEVEL']['DEFAULT_HEIGHT'])
 # --- Mini-map related ---
 # Size of the minimap
 MINIMAP_HEIGHT = int(param['MAP']['HEIGHT'])
-
 PLAYERHEALTH = float(param['PLAYER']['HEALTH'])
 
 def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, level_height=LEVEL_HEIGHT):
@@ -63,6 +62,8 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
     arcade.draw_rectangle_outline(center_x=x, center_y=y,
                                   width=100, height=10,
                                   color=arcade.color.WHITE)
+
+
     
     # draw player on mini map
     x = hor_offset + game_view.view_left + map_width*(game_view.player_sprite.center_x/level_width)
@@ -77,5 +78,11 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
             arcade.draw_circle_filled(x, y, 5, arcade.color.RED)
         else:
             arcade.draw_circle_filled(x, y, 5, arcade.color.GRAY)
+
+    game_view.window.developer_tool.on_draw(screen_height=game_view.view_bottom+game_view.window.height-80,
+                                            screen_beginning=game_view.view_left+40)
+    game_view.window.music_manager.on_draw(screen_height=game_view.view_bottom+game_view.window.height-80,
+                                           developer_mode=game_view.window.developer_mode,
+                                           screen_beginning=game_view.view_left+40)
 
 
