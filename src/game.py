@@ -38,6 +38,7 @@ MUSIC_VOL = int(settings['AUDIO']['MUSIC_VOL'])
 # Collision Types (for pymunk)
 COLLTYPE_POLICECAR = 1
 COLLTYPE_ASTEROID = 2
+COLLTYPE_STRUCTURE = 3
 
 class GameView(arcade.View):
     """ Main game view. """
@@ -96,7 +97,7 @@ class GameView(arcade.View):
         self.asteroid_sprite_list = arcade.SpriteList()
         self.bullet_sprite_list = arcade.SpriteList()
         self.particle_sprite_list = arcade.SpriteList()
-        self.structures_sprite_list = arcade.SpriteList()
+        self.structures_sprite_list = arcade.SpriteList(use_spatial_hash=True)
 
         # Set up the player
         self.player_sprite = Player(self.level_width, self.level_height, self.particle_sprite_list, self.space, 400, 400)
@@ -112,11 +113,11 @@ class GameView(arcade.View):
         """
         
         # Add static structures
-        structure_verts = [] # TODO: fill this with vertex data for static obstacles
-        #structure_verts.append([[600,600],[600,700],[1000,700],[1200,650],[800,550]])
-        for i in range(len(structure_verts)):
-            verts = structure_verts[i]
-            structure_sprite = Structure(self, self.space, verts, "rock_%d"%(i))
+        structures = [] # TODO: fill this with static_structures taken from assets
+        #structures.append(assets.static_structure['rock1'])
+        for i in range(len(structures)):
+            structure = structures[i]
+            structure_sprite = Structure(self, self.space, structure.verts, "str_%d"%(i), type=structure.type)
             self.structures_sprite_list.append(structure_sprite)
         
         # Add Asteroids
@@ -137,6 +138,8 @@ class GameView(arcade.View):
         # pymunk collision handlers
         self.collision_handlers = []
         self.collision_handlers.append(self.space.add_collision_handler(COLLTYPE_POLICECAR, COLLTYPE_ASTEROID))
+        self.collision_handlers[-1].post_solve=self.player_sprite.playerasteroidcollision_func
+        self.collision_handlers.append(self.space.add_collision_handler(COLLTYPE_POLICECAR, COLLTYPE_STRUCTURE))
         self.collision_handlers[-1].post_solve=self.player_sprite.playerasteroidcollision_func
         
         # test out some music
@@ -215,6 +218,14 @@ class GameView(arcade.View):
                 bullet.remove_from_sprite_lists()
             for asteroid in asteroid_hit_list:
                 asteroid.hit(bullet)
+        for bullet in self.bullet_sprite_list:
+            if bullet.death_to < 20: # bullet currently acting as explosion
+                continue
+            structures_hit_list = arcade.check_for_collision_with_list(bullet, self.structures_sprite_list)
+            if len(structures_hit_list) > 0:
+                explosion = Explosion(bullet)
+                self.bullet_sprite_list.append(explosion)
+                bullet.remove_from_sprite_lists()
         
         # Scroll left
         left_boundary = self.view_left + (self.window.width / 2 - 50)

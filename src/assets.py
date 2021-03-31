@@ -165,3 +165,16 @@ game_sfx['laser'].append(arcade.Sound(path_to_string('sound', 'laser001.ogg')))
 game_sfx['laser'].append(arcade.Sound(path_to_string('sound', 'laser002.ogg')))
 game_sfx['asteroid_break_small'] = arcade.Sound(path_to_string('sound', 'asteroid_break_small.ogg'))
 game_sfx['asteroid_break_big'] = arcade.Sound(path_to_string('sound', 'asteroid_break_big.ogg'))
+
+# Structure textures
+structure_textures = {}
+structure_textures['asteroid'] = arcade.load_texture(path_to_string('gfx', 'asteroid_texture.png'))
+
+# Static Structures Data
+class Collection(object):
+    pass
+static_structure = {}
+static_structure['rock1'] = Collection()
+static_structure['rock1'].verts = [[600,600],[600,700],[1000,700],[1200,650],[800,550]]
+static_structure['rock1'].type = 'rock'
+
