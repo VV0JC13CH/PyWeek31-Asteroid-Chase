@@ -75,14 +75,14 @@ class DeveloperTool:
             """ Draw everything """
             # Display timings
             output = f"Processing time: {self.processing_time:.3f}"
-            arcade.draw_text(output, 20, screen_height - 25, arcade.color.WHITE_SMOKE, 18)
+            arcade.draw_text(output, 20, screen_height - 50, arcade.color.WHITE_SMOKE, 18)
 
             output = f"Drawing time: {self.draw_time:.3f}"
-            arcade.draw_text(output, 20, screen_height - 50, arcade.color.WHITE_SMOKE, 18)
+            arcade.draw_text(output, 20, screen_height - 75, arcade.color.WHITE_SMOKE, 18)
 
             if self.fps is not None:
                 output = f"FPS: {self.fps:.0f}"
-                arcade.draw_text(output, 20, screen_height - 75, arcade.color.WHITE_SMOKE, 18)
+                arcade.draw_text(output, 20, screen_height - 100, arcade.color.WHITE_SMOKE, 18)
 
     def on_update(self, delta_time, enable_tools):
         self.tools_enabled = enable_tools

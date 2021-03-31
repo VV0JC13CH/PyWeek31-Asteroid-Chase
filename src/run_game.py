@@ -71,6 +71,7 @@ class GlobalWindow(arcade.Window):
     def on_draw(self):
         self.cursor.draw()
         self.developer_tool.on_draw(self.height)
+        self.music_manager.on_draw(self.height)
 
     def on_update(self, delta_time: float):
         self.developer_tool.on_update(delta_time=delta_time, enable_tools=self.developer_mode)
