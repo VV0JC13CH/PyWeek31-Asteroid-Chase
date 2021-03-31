@@ -26,6 +26,7 @@ MAX_VERTICAL_MOVEMENT_SPEED = int(param['PLAYER']['MAX_VERTICAL_MOVEMENT_SPEED']
 HORIZONTAL_ACCELERATION = float(param['PLAYER']['HORIZONTAL_ACCELERATION'])
 VERTICAL_ACCELERATION = float(param['PLAYER']['VERTICAL_ACCELERATION'])
 MOVEMENT_DRAG = float(param['PLAYER']['MOVEMENT_DRAG'])
+HEALTH = float(param['PLAYER']['HEALTH'])
 
 SOUND_VOL = int(settings['AUDIO']['SOUND_VOL'])
 
@@ -42,7 +43,7 @@ class Player(arcade.Sprite):
         
         radius = 40
         mass = 2.0
-        self.health = 10
+        self.health = HEALTH
         
         vs_body = [(-50,-25),(-50,0),(-20,25),(20,25),(50,0),(50,-25)]
         inertia = pymunk.moment_for_poly(mass, vs_body)
@@ -68,18 +69,24 @@ class Player(arcade.Sprite):
         self.scale = 1.0
     
     def accelerate_up(self):
+        if self.health == 0:
+            return
         """ Accelerate player up """
         self.controlled = True
         if self.body.velocity[1] < MAX_VERTICAL_MOVEMENT_SPEED:
             self.body.apply_impulse_at_world_point((0,VERTICAL_ACCELERATION),(self.center_x,self.center_y))
 
     def accelerate_down(self):
+        if self.health == 0:
+            return
         """ Accelerate player down """
         self.controlled = True
         if self.body.velocity[1] > -MAX_VERTICAL_MOVEMENT_SPEED:
             self.body.apply_impulse_at_world_point((0,-VERTICAL_ACCELERATION),(self.center_x,self.center_y))
 
     def accelerate_right(self):
+        if self.health == 0:
+            return
         """ Accelerate player right """
         self.controlled = True
         self.face_right = True
@@ -87,6 +94,8 @@ class Player(arcade.Sprite):
             self.body.apply_impulse_at_world_point((HORIZONTAL_ACCELERATION,0),(self.center_x,self.center_y))
 
     def accelerate_left(self):
+        if self.health == 0:
+            return
         """ Accelerate player left """
         self.controlled = True
         self.face_right = False
@@ -179,4 +188,4 @@ class Player(arcade.Sprite):
         
         # reset control tracking
         self.controlled = False
-
+        

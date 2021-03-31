@@ -21,7 +21,6 @@ param = data.load_parameters()
 settings = data.load_settings()
 
 # Control the physics of how the bad guy moves
-MAX_HORIZONTAL_MOVEMENT_SPEED = int(param['BADGUY1']['MAX_HORIZONTAL_MOVEMENT_SPEED'])
 MAX_VERTICAL_MOVEMENT_SPEED = int(param['BADGUY1']['MAX_VERTICAL_MOVEMENT_SPEED'])
 
 SOUND_VOL = int(settings['AUDIO']['SOUND_VOL'])
@@ -52,10 +51,14 @@ class BadGuy(arcade.Sprite):
         self.texture = assets.bad_guys[self.type][0][0]
         self.scale = 1.0
         
-        self.health = 10
+        if type in [0,1]:
+            self.maxhealth = int(param['BADGUY1']['HEALTH'])
+        else:
+            self.maxhealth = int(param['BADGUY1']['HEALTH'])
+        self.health = self.maxhealth
     
     def hit(self, damage=1):
-        self.track_y = self.level_height*random.random() # dodge vertically
+        self.track_y += 400*random.random()-200 # dodge vertically
         if self.flash_ani > 0:
             return
         if self.health <= 0:
@@ -79,7 +82,7 @@ class BadGuy(arcade.Sprite):
         else: # still driving
             dist2p = self.center_x-self.parent.player_sprite.center_x
             if dist2p > 1200:
-                vel_x = 0
+                vel_x = 50
             elif dist2p > 700:
                 vel_x = 300
             elif dist2p > 400:
@@ -146,5 +149,16 @@ class BadGuy(arcade.Sprite):
             heading_ind = 1
         self.texture = assets.bad_guys[self.type][ani_fram][heading_ind]
         
-        
+    def postdraw(self):
+        if self.health > 0:
+            meter_x = 100*(self.health/self.maxhealth)
+            arcade.draw_text("Shield", self.center_x-40, self.center_y+80, arcade.color.WHITE, 18)
+            arcade.draw_rectangle_filled(center_x=self.center_x-(50-meter_x/2), center_y=self.center_y+75,
+                                      width=meter_x, height=10,
+                                      color=arcade.color.ORANGE)
+            arcade.draw_rectangle_outline(center_x=self.center_x, center_y=self.center_y+75,
+                                      width=100, height=10,
+                                      color=arcade.color.WHITE)
+        else:
+            arcade.draw_text("Disabled", self.center_x-50, self.center_y+75, arcade.color.WHITE, 18)
 

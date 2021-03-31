@@ -136,7 +136,7 @@ class GameView(arcade.View):
             self.asteroid_sprite_list.append(sprite)
         
         # Add Badguy
-        bg_sprite = BadGuy(self, self.level_width, self.level_height, x=700, y=600, type=0)
+        bg_sprite = BadGuy(self, self.level_width, self.level_height, x=700, y=600, type=1)
         self.badguys_sprite_list.append(bg_sprite)
         
         # scrolling background images
@@ -179,6 +179,9 @@ class GameView(arcade.View):
         self.bullet_sprite_list.draw()
         self.particle_sprite_list.draw()
         self.player_list.draw()
+        
+        for badguy in self.badguys_sprite_list:
+            badguy.postdraw()
         
         """
         # Draw walls (testing)
