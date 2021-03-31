@@ -59,6 +59,10 @@ class BadGuy(arcade.Sprite):
     
     def hit(self, damage=1):
         self.track_y += 400*random.random()-200 # dodge vertically
+        if self.track_y < 30:
+            self.track_y = 30
+        elif self.track_y > (self.level_height-30):
+            self.track_y = (self.level_height-30)
         if self.flash_ani > 0:
             return
         if self.health <= 0:
@@ -82,7 +86,7 @@ class BadGuy(arcade.Sprite):
         else: # still driving
             dist2p = self.center_x-self.parent.player_sprite.center_x
             if dist2p > 1200:
-                vel_x = 50
+                vel_x = 100
             elif dist2p > 700:
                 vel_x = 300
             elif dist2p > 400:

@@ -20,26 +20,35 @@ MINIMAP_HEIGHT = int(param['MAP']['HEIGHT'])
 PLAYERHEALTH = float(param['PLAYER']['HEALTH'])
 
 def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, level_height=LEVEL_HEIGHT):
+    
+    map_width = game_view.window.width * 0.8
+    hor_offset = (game_view.window.width-map_width)/2
+    vert_offset = map_height * 0.3
+    
     # Draw a background for the minimap
-    arcade.draw_rectangle_outline(game_view.window.width - game_view.window.width / 2 + game_view.view_left,
-                                  map_height * 0.3 + game_view.view_bottom,
-                                  game_view.window.width * 0.8,
-                                  map_height * 0.4,
-                                  arcade.color.WHITE_SMOKE)
-
+    arcade.draw_rectangle_outline(hor_offset + map_width/ 2 + game_view.view_left,
+                                  vert_offset + map_height/2 + game_view.view_bottom,
+                                  map_width,
+                                  map_height,
+                                  arcade.color.GREEN) #WHITE_SMOKE
+    
+    arcade.draw_text("Police Radar", 
+                    hor_offset + game_view.view_left+5, 
+                    vert_offset + map_height + game_view.view_bottom-18, 
+                    arcade.color.GREEN, 12)
+    
     # Draw a rectangle showing where the screen is
     width_ratio = game_view.window.width / level_width
-    height_ratio = map_height / level_height
-    width = width_ratio * game_view.window.width
-    main_height = map_height
-    height = height_ratio * main_height
+    height_ratio = game_view.window.height / level_height
+    width = width_ratio * map_width
+    height = height_ratio * map_height
 
-    x = (game_view.view_left + game_view.window.width / 2) * width_ratio + game_view.view_left
-    y = map_height + game_view.view_bottom + height / 2 + (main_height / level_height) * game_view.view_bottom
+    x = (game_view.view_left/level_width)*map_width + width/2 + game_view.view_left + hor_offset
+    y = (game_view.view_bottom/level_height)*map_height + height/2 + game_view.view_bottom + vert_offset
 
     arcade.draw_rectangle_outline(center_x=x, center_y=y,
                                   width=width, height=height,
-                                  color=arcade.color.WHITE)
+                                  color=arcade.color.GREEN)
     
     # Other HUD stuff
     
@@ -56,14 +65,14 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
                                   color=arcade.color.WHITE)
     
     # draw player on mini map
-    x = game_view.window.width * 0.2 + game_view.view_left + (game_view.window.width * 0.8)*(game_view.player_sprite.center_x/level_width)
-    y = map_height * 0.3 + game_view.view_bottom + (map_height * 0.4)*(game_view.player_sprite.center_y/level_height)
+    x = hor_offset + game_view.view_left + map_width*(game_view.player_sprite.center_x/level_width)
+    y = vert_offset + game_view.view_bottom + map_height*(game_view.player_sprite.center_y/level_height)
     arcade.draw_circle_filled(x, y, 5, arcade.color.GREEN)
     
     # draw badguys on mini map
     for badguy in game_view.badguys_sprite_list:
-        x = game_view.window.width * 0.2 + game_view.view_left + (game_view.window.width * 0.8)*(badguy.center_x/level_width)
-        y = map_height * 0.3 + game_view.view_bottom + (map_height * 0.4)*(badguy.center_y/level_height)
+        x = game_view.window.width * 0.1 + game_view.view_left + (game_view.window.width * 0.8)*(badguy.center_x/level_width)
+        y = map_height * 0.3 + game_view.view_bottom + map_height*(badguy.center_y/level_height)
         if badguy.health > 0:
             arcade.draw_circle_filled(x, y, 5, arcade.color.RED)
         else:
