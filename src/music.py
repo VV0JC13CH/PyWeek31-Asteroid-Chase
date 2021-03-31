@@ -44,13 +44,14 @@ class MusicManager:
         # Play the song
         self.play_song()
 
-    def on_draw(self, screen_height):
+    def on_draw(self, screen_height, developer_mode):
         """ Render the screen. """
-        position = self.music.get_stream_position(self.current_player)
-        length = self.music.get_length()
-        text_position = f"{int(position) // 60}:{int(position) % 60:02} of {int(length) // 60}:{int(length) % 60:02}"
-        text_song = f"Currently playing: {self.music_list[self.current_song]}"
-        arcade.draw_text(text_position + ' ' + text_song, 20, screen_height - 20, arcade.color.WHITE_SMOKE, 18)
+        if developer_mode:
+            position = self.music.get_stream_position(self.current_player)
+            length = self.music.get_length()
+            text_position = f"Currently playing: {int(position) // 60}:{int(position) % 60:02} of {int(length) // 60}:{int(length) % 60:02}"
+            text_song = f" {self.music_list[self.current_song]}"
+            arcade.draw_text(text_position + ' ' + text_song, 20, screen_height - 20, arcade.color.WHITE_SMOKE, 18)
 
     def on_update(self, dt):
         position = self.music.get_stream_position()
