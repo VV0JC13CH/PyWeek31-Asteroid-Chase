@@ -148,6 +148,11 @@ asteroid_textures['broken_sat'].append(arcade.load_texture(path_to_string('gfx',
 # Music paths
 music_path = {}
 music_path['space_chase'] = path_to_string('music', 'space_chase.ogg')
+music_path['the_drop'] = path_to_string('music', 'the_drop.ogg')
+
+musics = {}
+for path in music_path:
+    musics[path] = arcade.Sound(music_path[path], streaming=True)
 
 # Sounds
 game_sfx = {}

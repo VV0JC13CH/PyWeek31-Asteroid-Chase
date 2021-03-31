@@ -140,8 +140,8 @@ class GameView(arcade.View):
         self.collision_handlers[-1].post_solve=self.player_sprite.playerasteroidcollision_func
         
         # test out some music
-        self.music = arcade.Sound(assets.music_path['space_chase'], streaming=True)
-        self.current_player = self.music.play(MUSIC_VOL,loop=True)
+        #self.music = arcade.Sound(assets.music_path['the_drop'], streaming=True)
+        self.current_player = assets.musics['space_chase'].play(MUSIC_VOL,loop=True)
 
     def on_show_view(self):
         self.window.cursor.change_state(state='off')
