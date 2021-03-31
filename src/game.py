@@ -63,7 +63,7 @@ class GameView(arcade.View):
         walls = [[0, 0, level_width, 0],[0, level_height, level_width, level_height],[0, 0, 0, level_height],[level_width, 0, level_width, level_height]]
         for wall in walls:
             body = pymunk.Body(body_type=pymunk.Body.STATIC)
-            shape = pymunk.Segment(body, [wall[0], wall[1]], [wall[2], wall[3]], 0.0)
+            shape = pymunk.Segment(body, (wall[0], wall[1]), (wall[2], wall[3]), 0.0)
             shape.elasticity = 0.99
             shape.friction = 10
             self.space.add(shape, body)
