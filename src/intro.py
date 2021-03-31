@@ -22,6 +22,7 @@ LEVEL_HEIGHT = int(param['LEVEL']['DEFAULT_HEIGHT'])
 class IntroView(arcade.View):
     def __init__(self):
         super().__init__()
+        self.window.current_view_name = 'intro_view'
         self.button_skip = Button(x=self.window.width / 6 * 5,
                                   y=self.window.height * 1 / 8,
                                   width=250, height=50,

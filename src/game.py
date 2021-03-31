@@ -11,6 +11,7 @@ from arcade.gl import geometry
 import random
 # --- Import internal classes ---
 from developer import log
+import pause
 import data
 import minimap
 from player import Player
@@ -48,6 +49,7 @@ class GameView(arcade.View):
 
         # Call the parent class initializer
         super().__init__()
+        self.window.current_view_name = 'game_view'
         # Set up level
         self.level_width = level_width
         self.level_height = level_height
@@ -271,6 +273,7 @@ class GameView(arcade.View):
         """Called whenever a key is pressed. """
         if key == arcade.key.ESCAPE:
             self.reset_viewport()
+            self.window.pause_view = pause.PauseView(self)
             log('Scene switched to ' + str(self.window.pause_view))
             self.window.scenes.append(self.window.pause_view)
             self.window.show_view(self.window.pause_view)

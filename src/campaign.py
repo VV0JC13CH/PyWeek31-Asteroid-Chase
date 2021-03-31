@@ -22,6 +22,7 @@ RADIANS_PER_FRAME = float(param['CAMPAIGN']['RADIANS_PER_FRAME'])
 class CampaignView(arcade.View):
     def __init__(self):
         super().__init__()
+        self.window.current_view_name = 'campaign_view'
         self.angle = 0
         if self.window.levels_unlocked != 0:
             self.selected_level = self.window.levels_unlocked
@@ -162,6 +163,7 @@ class CampaignView(arcade.View):
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
         if key == arcade.key.ESCAPE:
+            self.window.pause_view = pause.PauseView(self)
             log('Scene switched to ' + str(self.window.pause_view))
             self.window.scenes.append(self.window.pause_view)
             self.window.show_view(self.window.pause_view)

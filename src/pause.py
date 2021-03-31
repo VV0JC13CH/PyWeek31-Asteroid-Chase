@@ -17,6 +17,7 @@ from developer import log
 class PauseView(arcade.View):
     def __init__(self, game_view):
         super().__init__()
+        self.window.current_view_name = 'pause_view'
         self.game_view = game_view
 
         self.button_back_game = Button(x=self.window.width / 6 * 4, y=self.window.height * 5 / 6,

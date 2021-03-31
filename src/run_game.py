@@ -11,7 +11,6 @@ import data
 import assets
 import music
 from menu import MenuView
-from pause import PauseView
 from intro import IntroView
 from campaign import CampaignView
 from developer import DeveloperTool, log
@@ -51,8 +50,9 @@ class GlobalWindow(arcade.Window):
         self.start_view = MenuView()
         self.active_view = 0
         self.scenes = [self.start_view]
+        self.current_view_name = 'menu_view'
         # Views:
-        self.pause_view = PauseView(self)
+        self.pause_view = None
         self.scenes.append(self.pause_view)
         self.campaign_view = CampaignView()
         self.scenes.append(self.campaign_view)
@@ -70,8 +70,9 @@ class GlobalWindow(arcade.Window):
 
     def on_draw(self):
         self.cursor.draw()
-        self.developer_tool.on_draw(self.height)
-        self.music_manager.on_draw(self.height, self.developer_mode)
+        if self.developer_mode and self.current_view_name != 'game_view':
+            self.developer_tool.on_draw(self.height)
+            self.music_manager.on_draw(self.height, self.developer_mode)
 
     def on_update(self, delta_time: float):
         self.developer_tool.on_update(delta_time=delta_time, enable_tools=self.developer_mode)

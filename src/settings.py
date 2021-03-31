@@ -12,6 +12,7 @@ from button import Button
 class SettingsView(arcade.View):
     def __init__(self, previous_view):
         super().__init__()
+        self.window.current_view_name = 'settings_view'
         self.previous_view = previous_view
         full_resolution_mode_state = self.window.fullscreen
         developer_mode_state = self.window.developer_mode

@@ -15,6 +15,7 @@ from developer import log
 class MenuView(arcade.View):
     def __init__(self):
         super().__init__()
+        self.window.current_view_name = 'menu_view'
         self.button_play = Button(x=self.window.width/2,
                                   y=self.window.height*3/6,
                                   width=500, height=100,
