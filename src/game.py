@@ -277,13 +277,13 @@ class GameView(arcade.View):
             log('Scene switched to ' + str(self.window.pause_view))
             self.window.scenes.append(self.window.pause_view)
             self.window.show_view(self.window.pause_view)
-        elif key == arcade.key.UP or arcade.key.W:
+        elif key == arcade.key.UP or key == arcade.key.W:
             self.up_pressed = True
-        elif key == arcade.key.DOWN or arcade.key.S:
+        elif key == arcade.key.DOWN or key == arcade.key.S:
             self.down_pressed = True
-        elif key == arcade.key.LEFT or arcade.key.A:
+        elif key == arcade.key.LEFT or key == arcade.key.A:
             self.left_pressed = True
-        elif key == arcade.key.RIGHT or arcade.key.D:
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = True
         elif key == arcade.key.SPACE:
             # Shoot out a bullet/laser
@@ -293,11 +293,11 @@ class GameView(arcade.View):
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
 
-        if key == arcade.key.UP or arcade.key.W:
+        if key == arcade.key.UP or key == arcade.key.W:
             self.up_pressed = False
-        elif key == arcade.key.DOWN or arcade.key.S:
+        elif key == arcade.key.DOWN or key == arcade.key.S:
             self.down_pressed = False
-        elif key == arcade.key.LEFT or arcade.key.A:
+        elif key == arcade.key.LEFT or key == arcade.key.A:
             self.left_pressed = False
-        elif key == arcade.key.RIGHT or arcade.key.D:
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = False
