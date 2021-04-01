@@ -45,35 +45,12 @@ COLLTYPE_BOMB = 3
 class GameView(arcade.View):
     """ Main game view. """
 
-    def __init__(self, level_width, level_height):
+    def __init__(self):
         """ Initializer """
 
         # Call the parent class initializer
         super().__init__()
         self.window.current_view_name = 'game_view'
-        # Set up level
-        self.level_width = level_width
-        self.level_height = level_height
-        
-        #self.level_width = 4000
-        #self.level_height = 2000
-
-        # pymunk
-        self.space = pymunk.Space()
-        self.space.iterations = 35
-        self.space.gravity = (0.0, 0.0)
-        self.static_lines = []
-        
-        # Create pymunk walls around level
-        #walls = [[0, 80, 700, 80],[0, 600, 700, 600],[0, 80, 0, 600],[700, 80, 700, 600]]
-        walls = [[0, 0, level_width, 0],[0, level_height, level_width, level_height],[0, 0, 0, level_height],[level_width, 0, level_width, level_height]]
-        for wall in walls:
-            body = pymunk.Body(body_type=pymunk.Body.STATIC)
-            shape = pymunk.Segment(body, (wall[0], wall[1]), (wall[2], wall[3]), 0.0)
-            shape.elasticity = 0.99
-            shape.friction = 10
-            self.space.add(shape, body)
-            self.static_lines.append(shape)
         
         # Variables that will hold sprite lists
         self.player_list = None
@@ -87,6 +64,35 @@ class GameView(arcade.View):
         
         # Set up the player info
         self.player_sprite = None
+    
+    def setup(self, level, restart=False):
+        
+        self.current_level = level
+        self.outcome = None
+        self.level_to = 180
+        
+        if not restart:
+            self.window.music_manager.play_song(assets.leveldata[level].music)
+        
+        # Set up level
+        self.level_width = assets.leveldata[level].size[0]
+        self.level_height = assets.leveldata[level].size[1]
+
+        # pymunk
+        self.space = pymunk.Space()
+        self.space.iterations = 35
+        self.space.gravity = (0.0, 0.0)
+        self.static_lines = []
+        
+        # Create pymunk walls around level
+        walls = [[0, 0, self.level_width, 0],[0, self.level_height, self.level_width, self.level_height],[0, 0, 0, self.level_height],[self.level_width, 0, self.level_width, self.level_height]]
+        for wall in walls:
+            body = pymunk.Body(body_type=pymunk.Body.STATIC)
+            shape = pymunk.Segment(body, (wall[0], wall[1]), (wall[2], wall[3]), 0.0)
+            shape.elasticity = 0.99
+            shape.friction = 10
+            self.space.add(shape, body)
+            self.static_lines.append(shape)
 
         # Track the current state of what key is pressed
         self.left_pressed = False
@@ -110,21 +116,15 @@ class GameView(arcade.View):
         self.bomb_sprite_list = arcade.SpriteList()
 
         # Set up the player
-        self.player_sprite = Player(self.level_width, self.level_height, self.particle_sprite_list, self.space, 400, 400)
+        startx = assets.leveldata[level].player_start[0]
+        starty = assets.leveldata[level].player_start[1]
+        self.player_sprite = Player(self.level_width, self.level_height, self.particle_sprite_list, self.space, startx, starty)
         self.player_list.append(self.player_sprite)
-        
-        """
-        # Add stars
-        for i in range(100):
-            sprite = arcade.SpriteSolidColor(4, 4, arcade.color.WHITE)
-            sprite.center_x = random.randrange(self.level_width)
-            sprite.center_y = random.randrange(self.level_height)
-            self.star_sprite_list.append(sprite)
-        """
         
         # Add static structures
         structures = [] # TODO: fill this with static_structures taken from assets
-        #structures.append(assets.static_structure['rock1'])
+        for id in assets.leveldata[level].static_structures:
+            structures.append(assets.static_structure[id])
         for i in range(len(structures)):
             structure = structures[i]
             structure_sprite = Structure(self, self.space, structure.verts, "str_%d"%(i), type=structure.type)
@@ -150,19 +150,14 @@ class GameView(arcade.View):
         self.bomb_sprite_list.append(sprite)
         """
         
-        # Add Badguy
-        action_data = [('bomb',0.2),('bomb',0.4),('bomb',0.6),('bomb',0.8),('bomb',0.9),
-            ('boost',0.3),('boost',0.6)]
-        bg_sprite = BadGuy(self, self.level_width, self.level_height, x=700, y=600, type=1, action_data=action_data)
-        self.badguys_sprite_list.append(bg_sprite)
-        
-        action_data = [('boost',0.5)]
-        bg_sprite = BadGuy(self, self.level_width, self.level_height, x=900, y=300, type=0, action_data=action_data)
-        self.badguys_sprite_list.append(bg_sprite)
-        
-        action_data = [('boost',0.5)]
-        bg_sprite = BadGuy(self, self.level_width, self.level_height, x=900, y=900, type=0, action_data=action_data)
-        self.badguys_sprite_list.append(bg_sprite)
+        # Add Badguys
+        for id in assets.leveldata[level].badguy_ids:
+            x = assets.bad_guydata[id].start_pos[0]
+            y = assets.bad_guydata[id].start_pos[1]
+            type = assets.bad_guydata[id].type
+            action_data = assets.bad_guydata[id].action_data
+            bg_sprite = BadGuy(self, self.level_width, self.level_height, x=x, y=y, type=type, action_data=action_data)
+            self.badguys_sprite_list.append(bg_sprite)
         
         # scrolling background images
         self.background_list = ScrollBackground(self.window)
@@ -173,7 +168,6 @@ class GameView(arcade.View):
         self.collision_handlers[-1].post_solve=self.player_sprite.playerasteroidcollision_func
         self.collision_handlers.append(self.space.add_collision_handler(COLLTYPE_POLICECAR, COLLTYPE_STRUCTURE))
         self.collision_handlers[-1].post_solve=self.player_sprite.playerasteroidcollision_func
-
 
     def on_show_view(self):
         self.window.cursor.change_state(state='off')
@@ -294,6 +288,24 @@ class GameView(arcade.View):
         
         # Update scrolling background
         self.background_list.update_scroll(self.view_left, self.view_bottom)
+        
+        # Check for level outcome
+        if self.outcome == None:
+            if self.player_sprite.health == 0:
+                self.outcome = 'restart'
+            if any([bg.fraction > 1.0 for bg in self.badguys_sprite_list]):
+                self.outcome = 'restart'
+            if all([(bg.health == 0) for bg in self.badguys_sprite_list]):
+                self.outcome = 'victory'
+        if not self.outcome == None:
+            self.level_to -= 1
+            if self.level_to == 0:
+                if self.outcome == 'restart':
+                    self.window.gameview.setup(self.current_level,restart=True)
+                    self.window.show_view(self.window.gameview)
+                else:
+                    pass # TODO: switch to campaign view
+                
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """

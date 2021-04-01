@@ -91,10 +91,11 @@ class IntroView(arcade.View):
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         if self.button_skip.current_state == 'hover':
-            self.window.game_view = GameView(LEVEL_WIDTH, LEVEL_HEIGHT)
-            self.window.scenes.append(self.window.game_view)
-            log('View switched to ' + str(self.window.game_view))
-            self.window.show_view(self.window.game_view)
+            #self.window.game_view = GameView(LEVEL_WIDTH, LEVEL_HEIGHT)
+            #self.window.scenes.append(self.window.game_view)
+            log('View switched to ' + str(self.window.gameview))
+            self.window.gameview.setup('level2')
+            self.window.show_view(self.window.gameview)
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """

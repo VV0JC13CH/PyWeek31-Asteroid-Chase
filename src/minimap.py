@@ -68,8 +68,9 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
     
     if len(game_view.badguys_sprite_list) > 0:
         if all([(bg.health == 0) for bg in game_view.badguys_sprite_list]):
-            arcade.draw_text("Mission Complete!", game_view.view_left+game_view.window.width/2-300, game_view.view_bottom+game_view.window.height/2, arcade.color.ORANGE, 56, width=600, align="center")
-    
+            arcade.draw_text("Mission Complete!", game_view.view_left+game_view.window.width/2-300, game_view.view_bottom+game_view.window.height/2, arcade.color.GREEN, 56, width=600, align="center")
+        if any([bg.fraction > 1.0 for bg in game_view.badguys_sprite_list]):
+            arcade.draw_text("Mission Failed!", game_view.view_left+game_view.window.width/2-300, game_view.view_bottom+game_view.window.height/2, arcade.color.RED, 56, width=600, align="center")
     
     # draw player on mini map
     x = hor_offset + game_view.view_left + map_width*(game_view.player_sprite.center_x/level_width)

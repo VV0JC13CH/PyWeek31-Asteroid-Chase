@@ -176,10 +176,16 @@ bomb_textures.append(arcade.load_texture(path_to_string('gfx', 'bomb001.png')))
 bomb_textures.append(arcade.load_texture(path_to_string('gfx', 'bomb002.png')))
 
 # Music paths
+"""
 songs = [path_to_string('music', 'the_drop.ogg'),
          path_to_string('music', 'the_chase.ogg'),
          path_to_string('music', 'asteroid_chase_menu.ogg')]
+"""
 
+music_list = {}
+music_list['menu'] = path_to_string('music', 'asteroid_chase_menu.ogg')
+music_list['space_chase'] = path_to_string('music', 'space_chase.ogg')
+music_list['the_drop'] = path_to_string('music', 'the_drop.ogg')
 
 # Sounds
 game_sfx = {}
@@ -203,14 +209,6 @@ game_sfx['hehheh'] = pygame.mixer.Sound(path_to_string('sound', 'hehheh.ogg'))
 # Structure textures
 structure_textures = {}
 structure_textures['asteroid'] = arcade.load_texture(path_to_string('gfx', 'asteroid_texture.png'))
-
-# Static Structures Data
-class Collection(object):
-    pass
-static_structure = {}
-static_structure['rock1'] = Collection()
-static_structure['rock1'].verts = [[600,600],[600,700],[1000,700],[1200,650],[800,550]]
-static_structure['rock1'].type = 'rock'
 
 # Planets
 planets_filenames = []
@@ -241,3 +239,54 @@ for x in range(1,7,1):
     bg_path = arcade.load_texture(path_to_string("gfx", "bg_intro"+str(x)+".png"))
     intro_bg_paths.append(bg_path)
 
+
+
+
+# Static Structures Data
+class Collection(object):
+    pass
+static_structure = {}
+static_structure['rock1'] = Collection()
+static_structure['rock1'].verts = [[600,600],[600,700],[1000,700],[1200,650],[800,550]]
+static_structure['rock1'].type = 'rock'
+
+# Bad Guy Archetypes
+bad_guydata = {}
+bad_guydata['green1'] = Collection()
+bad_guydata['green1'].type = 0
+bad_guydata['green1'].start_pos = (900,900)
+bad_guydata['green1'].action_data = [('boost',0.5)]
+
+bad_guydata['green2'] = Collection()
+bad_guydata['green2'].type = 0
+bad_guydata['green2'].start_pos = (300,300)
+bad_guydata['green2'].action_data = [('boost',0.5)]
+
+bad_guydata['purple1'] = Collection()
+bad_guydata['purple1'].type = 1
+bad_guydata['purple1'].start_pos = (700,600)
+bad_guydata['purple1'].action_data = action_data = [('bomb',0.2),('bomb',0.4),('bomb',0.6),('bomb',0.8),('bomb',0.9),
+            ('boost',0.3),('boost',0.6)]
+
+# Level Data (it's sort of like an asset :) )
+class LevelData(object):
+    pass
+
+leveldata = {}
+leveldata['level1'] = LevelData()
+leveldata['level1'].music = 'space_chase'
+leveldata['level1'].size = (15000,3000) # level_width, level_height
+leveldata['level1'].player_start = (400,400) # position
+leveldata['level1'].asteroid_density = 100 # asteroids per screen width
+leveldata['level1'].badguy_ids = ['green1']
+leveldata['level1'].static_structures = []
+
+leveldata['level2'] = LevelData()
+leveldata['level2'].music = 'the_drop'
+leveldata['level2'].size = (20000,3000) # level_width, level_height
+leveldata['level2'].player_start = (400,400) # position
+leveldata['level2'].asteroid_density = 100 # asteroids per screen width
+leveldata['level2'].badguy_ids = ['green1','green2','purple1']
+leveldata['level2'].static_structures = []
+
+# etc ....

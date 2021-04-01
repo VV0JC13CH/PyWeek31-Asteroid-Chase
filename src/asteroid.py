@@ -21,6 +21,11 @@ SCREEN_WIDTH = int(settings['VIDEO']['WINDOW_WIDTH'])
 
 SOUND_VOL = int(settings['AUDIO']['SOUND_VOL'])
 
+# AsteroidManager: dynamically creates/deletes asteroids based on current player position
+class AsteroidManager(object):
+    def __init__(self):
+        pass
+
 class Asteroid(arcade.Sprite):
     """ Asteroid """
 

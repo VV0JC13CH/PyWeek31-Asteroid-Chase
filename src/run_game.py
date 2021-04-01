@@ -13,6 +13,7 @@ import music
 from menu import MenuView
 from intro import IntroView
 from campaign import CampaignView
+from game import GameView
 from developer import DeveloperTool, log
 from cursor import Cursor
 # --- Constants ---
@@ -39,6 +40,7 @@ class GlobalWindow(arcade.Window):
         self.levels_unlocked = 0
         self.music_manager = music.MusicManager(init_volume=MUSIC_VOL)
         self.music_manager.setup(music_enabled)
+        self.music_manager.play_song('menu')
         self.music_enabled = music_enabled
         self.developer_mode = developer_mode
         # Game logic global variables:
@@ -57,6 +59,9 @@ class GlobalWindow(arcade.Window):
         self.scenes.append(self.campaign_view)
         self.intro_view = IntroView()
         self.scenes.append(self.intro_view)
+        
+        self.gameview = GameView()
+        self.scenes.append(self.gameview)
 
     def on_resize(self, width, height):
         """ This method is automatically called when the window is resized. """

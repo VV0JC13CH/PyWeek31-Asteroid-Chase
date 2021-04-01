@@ -63,6 +63,7 @@ class BadGuy(arcade.Sprite):
             self.maxhealth = int(param['BADGUY1']['HEALTH'])
         self.health = self.maxhealth
         
+        self.fraction = 0.0
         self.boost_to = 0
         self.bomblaunch_to = 0
     
@@ -122,17 +123,17 @@ class BadGuy(arcade.Sprite):
             self.face_right = False
         
         # Look for behaviours
-        fraction = self.center_x/self.level_width
+        self.fraction = self.center_x/self.level_width
         for action in self.action_data:
             if action[2] == True: # already completed this action
                 continue
             if action[0] == 'boost':
-                if fraction > action[1]:
+                if self.fraction > action[1]:
                     self.boost_to = 300
                     action[2] = True
                     assets.game_sfx['boost'].play()
             elif action[0] == 'bomb':
-                if fraction > action[1]:
+                if self.fraction > action[1]:
                     self.bomblaunch_to = 60
                     action[2] = True
                     assets.game_sfx['hehheh'].play()

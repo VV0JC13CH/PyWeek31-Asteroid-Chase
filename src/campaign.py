@@ -191,9 +191,11 @@ class CampaignView(arcade.View):
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
-            new_game = game.GameView(level_width=self.window.width,
-                                     level_height=self.window.height)
-            self.window.show_view(new_game)
+            #new_game = game.GameView(level_width=self.window.width,
+            #                         level_height=self.window.height)
+            #self.window.show_view(new_game)
+            self.window.gameview.setup('level1')
+            self.window.show_view(self.window.gameview)
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
