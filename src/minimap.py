@@ -62,8 +62,14 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
     arcade.draw_rectangle_outline(center_x=x, center_y=y,
                                   width=100, height=10,
                                   color=arcade.color.WHITE)
-
-
+    
+    if game_view.player_sprite.health == 0:
+        arcade.draw_text("Police Ship\nOut of Action", game_view.view_left+game_view.window.width/2-300, game_view.view_bottom+game_view.window.height/2, arcade.color.ORANGE, 56, width=600, align="center")
+    
+    if len(game_view.badguys_sprite_list) > 0:
+        if all([(bg.health == 0) for bg in game_view.badguys_sprite_list]):
+            arcade.draw_text("Mission Complete!", game_view.view_left+game_view.window.width/2-300, game_view.view_bottom+game_view.window.height/2, arcade.color.ORANGE, 56, width=600, align="center")
+    
     
     # draw player on mini map
     x = hor_offset + game_view.view_left + map_width*(game_view.player_sprite.center_x/level_width)

@@ -20,7 +20,7 @@ from bullet import Bullet, Explosion
 from scroll_background import ScrollBackground
 from structures import Structure
 from asteroid import Asteroid
-from badguys import BadGuy
+from badguys import BadGuy, FloatingBomb
 import assets
 
 # --- Constants ---
@@ -40,6 +40,7 @@ DEFAULT_BOTTOM_VIEWPORT = int(param['VIEWPORT']['DEFAULT_BOTTOM_VIEWPORT'])
 COLLTYPE_POLICECAR = 1
 COLLTYPE_ASTEROID = 2
 COLLTYPE_STRUCTURE = 3
+COLLTYPE_BOMB = 3
 
 class GameView(arcade.View):
     """ Main game view. """
@@ -53,6 +54,9 @@ class GameView(arcade.View):
         # Set up level
         self.level_width = level_width
         self.level_height = level_height
+        
+        #self.level_width = 4000
+        #self.level_height = 2000
 
         # pymunk
         self.space = pymunk.Space()
@@ -79,6 +83,7 @@ class GameView(arcade.View):
         self.particle_sprite_list = None
         self.structures_sprite_list = None
         self.badguys_sprite_list = None
+        self.bomb_sprite_list = None
         
         # Set up the player info
         self.player_sprite = None
@@ -102,6 +107,7 @@ class GameView(arcade.View):
         self.particle_sprite_list = arcade.SpriteList()
         self.structures_sprite_list = arcade.SpriteList(use_spatial_hash=True)
         self.badguys_sprite_list = arcade.SpriteList()
+        self.bomb_sprite_list = arcade.SpriteList()
 
         # Set up the player
         self.player_sprite = Player(self.level_width, self.level_height, self.particle_sprite_list, self.space, 400, 400)
@@ -136,8 +142,26 @@ class GameView(arcade.View):
             sprite = Asteroid(self,self.space,x,y,vx,vy,type=type)
             self.asteroid_sprite_list.append(sprite)
         
+        """
+        # Add in some bombs for testing
+        sprite = FloatingBomb(self,self.space,1000,300,0,0)
+        self.bomb_sprite_list.append(sprite)
+        sprite = FloatingBomb(self,self.space,1500,400,0,0)
+        self.bomb_sprite_list.append(sprite)
+        """
+        
         # Add Badguy
-        bg_sprite = BadGuy(self, self.level_width, self.level_height, x=700, y=600, type=1)
+        action_data = [('bomb',0.2),('bomb',0.4),('bomb',0.6),('bomb',0.8),('bomb',0.9),
+            ('boost',0.3),('boost',0.6)]
+        bg_sprite = BadGuy(self, self.level_width, self.level_height, x=700, y=600, type=1, action_data=action_data)
+        self.badguys_sprite_list.append(bg_sprite)
+        
+        action_data = [('boost',0.5)]
+        bg_sprite = BadGuy(self, self.level_width, self.level_height, x=900, y=300, type=0, action_data=action_data)
+        self.badguys_sprite_list.append(bg_sprite)
+        
+        action_data = [('boost',0.5)]
+        bg_sprite = BadGuy(self, self.level_width, self.level_height, x=900, y=900, type=0, action_data=action_data)
         self.badguys_sprite_list.append(bg_sprite)
         
         # scrolling background images
@@ -174,6 +198,7 @@ class GameView(arcade.View):
         self.structures_sprite_list.draw()
         self.asteroid_sprite_list.draw()
         self.badguys_sprite_list.draw()
+        self.bomb_sprite_list.draw()
         self.bullet_sprite_list.draw()
         self.particle_sprite_list.draw()
         self.player_list.draw()
@@ -217,6 +242,7 @@ class GameView(arcade.View):
         self.asteroid_sprite_list.update()
         self.particle_sprite_list.update()
         self.badguys_sprite_list.update()
+        self.bomb_sprite_list.update()
         
         for bullet in self.bullet_sprite_list:
             if bullet.death_to < 20: # bullet currently acting as explosion
@@ -287,8 +313,9 @@ class GameView(arcade.View):
             self.right_pressed = True
         elif key == arcade.key.SPACE:
             # Shoot out a bullet/laser
-            bullet = Bullet(self.player_sprite)
-            self.bullet_sprite_list.append(bullet)
+            if self.player_sprite.health > 0:
+                bullet = Bullet(self.player_sprite)
+                self.bullet_sprite_list.append(bullet)
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """

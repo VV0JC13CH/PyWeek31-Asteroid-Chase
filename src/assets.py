@@ -143,6 +143,13 @@ explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast004.png'
 explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast005.png')))
 explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast006.png')))
 
+# bomb explosion
+explodeb_textures = []
+explodeb_textures.append(arcade.load_texture(path_to_string('gfx', 'explode001.png')))
+explodeb_textures.append(arcade.load_texture(path_to_string('gfx', 'explode002.png')))
+explodeb_textures.append(arcade.load_texture(path_to_string('gfx', 'explode003.png')))
+explodeb_textures.append(arcade.load_texture(path_to_string('gfx', 'explode004.png')))
+
 # bullet/laser textures
 bullet_textures = []
 bullet_textures.append(arcade.load_texture(path_to_string('gfx', 'laser001.png')))
@@ -163,9 +170,15 @@ asteroid_textures['broken_sat'] = []
 asteroid_textures['broken_sat'].append(arcade.load_texture(path_to_string('gfx', 'broken_sat.png')))
 asteroid_textures['broken_sat'].append(arcade.load_texture(path_to_string('gfx', 'broken_sat_f.png')))
 
+# Bomb textures
+bomb_textures = []
+bomb_textures.append(arcade.load_texture(path_to_string('gfx', 'bomb001.png')))
+bomb_textures.append(arcade.load_texture(path_to_string('gfx', 'bomb002.png')))
+
 # Music paths
 songs = [path_to_string('music', 'the_drop.ogg'),
-         path_to_string('music', 'the_chase.ogg')]
+         path_to_string('music', 'the_chase.ogg'),
+         path_to_string('music', 'asteroid_chase_menu.ogg')]
 
 
 # Sounds
@@ -179,6 +192,13 @@ game_sfx['laser'].append(pygame.mixer.Sound(path_to_string('sound', 'laser001.og
 game_sfx['laser'].append(pygame.mixer.Sound(path_to_string('sound', 'laser002.ogg')))
 game_sfx['asteroid_break_small'] = pygame.mixer.Sound(path_to_string('sound', 'asteroid_break_small.ogg'))
 game_sfx['asteroid_break_big'] = pygame.mixer.Sound(path_to_string('sound', 'asteroid_break_big.ogg'))
+game_sfx['explode'] = pygame.mixer.Sound(path_to_string('sound', 'explode_big.ogg'))
+game_sfx['beep'] = pygame.mixer.Sound(path_to_string('sound', 'beep.ogg'))
+game_sfx['fastbeeps'] = pygame.mixer.Sound(path_to_string('sound', 'fastbeeps.ogg'))
+game_sfx['boost'] = pygame.mixer.Sound(path_to_string('sound', 'boost.ogg'))
+game_sfx['bomblaunch'] = pygame.mixer.Sound(path_to_string('sound', 'bomblaunch.ogg'))
+game_sfx['scumbag'] = pygame.mixer.Sound(path_to_string('sound', 'scumbag.ogg'))
+game_sfx['hehheh'] = pygame.mixer.Sound(path_to_string('sound', 'hehheh.ogg'))
 
 # Structure textures
 structure_textures = {}

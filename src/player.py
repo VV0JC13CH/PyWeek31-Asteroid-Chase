@@ -131,6 +131,8 @@ class Player(arcade.Sprite):
         if self.flash_ani > 0:
             return
         self.health -= damage
+        if self.health < 0:
+            self.health = 0
         self.flash_ani = 10
         if self.health == 0:
             pass # TODO: handle player death
@@ -185,6 +187,17 @@ class Player(arcade.Sprite):
         else:
             heading_ind = 1
         self.texture = assets.police_textures[siren_ani_fram][heading_ind]
+        
+        # Check for breakdown sparks
+        if self.health == 0 and self.siren_ani == 0:
+            for i in range(5):
+                particle = Particle(4, 4, arcade.color.ORANGE)
+                while particle.change_y == 0 and particle.change_x == 0:
+                    particle.change_y = random.randrange(-2, 3)
+                    particle.change_x = random.randrange(-2, 3)
+                particle.center_x = self.center_x
+                particle.center_y = self.center_y
+                self.particle_sprite_list.append(particle)
         
         # reset control tracking
         self.controlled = False
