@@ -95,14 +95,14 @@ class CampaignView(arcade.View):
         else:
             self.window.cursor.change_state(state='idle')
 
-        self.planet_8.update_rotation()
-        self.planet_7.update_rotation()
-        self.planet_6.update_rotation()
-        self.planet_5.update_rotation()
-        self.planet_4.update_rotation()
-        self.planet_3.update_rotation()
-        self.planet_2.update_rotation()
-        self.planet_1.update_rotation()
+        self.planet_8.update_rotation(delta_time)
+        self.planet_7.update_rotation(delta_time)
+        self.planet_6.update_rotation(delta_time)
+        self.planet_5.update_rotation(delta_time)
+        self.planet_4.update_rotation(delta_time)
+        self.planet_3.update_rotation(delta_time)
+        self.planet_2.update_rotation(delta_time)
+        self.planet_1.update_rotation(delta_time)
 
     def on_draw(self):
         """ Use this function to draw everything to the screen. """
