@@ -34,12 +34,15 @@ class IntroView(arcade.View):
         self.background_move_left_change_pos = 0
         self.background_move_left_change_pos_speed = 1
         self.background_goes_up = True
+        self.background_goes_down = False
         self.background_position = 0
+        self.background_finish_animation = False
+        self.show_skip_button = False
         self.frame = 0
         self.player = pointer.Pointer(level_width=self.window.width*60, level_height=self.window.height*2)
 
     def on_show_view(self):
-        self.window.cursor.change_state(state='idle')
+        self.window.cursor.change_state(state='off')
 
     def on_update(self, delta_time: float):
         self.button_skip.detect_mouse(self.window.cursor)
@@ -51,8 +54,18 @@ class IntroView(arcade.View):
             self.background_move_left_change_pos += 1
             if self.background_move_left_change_pos_speed < 5:
                 self.background_move_left_change_pos_speed += 0.1
-            else:
+            if self.background_move_left_change_pos_speed < 15:
                 self.background_move_left_change_pos_speed += 0.01
+            else:
+                self.background_goes_down = True
+        if self.background_goes_down and self.background_position > 0:
+            self.background_position -= 5
+        elif self.background_position == 0 and self.background_goes_down:
+            self.background_goes_up = False
+            self.background_move_left = False
+        else:
+            self.background_goes_down = False
+            self.background_move_left = False
 
     def on_draw(self):
         self.window.developer_tool.on_draw_start()
@@ -60,16 +73,21 @@ class IntroView(arcade.View):
         # In order to count FPS in proper way, add objects below:
 
         # Draw the background texture
-        for x in range(0, 10, 1):
-            for frame in range (1, 6, 1):
-                arcade.draw_lrwh_rectangle_textured(0-self.background_move_left_change_pos *
-                                                    self.background_move_left_change_pos_speed+x*self.window.width*frame,
-                                                    self.background_position-self.window.height,
-                                                    self.window.width, self.window.height*2,
-                                                    assets.intro_bg_paths[int(frame)])
-
-        self.button_skip.draw()
+        for x in range(0, 15, 1):
+            arcade.draw_lrwh_rectangle_textured(0-self.background_move_left_change_pos *
+                                                self.background_move_left_change_pos_speed+
+                                                self.window.width*x,
+                                                self.background_position-self.window.height,
+                                                self.window.width, self.window.height*2,
+                                                assets.intro_bg_paths[(x // 5)])
+        if self.show_skip_button:
+            self.button_skip.draw()
         self.window.developer_tool.on_draw_finish()
+
+    def on_mouse_motion(self, x: float, y: float, dx: float, dy: float):
+        if dx+dy > 50:
+            self.window.cursor.change_state('idle')
+            self.show_skip_button = True
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         if self.button_skip.current_state == 'hover':
