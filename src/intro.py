@@ -29,12 +29,23 @@ class IntroView(arcade.View):
                                   texture_idle='skip_intro',
                                   texture_hover='skip_intro_hover'
                                   )
+        self.background_reached_max = False
+        self.start_shaking_buildings = True
+        self.time = 0
 
     def on_show_view(self):
         self.window.cursor.change_state(state='idle')
 
     def on_update(self, delta_time: float):
         self.button_skip.detect_mouse(self.window.cursor)
+        if self.start_shaking_buildings:
+            if self.time < 4 and not self.background_reached_max:
+                self.time += 0.4
+            elif 5 >= self.time > 0:
+                self.background_reached_max = True
+                self.time -= 0.4
+            else:
+                self.background_reached_max = False
 
     def on_draw(self):
         self.window.developer_tool.on_draw_start()
@@ -42,10 +53,9 @@ class IntroView(arcade.View):
         # In order to count FPS in proper way, add objects below:
 
         # Draw the background texture
-        arcade.draw_lrwh_rectangle_textured(0, 0,
-                                            self.window.width, self.window.height,
-                                            assets.bg_menu)
-
+        arcade.draw_lrwh_rectangle_textured(0, -self.window.height,
+                                            self.window.width, self.window.height*2,
+                                            assets.intro_bg_paths[int(self.time)])
 
         self.button_skip.draw()
         self.window.developer_tool.on_draw_finish()

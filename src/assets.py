@@ -199,12 +199,24 @@ for x in range(1,9,1):
 
 planet_sprite = None
 planet_sprite_list = arcade.SpriteList()
+planet_rows = 6
+planet_cols = 6
+planet_width = 100
+planet_height = 100
 for z in planets_filenames:
     planet_sprite = arcade.AnimatedTimeBasedSprite()
     planet_sprite_list.append(planet_sprite)
-    for x in range(0, 6, 1):
-        for y in range(0, 6, 1):
-            planet_texture = arcade.texture.load_texture(file_name=z, x=100*x, y=100*y, width=100, height=100)
+    for x in range(0, planet_rows, 1):
+        for y in range(0, planet_cols, 1):
+            planet_texture = arcade.texture.load_texture(file_name=z, x=planet_width*x,
+                                                         y=planet_height*y, width=planet_width, height=planet_height)
             planet_sprite.textures.append(planet_texture)
         planet_sprite.texture = planet_sprite.textures[0]
+
+# Intro backgrounds:
+# Planets
+intro_bg_paths = []
+for x in range(1,7,1):
+    bg_path = arcade.load_texture(path_to_string("gfx", "bg_intro"+str(x)+".png"))
+    intro_bg_paths.append(bg_path)
 
