@@ -111,7 +111,7 @@ class IntroView(arcade.View):
         # In order to count FPS in proper way, add objects below:
 
         # Draw the background texture
-        for x in range(0, 15, 1):
+        for x in range(0, 30, 1):
             arcade.draw_lrwh_rectangle_textured(0-self.background_move_left_change_pos *
                                                 self.background_move_left_change_pos_speed+
                                                 self.window.width*x,
