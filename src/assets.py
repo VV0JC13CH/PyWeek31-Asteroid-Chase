@@ -12,8 +12,8 @@ from pathlib import Path
 # we love Ubuntu users (bug fix):
 import pygame
 pygame.mixer.pre_init(44100,-16,1,512)
-pygame.init()
-
+pygame.mixer.init()
+#pygame.init()
 
 def path_to_string(directory, file):
     return str(Path.cwd().joinpath(directory, file).resolve())
