@@ -98,6 +98,13 @@ class IntroView(arcade.View):
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
-        if key == arcade.key.ESCAPE or key == arcade.key.SPACE or key == arcade.key.ENTER:
+        if key == arcade.key.ESCAPE:
             self.window.cursor.change_state('idle')
             self.show_skip_button = True
+        elif key == arcade.key.SPACE:
+            self.window.cursor.change_state('idle')
+            self.show_skip_button = True
+        elif key == arcade.key.ENTER:
+            self.window.cursor.change_state('idle')
+            self.show_skip_button = True
+
