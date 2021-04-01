@@ -191,3 +191,20 @@ static_structure['rock1'] = Collection()
 static_structure['rock1'].verts = [[600,600],[600,700],[1000,700],[1200,650],[800,550]]
 static_structure['rock1'].type = 'rock'
 
+# Planets
+planets_filenames = []
+for x in range(1,9,1):
+    planet = path_to_string("gfx", "planet_"+str(x)+".png")
+    planets_filenames.append(planet)
+
+planet_sprite = None
+planet_sprite_list = arcade.SpriteList()
+for z in planets_filenames:
+    planet_sprite = arcade.AnimatedTimeBasedSprite()
+    planet_sprite_list.append(planet_sprite)
+    for x in range(0, 6, 1):
+        for y in range(0, 6, 1):
+            planet_texture = arcade.texture.load_texture(file_name=z, x=100*x, y=100*y, width=100, height=100)
+            planet_sprite.textures.append(planet_texture)
+        planet_sprite.texture = planet_sprite.textures[0]
+

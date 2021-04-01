@@ -53,7 +53,6 @@ class GlobalWindow(arcade.Window):
         self.current_view_name = 'menu_view'
         # Views:
         self.pause_view = None
-        self.scenes.append(self.pause_view)
         self.campaign_view = CampaignView()
         self.scenes.append(self.campaign_view)
         self.intro_view = IntroView()
@@ -106,7 +105,7 @@ class GlobalWindow(arcade.Window):
         # F4 - switch to all registered views player was before:
         elif key == arcade.key.F4 and self.developer_mode:
             if self.active_view < len(self.scenes)-1:
-                self.active_view = self.active_view + 1
+                self.active_view += 1
             else:
                 self.active_view = 0
             log('View switched to ' + str(self.scenes[self.active_view]))

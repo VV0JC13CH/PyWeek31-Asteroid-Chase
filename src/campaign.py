@@ -11,6 +11,7 @@ import pause
 import math
 import random
 import game
+import planet
 from developer import log
 from pointer import Pointer
 
@@ -40,6 +41,19 @@ class CampaignView(arcade.View):
         self.level_2 = (self.window.width // 2 * 0.8, self.window.height // 2 * 0.4)
         self.level_1 = (self.window.width // 2 * 0.8, self.window.height // 2 * 1.1)
         self.levels = [self.level_1, self.level_2, self.level_3, self.level_4, self.level_5]
+        # Planets animated in time sprites:
+        self.planet_8 = planet.Planet(planet_id=0, speed=50, center_x=self.window.width*0.9, center_y=self.window.height*0.7,
+                                      scale=0.6)
+        self.planet_7 = planet.Planet(planet_id=7, speed=40, center_x=self.window.width*0.8, center_y=self.window.height*0.3,
+                                      scale=0.3)
+        self.planet_6 = planet.Planet(planet_id=6, speed=40, center_x=self.window.width*0.3, center_y=self.window.height*0.2,
+                                      scale=0.3)
+        self.planet_5 = planet.Planet(planet_id=5, speed=40, center_x=self.level_5[0], center_y=self.level_5[1], scale=0.3)
+        self.planet_4 = planet.Planet(planet_id=4, speed=35, center_x=self.level_4[0], center_y=self.level_4[1], scale=0.2)
+        self.planet_3 = planet.Planet(planet_id=3, speed=30, center_x=self.level_3[0], center_y=self.level_3[1], scale=0.4)
+        self.planet_2 = planet.Planet(planet_id=2, speed=25, center_x=self.level_2[0], center_y=self.level_2[1], scale=0.2)
+        self.planet_1 = planet.Planet(planet_id=1, speed=35, center_x=self.level_1[0], center_y=self.level_1[1], scale=0.5)
+
         for i in range(100):
             sprite = arcade.SpriteSolidColor(2, 2, arcade.color.WHITE)
             sprite.center_x = random.randrange(self.window.width)
@@ -71,6 +85,7 @@ class CampaignView(arcade.View):
     def on_update(self, delta_time: float):
         # Call update to move the sprite
         self.player_list.update()
+
         if self.selected_level > 1:
             if abs(self.levels[self.selected_level - 1][0] - self.player_sprite.center_x) > 5:
                 if abs(self.levels[self.selected_level - 1][1] - self.player_sprite.center_y) > 5:
@@ -79,6 +94,15 @@ class CampaignView(arcade.View):
             self.window.cursor.change_state(state='no')
         else:
             self.window.cursor.change_state(state='idle')
+
+        self.planet_8.update_rotation()
+        self.planet_7.update_rotation()
+        self.planet_6.update_rotation()
+        self.planet_5.update_rotation()
+        self.planet_4.update_rotation()
+        self.planet_3.update_rotation()
+        self.planet_2.update_rotation()
+        self.planet_1.update_rotation()
 
     def on_draw(self):
         """ Use this function to draw everything to the screen. """
@@ -150,7 +174,18 @@ class CampaignView(arcade.View):
         # Draw the outline of the radar
         arcade.draw_circle_outline(self.window.width // 2, self.window.height // 2, self.sweep_length,
                                    arcade.color.OLD_SILVER, 8)
+        # Planets:
+        self.planet_8.on_draw()
+        self.planet_7.on_draw()
+        self.planet_6.on_draw()
+        self.planet_5.on_draw()
+        self.planet_4.on_draw()
+        self.planet_3.on_draw()
+        self.planet_2.on_draw()
+        self.planet_1.on_draw()
+
         self.player_list.draw()
+
 
         self.window.developer_tool.on_draw_finish()
 

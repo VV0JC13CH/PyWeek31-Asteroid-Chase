@@ -23,7 +23,7 @@ class IntroView(arcade.View):
     def __init__(self):
         super().__init__()
         self.window.current_view_name = 'intro_view'
-        self.button_skip = Button(x=self.window.width / 6 * 5,
+        self.button_skip = Button(x=self.window.width,
                                   y=self.window.height * 1 / 8,
                                   width=250, height=50,
                                   texture_idle='skip_intro',
@@ -46,8 +46,6 @@ class IntroView(arcade.View):
                                             self.window.width, self.window.height,
                                             assets.bg_menu)
 
-        arcade.draw_text("Intro Screen", self.window.width / 2, self.window.height / 2,
-                         arcade.color.WHITE, font_size=50, anchor_x="center")
 
         self.button_skip.draw()
         self.window.developer_tool.on_draw_finish()
