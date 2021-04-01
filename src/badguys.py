@@ -25,6 +25,7 @@ MAX_VERTICAL_MOVEMENT_SPEED = int(param['BADGUY1']['MAX_VERTICAL_MOVEMENT_SPEED'
 
 SOUND_VOL = int(settings['AUDIO']['SOUND_VOL'])
 
+
 class BadGuy(arcade.Sprite):
     """ Bad Guy """
     def __init__(self, parent, level_width, level_height, x=0, y=0, type=0):
