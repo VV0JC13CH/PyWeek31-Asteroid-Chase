@@ -72,7 +72,7 @@ class Asteroid(arcade.Sprite):
             self.space.remove(self.shape, self.body)
             self.remove_from_sprite_lists()
             if self.type == 'large':
-                assets.game_sfx['asteroid_break_big'].play(SOUND_VOL)
+                assets.game_sfx['asteroid_break_big'].play()
                 for i in range(3):
                     vx = random.randrange(-50, 50)
                     vy = random.randrange(-50, 50)
@@ -81,7 +81,7 @@ class Asteroid(arcade.Sprite):
                     sprite = Asteroid(self.parent,self.space,x,y,vx,vy,type='small')
                     self.parent.asteroid_sprite_list.append(sprite)
             else:
-                assets.game_sfx['asteroid_break_small'].play(SOUND_VOL)
+                assets.game_sfx['asteroid_break_small'].play()
             for i in range(10):
                 particle = Particle(4, 4, arcade.color.GRAY)
                 while particle.change_y == 0 and particle.change_x == 0:

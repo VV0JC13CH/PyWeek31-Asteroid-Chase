@@ -38,7 +38,7 @@ class Bullet(arcade.Sprite):
             self.texture = assets.bullet_textures[1]
             self.change_x *= -1
         self.death_to = 20
-        assets.game_sfx['laser'][int(random.random()>0.5)].play(SOUND_VOL)
+        assets.game_sfx['laser'][int(random.random()>0.5)].play()
     
     def update(self):
         self.center_x += self.change_x

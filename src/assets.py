@@ -11,6 +11,7 @@ from button import SimpleButton
 from pathlib import Path
 # we love Ubuntu users (bug fix):
 import pygame
+pygame.mixer.pre_init(44100,-16,1,512)
 pygame.init()
 
 

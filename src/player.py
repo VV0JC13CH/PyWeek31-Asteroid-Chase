@@ -110,11 +110,11 @@ class Player(arcade.Sprite):
         position = arbiter.contact_point_set.points[0].point_a
         hit = False
         if self.flash_ani <= 0 and rel_velocity > 150:
-            assets.game_sfx['crashbig'].play(SOUND_VOL)
+            assets.game_sfx['crashbig'].play()
             self.hit(damage=1)
             hit = True
         elif self.flash_ani <= 0 and rel_velocity > 50: # sparks on contact with asteroid
-            assets.game_sfx['crashsmall'][int(random.random()>0.5)].play(SOUND_VOL)
+            assets.game_sfx['crashsmall'][int(random.random()>0.5)].play()
             self.hit(damage=0)
             hit = True
         if hit:
