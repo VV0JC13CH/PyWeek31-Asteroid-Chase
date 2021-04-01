@@ -171,6 +171,7 @@ class GameView(arcade.View):
 
     def on_show_view(self):
         self.window.cursor.change_state(state='off')
+        self.window.current_view_name = 'game_view'
 
     def reset_viewport(self):
         """In order to fix views after quit from gameView"""
