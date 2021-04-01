@@ -24,7 +24,7 @@ class IntroView(arcade.View):
     def __init__(self):
         super().__init__()
         self.window.current_view_name = 'intro_view'
-        self.button_skip = Button(x=self.window.width,
+        self.button_skip = Button(x=self.window.width/2,
                                   y=self.window.height * 1 / 8,
                                   width=250, height=50,
                                   texture_idle='skip_intro',

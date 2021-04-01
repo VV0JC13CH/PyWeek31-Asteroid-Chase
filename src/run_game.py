@@ -57,8 +57,6 @@ class GlobalWindow(arcade.Window):
         self.pause_view = None
         self.campaign_view = CampaignView()
         self.scenes.append(self.campaign_view)
-        self.intro_view = IntroView()
-        self.scenes.append(self.intro_view)
         
         self.gameview = GameView()
         self.scenes.append(self.gameview)
