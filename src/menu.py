@@ -15,6 +15,8 @@ from developer import log
 class MenuView(arcade.View):
     def __init__(self):
         super().__init__()
+        self.logo_counter = 0
+        self.logo_switch = False
         self.window.current_view_name = 'menu_view'
         self.button_play = Button(x=self.window.width/2,
                                   y=self.window.height*3/6,
@@ -42,6 +44,14 @@ class MenuView(arcade.View):
         self.button_play.detect_mouse(self.window.cursor)
         self.button_settings.detect_mouse(self.window.cursor)
         self.button_exit.detect_mouse(self.window.cursor)
+        if self.logo_counter < delta_time*25:
+            self.logo_counter += delta_time
+            self.logo_switch = True
+        elif self.logo_counter < delta_time*50:
+            self.logo_counter += delta_time
+            self.logo_switch = False
+        else:
+            self.logo_counter = 0
 
     def on_draw(self):
         self.window.developer_tool.on_draw_start()
@@ -52,6 +62,14 @@ class MenuView(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             self.window.width, self.window.height,
                                             assets.bg_menu)
+        if self.logo_switch:
+            arcade.draw_lrwh_rectangle_textured(self.window.width/2-250, self.window.height*3.5/6,
+                                                500, 200,
+                                                assets.logo_1)
+        else:
+            arcade.draw_lrwh_rectangle_textured(self.window.width/2-250, self.window.height*3.5/6,
+                                                500, 200,
+                                                assets.logo_2)
 
         self.button_play.draw()
         self.button_settings.draw()
