@@ -185,8 +185,6 @@ class CampaignView(arcade.View):
         self.planet_1.on_draw()
 
         self.player_list.draw()
-
-
         self.window.developer_tool.on_draw_finish()
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
