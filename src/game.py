@@ -140,20 +140,6 @@ class GameView(arcade.View):
         self.asteroid_manager.Update() # initial asteroid population
         
         """
-        # Add Asteroids
-        for i in range(100):
-            x = random.randrange(self.level_width)
-            y = random.randrange(self.level_height)
-            vx = random.randrange(100)-50
-            vy = random.randrange(100)-50
-            type=['small','large'][int(random.random()>0.5)]
-            if type == 'small' and random.random()>0.8:
-                type = 'broken_sat'
-            sprite = Asteroid(self,self.space,x,y,vx,vy,type=type)
-            self.asteroid_sprite_list.append(sprite)
-        """
-        
-        """
         # Add in some bombs for testing
         sprite = FloatingBomb(self,self.space,1000,300,0,0)
         self.bomb_sprite_list.append(sprite)

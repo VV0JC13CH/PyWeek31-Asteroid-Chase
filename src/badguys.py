@@ -66,6 +66,9 @@ class BadGuy(arcade.Sprite):
         self.fraction = 0.0
         self.boost_to = 0
         self.bomblaunch_to = 0
+        
+        self.bump = False
+        self.bump_to = 0
     
     def hit(self, damage=1):
         self.track_y += 400*random.random()-200 # dodge vertically
@@ -105,7 +108,12 @@ class BadGuy(arcade.Sprite):
                 vel_x = 400
             else:
                 vel_x = 400+(400-dist2p)
-        
+            
+            if self.bump_to > 0:
+                vel_x -= 150
+                
+            if vel_x < 0:
+                vel_x = 0
             self.change_x = vel_x/60.0
             
             # track y position
@@ -145,6 +153,37 @@ class BadGuy(arcade.Sprite):
                 sprite = FloatingBomb(self.parent,self.parent.space,self.center_x,self.center_y,self.change_x/10,20*random.random()-10)
                 self.parent.bomb_sprite_list.append(sprite)
                 assets.game_sfx['bomblaunch'].play()
+        
+        # Look for asteroid impacts
+        if self.bump_to == 0:
+            impacts = arcade.check_for_collision_with_list(self, self.parent.asteroid_sprite_list)
+            if len(impacts) > 0:
+                self.bump_to = 30
+                coll_x = 0.5*(impacts[0].center_x+self.center_x)
+                for i in range(8):
+                    particle = Particle(4, 4, arcade.color.YELLOW)
+                    while particle.change_y == 0 and particle.change_x == 0:
+                        particle.change_y = random.randrange(-2, 3)
+                        particle.change_x = random.randrange(-2, 3)
+                    particle.center_x = coll_x
+                    particle.center_y = self.center_y
+                    self.parent.particle_sprite_list.append(particle)
+                dx = impacts[0].center_x-self.center_x
+                dy = impacts[0].center_y-self.center_y
+                dist = math.sqrt(dx*dx+dy*dy)
+                impacts[0].body.apply_impulse_at_world_point((200*dx/dist,200*dy/dist),(impacts[0].center_x,impacts[0].center_y))
+                assets.game_sfx['crashsmall'][int(random.random()>0.5)].play()
+                if dy > 0:
+                    self.track_y -= 100
+                else:
+                    self.track_y += 100
+                if self.track_y < 30:
+                    self.track_y = 30
+                elif self.track_y > (self.level_height-30):
+                    self.track_y = (self.level_height-30)
+                
+        else:
+            self.bump_to -= 1
         
         # breakdown sparks
         if self.health == 0 and self.frame_ani == 0:
