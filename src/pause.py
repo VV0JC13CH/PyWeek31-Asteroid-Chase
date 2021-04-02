@@ -33,8 +33,10 @@ class PauseView(arcade.View):
         self.window.cursor.change_state(state='idle')
 
     def on_update(self, delta_time: float):
-        self.button_back_game.detect_mouse(self.window.cursor)
-        self.button_back_camp.detect_mouse(self.window.cursor)
+        if self.window.current_view_name == 'pause_view_after_game':
+            self.button_back_game.detect_mouse(self.window.cursor)
+        if self.window.current_view_name == 'pause_view_after_campaign':
+            self.button_back_camp.detect_mouse(self.window.cursor)
         self.button_back_menu.detect_mouse(self.window.cursor)
 
     def on_draw(self):
