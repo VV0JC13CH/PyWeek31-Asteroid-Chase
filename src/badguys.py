@@ -25,7 +25,6 @@ MAX_VERTICAL_MOVEMENT_SPEED = int(param['BADGUY1']['MAX_VERTICAL_MOVEMENT_SPEED'
 
 SOUND_VOL = int(settings['AUDIO']['SOUND_VOL'])
 
-
 class BadGuy(arcade.Sprite):
     """ Bad Guy """
     def __init__(self, parent, level_width, level_height, x=0, y=0, type=0, action_data=[]):
@@ -111,7 +110,17 @@ class BadGuy(arcade.Sprite):
             
             if self.bump_to > 0:
                 vel_x -= 150
-                
+            
+            # Check not running into others
+            for bg in self.parent.badguys_sprite_list:
+                if bg == self:
+                    continue
+                if math.fabs(self.center_x-bg.center_x) < 100 and math.fabs(self.center_y-bg.center_y) < 50:
+                    if self.center_x > bg.center_x:
+                        vel_x += 50
+                    else:
+                        vel_x -= 50
+            
             if vel_x < 0:
                 vel_x = 0
             self.change_x = vel_x/60.0
@@ -184,6 +193,19 @@ class BadGuy(arcade.Sprite):
                 
         else:
             self.bump_to -= 1
+        
+        # control lanes
+        best_dist = 100000
+        best_tracky = -1
+        for lane in assets.leveldata[self.parent.current_level].lanes:
+            if self.center_x > lane[0] and self.center_x < lane[1]:
+                dist = math.fabs(self.center_y-lane[2])
+                if dist < best_dist:
+                    best_dist = dist
+                    best_tracky = lane[2]
+        if best_tracky >= 0:
+            if best_dist > 40:
+                self.track_y = best_tracky
         
         # breakdown sparks
         if self.health == 0 and self.frame_ani == 0:

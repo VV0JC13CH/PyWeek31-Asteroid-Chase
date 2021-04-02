@@ -43,6 +43,12 @@ class AsteroidManager(object):
                 type = 'broken_sat'
             sprite = Asteroid(self.parent,self.space,x,y,vx,vy,type=type)
             self.parent.asteroid_sprite_list.append(sprite)
+            
+            # get rid of asteroids floating inside structures
+            structures_hit_list = arcade.check_for_collision_with_list(sprite, self.parent.structures_sprite_list)
+            if len(structures_hit_list) > 0:
+                self.space.remove(sprite.shape, sprite.body)
+                sprite.remove_from_sprite_lists()
     
     def Update(self):
         

@@ -7,6 +7,8 @@ Let's gather all resources from gfx/sfx here, like sprites and sounds.
 import arcade
 from button import SimpleButton
 
+import math
+
 # we love Windows users:
 from pathlib import Path
 # we love Ubuntu users (bug fix):
@@ -242,12 +244,29 @@ for x in range(1,9,1):
 
 
 # Static Structures Data
+
+# utility function for planetoids
+def CreatePlanetoid(xc,yc,r,nface,offset=0.02):
+    dang = (2*math.pi)/nface
+    verts = []
+    for i in range(nface):
+        x = r*math.cos(i*dang+offset)+xc
+        y = r*math.sin(i*dang+offset)+yc
+        verts.append([x,y])
+    return verts
+
 class Collection(object):
     pass
 static_structure = {}
-static_structure['rock1'] = Collection()
-static_structure['rock1'].verts = [[600,600],[600,700],[1000,700],[1200,650],[800,550]]
-static_structure['rock1'].type = 'rock'
+static_structure['rock1a'] = Collection()
+static_structure['rock1a'].verts = CreatePlanetoid(5000,1000,300,11)
+static_structure['rock1a'].type = 'rock'
+static_structure['rock1b'] = Collection()
+static_structure['rock1b'].verts = CreatePlanetoid(8000,1400,300,11)
+static_structure['rock1b'].type = 'rock'
+static_structure['rock1c'] = Collection()
+static_structure['rock1c'].verts = CreatePlanetoid(14000,600,300,11)
+static_structure['rock1c'].type = 'rock'
 
 # Bad Guy Archetypes
 bad_guydata = {}
@@ -259,7 +278,7 @@ bad_guydata['green1'].action_data = [('boost',0.5)]
 bad_guydata['green2'] = Collection()
 bad_guydata['green2'].type = 0
 bad_guydata['green2'].start_pos = (300,300)
-bad_guydata['green2'].action_data = [('boost',0.5)]
+bad_guydata['green2'].action_data = [('boost',0.55)]
 
 bad_guydata['purple1'] = Collection()
 bad_guydata['purple1'].type = 1
@@ -272,13 +291,17 @@ class LevelData(object):
     pass
 
 leveldata = {}
+
 leveldata['level1'] = LevelData()
 leveldata['level1'].music = 'space_chase'
-leveldata['level1'].size = (15000,2000) # level_width, level_height
+leveldata['level1'].size = (25000,2000) # level_width, level_height
 leveldata['level1'].player_start = (400,400) # position
 leveldata['level1'].asteroid_density = 10 # asteroids per screen width
 leveldata['level1'].badguy_ids = ['green1','green2']
-leveldata['level1'].static_structures = []
+leveldata['level1'].static_structures = ['rock1a','rock1b','rock1c']
+leveldata['level1'].lanes = [[4000,5200,1400],[4000,5200,600],
+                            [7000,8200,1800],[7000,8200,1000],
+                            [13000,14200,1000],[13000,14200,200]] # each lane is [start-x, finish-x, ypos]
 
 leveldata['level2'] = LevelData()
 leveldata['level2'].music = 'space_chase'
@@ -287,5 +310,14 @@ leveldata['level2'].player_start = (400,400) # position
 leveldata['level2'].asteroid_density = 20 # asteroids per screen width
 leveldata['level2'].badguy_ids = ['green1','green2','purple1']
 leveldata['level2'].static_structures = []
+leveldata['level2'].lanes = []
 
+leveldata['level3'] = LevelData()
+leveldata['level3'].music = 'space_chase'
+leveldata['level3'].size = (25000,2000) # level_width, level_height
+leveldata['level3'].player_start = (400,400) # position
+leveldata['level3'].asteroid_density = 10 # asteroids per screen width
+leveldata['level3'].badguy_ids = ['green1','green2']
+leveldata['level3'].static_structures = ['rock1']
+leveldata['level3'].lanes = []
 # etc ....
