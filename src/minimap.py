@@ -91,9 +91,9 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
                                            developer_mode=game_view.window.developer_mode,
                                            screen_beginning=game_view.view_left+40)
     
-    
+    """
     # draw lanes for bad guy path planning (Debug only)
     for lane in assets.leveldata[game_view.current_level].lanes:
         arcade.draw_line(lane[0], lane[2], lane[1], lane[2], arcade.color.PURPLE, 2)
-    
+    """
 
