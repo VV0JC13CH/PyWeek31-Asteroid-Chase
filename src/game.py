@@ -42,6 +42,7 @@ COLLTYPE_ASTEROID = 2
 COLLTYPE_STRUCTURE = 3
 COLLTYPE_BOMB = 3
 
+
 class GameView(arcade.View):
     """ Main game view. """
 
@@ -66,9 +67,12 @@ class GameView(arcade.View):
         self.right_pressed = None
         self.up_pressed = None
         self.down_pressed = None
+        self.lshift_pressed = None
+        self.space_pressed = None
         
         # Set up the player info
         self.player_sprite = None
+        self.basic_laser_in_use = False
     
     def setup(self, level, restart=False):
         
@@ -104,6 +108,8 @@ class GameView(arcade.View):
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
+        self.lshift_pressed = False
+        self.space_pressed = False
 
         self.view_bottom = 5
         self.view_left = 0
@@ -125,6 +131,9 @@ class GameView(arcade.View):
         starty = assets.leveldata[level].player_start[1]
         self.player_sprite = Player(self.level_width, self.level_height, self.particle_sprite_list, self.space, startx, starty)
         self.player_list.append(self.player_sprite)
+
+        # Weapons
+        self.basic_laser_in_use = False
         
         # Add static structures
         structures = [] # TODO: fill this with static_structures taken from assets
@@ -286,10 +295,17 @@ class GameView(arcade.View):
 
         self.view_left = int(self.view_left)
         self.view_bottom = int(self.view_bottom)
+
+        # Shoot out a bullet/laser
+        if self.player_sprite.health > 0:
+            if self.space_pressed and self.lshift_pressed and not self.basic_laser_in_use:
+                bullet = Bullet(self.player_sprite)
+                if len(self.bullet_sprite_list) < 8:
+                    self.bullet_sprite_list.append(bullet)
         
         # Update scrolling background
         self.background_list.update_scroll(self.view_left, self.view_bottom)
-        
+
         # Check for level outcome
         if self.outcome == None:
             if self.player_sprite.health == 0:
@@ -325,10 +341,12 @@ class GameView(arcade.View):
         elif key == arcade.key.RIGHT:
             self.right_pressed = True
         elif key == arcade.key.SPACE:
-            # Shoot out a bullet/laser
+            self.space_pressed = True
             if self.player_sprite.health > 0:
+                self.basic_laser_in_use = True
                 bullet = Bullet(self.player_sprite)
                 self.bullet_sprite_list.append(bullet)
+                self.basic_laser_in_use = False
         elif key == arcade.key.W:
             self.up_pressed = True
         elif key == arcade.key.S:
@@ -337,6 +355,8 @@ class GameView(arcade.View):
             self.left_pressed = True
         elif key == arcade.key.D:
             self.right_pressed = True
+        elif key == arcade.key.LSHIFT:
+            self.lshift_pressed = True
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
@@ -356,3 +376,7 @@ class GameView(arcade.View):
             self.left_pressed = False
         elif key == arcade.key.D:
             self.right_pressed = False
+        elif key == arcade.key.LSHIFT:
+            self.lshift_pressed = False
+        elif key == arcade.key.SPACE:
+            self.space_pressed = False
