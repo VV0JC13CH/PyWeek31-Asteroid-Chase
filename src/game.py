@@ -203,7 +203,7 @@ class GameView(arcade.View):
         self.bullet_sprite_list.draw()
         self.particle_sprite_list.draw()
         self.player_list.draw()
-        
+
         for badguy in self.badguys_sprite_list:
             badguy.postdraw()
         
@@ -315,6 +315,8 @@ class GameView(arcade.View):
                 self.outcome = 'failure'
             if all([(bg.health == 0) for bg in self.badguys_sprite_list]):
                 self.outcome = 'victory'
+                self.window.levels_unlocked = self.window.levels_unlocked + 1
+                print(self.window.levels_unlocked)
         if not self.outcome == None:
             self.level_to -= 1
             if self.level_to == 0:
