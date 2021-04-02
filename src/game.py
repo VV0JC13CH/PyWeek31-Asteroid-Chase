@@ -293,15 +293,15 @@ class GameView(arcade.View):
         # Check for level outcome
         if self.outcome == None:
             if self.player_sprite.health == 0:
-                self.outcome = 'restart'
+                self.outcome = 'death'
             if any([bg.fraction > 1.0 for bg in self.badguys_sprite_list]):
-                self.outcome = 'restart'
+                self.outcome = 'failure'
             if all([(bg.health == 0) for bg in self.badguys_sprite_list]):
                 self.outcome = 'victory'
         if not self.outcome == None:
             self.level_to -= 1
             if self.level_to == 0:
-                if self.outcome == 'restart':
+                if self.outcome in ['death','failure']:
                     self.window.gameview.setup(self.current_level,restart=True)
                     self.window.show_view(self.window.gameview)
                 else:

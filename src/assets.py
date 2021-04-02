@@ -274,15 +274,15 @@ class LevelData(object):
 leveldata = {}
 leveldata['level1'] = LevelData()
 leveldata['level1'].music = 'space_chase'
-leveldata['level1'].size = (15000,3000) # level_width, level_height
+leveldata['level1'].size = (15000,2000) # level_width, level_height
 leveldata['level1'].player_start = (400,400) # position
 leveldata['level1'].asteroid_density = 10 # asteroids per screen width
-leveldata['level1'].badguy_ids = ['green1']
+leveldata['level1'].badguy_ids = ['green1','green2']
 leveldata['level1'].static_structures = []
 
 leveldata['level2'] = LevelData()
-leveldata['level2'].music = 'the_drop'
-leveldata['level2'].size = (20000,3000) # level_width, level_height
+leveldata['level2'].music = 'space_chase'
+leveldata['level2'].size = (25000,3000) # level_width, level_height
 leveldata['level2'].player_start = (400,400) # position
 leveldata['level2'].asteroid_density = 20 # asteroids per screen width
 leveldata['level2'].badguy_ids = ['green1','green2','purple1']
