@@ -233,6 +233,11 @@ for x in range(1,7,1):
     bg_path = arcade.load_texture(path_to_string("gfx", "bg_intro"+str(x)+".png"))
     intro_bg_paths.append(bg_path)
 
+keyboard_hints_paths = []
+for x in range(1,9,1):
+    bg_path = arcade.load_texture(path_to_string("gfx", "keyboard"+str(x)+".png"))
+    keyboard_hints_paths.append(bg_path)
+
 
 
 

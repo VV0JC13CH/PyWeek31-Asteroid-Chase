@@ -63,6 +63,16 @@ class IntroView(arcade.View):
         self.bad_guys_list.append(self.bad_guy_a)
         self.bad_guys_list.append(self.bad_guy_b)
         self.bad_guys_list.append(self.bad_guy_c)
+        # Track the current state of what key is pressed
+        self.left_pressed = False
+        self.right_pressed = False
+        self.up_pressed = False
+        self.down_pressed = False
+        self.shift_pressed = False
+        self.space_pressed = False
+        self.escape_pressed = False
+        self.keyboard_int = 8
+        self.keyboard_image = assets.keyboard_hints_paths[7]
 
     def on_show_view(self):
         self.window.cursor.change_state(state='off')
@@ -104,6 +114,23 @@ class IntroView(arcade.View):
             self.bad_guy_a.update()
             self.bad_guy_b.update()
             self.bad_guy_c.update()
+        if self.shift_pressed:
+            self.keyboard_int = 1
+        elif self.escape_pressed:
+            self.keyboard_int = 2
+        elif self.left_pressed:
+            self.keyboard_int = 3
+        elif self.down_pressed:
+            self.keyboard_int = 4
+        elif self.right_pressed:
+            self.keyboard_int = 5
+        elif self.up_pressed:
+            self.keyboard_int = 6
+        elif self.space_pressed:
+            self.keyboard_int = 7
+        else:
+            self.keyboard_int = 8
+        self.keyboard_image = assets.keyboard_hints_paths[self.keyboard_int-1]
 
     def on_draw(self):
         self.window.developer_tool.on_draw_start()
@@ -126,6 +153,9 @@ class IntroView(arcade.View):
             self.button_skip.draw()
         elif self.show_play_game:
             self.button_play_game.draw()
+            arcade.draw_lrwh_rectangle_textured(self.window.width / 2 - 500, self.window.height / 2 - 400,
+                                                500 * 2, 200 * 2,
+                                                self.keyboard_image)
 
         self.window.developer_tool.on_draw_finish()
 
@@ -150,10 +180,57 @@ class IntroView(arcade.View):
         if key == arcade.key.ESCAPE:
             self.window.cursor.change_state('idle')
             self.show_skip_button = True
+            self.escape_pressed = True
         elif key == arcade.key.SPACE:
             self.window.cursor.change_state('idle')
+            self.space_pressed = True
             self.show_skip_button = True
         elif key == arcade.key.ENTER:
             self.window.cursor.change_state('idle')
             self.show_skip_button = True
+        elif key == arcade.key.UP:
+            self.up_pressed = True
+        elif key == arcade.key.DOWN:
+            self.down_pressed = True
+        elif key == arcade.key.LEFT:
+            self.left_pressed = True
+        elif key == arcade.key.RIGHT:
+            self.right_pressed = True
+        elif key == arcade.key.SPACE:
+            self.space_pressed = True
+        elif key == arcade.key.W:
+            self.up_pressed = True
+        elif key == arcade.key.S:
+            self.down_pressed = True
+        elif key == arcade.key.A:
+            self.left_pressed = True
+        elif key == arcade.key.D:
+            self.right_pressed = True
+        elif key == arcade.key.LSHIFT:
+            self.shift_pressed = True
+
+    def on_key_release(self, key, modifiers):
+        """Called when the user releases a key. """
+        if key == arcade.key.UP:
+            self.up_pressed = False
+        elif key == arcade.key.DOWN:
+            self.down_pressed = False
+        elif key == arcade.key.LEFT:
+            self.left_pressed = False
+        elif key == arcade.key.RIGHT:
+            self.right_pressed = False
+        elif key == arcade.key.SPACE:
+            self.space_pressed = False
+        elif key == arcade.key.W:
+            self.up_pressed = False
+        elif key == arcade.key.S:
+            self.down_pressed = False
+        elif key == arcade.key.A:
+            self.left_pressed = False
+        elif key == arcade.key.D:
+            self.right_pressed = False
+        elif key == arcade.key.LSHIFT:
+            self.shift_pressed = False
+        elif key == arcade.key.ESCAPE:
+            self.escape_pressed = False
 
