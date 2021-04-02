@@ -19,7 +19,7 @@ from particle import Particle
 from bullet import Bullet, Explosion
 from scroll_background import ScrollBackground
 from structures import Structure
-from asteroid import Asteroid
+from asteroid import Asteroid, AsteroidManager
 from badguys import BadGuy, FloatingBomb
 import assets
 
@@ -135,17 +135,9 @@ class GameView(arcade.View):
             structure_sprite = Structure(self, self.space, structure.verts, "str_%d"%(i), type=structure.type)
             self.structures_sprite_list.append(structure_sprite)
         
-        # Add Asteroids
-        for i in range(100):
-            x = random.randrange(self.level_width)
-            y = random.randrange(self.level_height)
-            vx = random.randrange(100)-50
-            vy = random.randrange(100)-50
-            type=['small','large'][int(random.random()>0.5)]
-            if type == 'small' and random.random()>0.8:
-                type = 'broken_sat'
-            sprite = Asteroid(self,self.space,x,y,vx,vy,type=type)
-            self.asteroid_sprite_list.append(sprite)
+        # Initialise Asteroid Manager
+        self.asteroid_manager = AsteroidManager(self, density=assets.leveldata[level].asteroid_density)
+        self.asteroid_manager.Update() # initial asteroid population
         
         """
         # Add in some bombs for testing
@@ -244,6 +236,9 @@ class GameView(arcade.View):
         self.badguys_sprite_list.update()
         self.bomb_sprite_list.update()
         
+        # check for asteroid updates needed
+        self.asteroid_manager.Update()
+        
         for bullet in self.bullet_sprite_list:
             if bullet.death_to < 20: # bullet currently acting as explosion
                 continue
@@ -298,15 +293,15 @@ class GameView(arcade.View):
         # Check for level outcome
         if self.outcome == None:
             if self.player_sprite.health == 0:
-                self.outcome = 'restart'
+                self.outcome = 'death'
             if any([bg.fraction > 1.0 for bg in self.badguys_sprite_list]):
-                self.outcome = 'restart'
+                self.outcome = 'failure'
             if all([(bg.health == 0) for bg in self.badguys_sprite_list]):
                 self.outcome = 'victory'
         if not self.outcome == None:
             self.level_to -= 1
             if self.level_to == 0:
-                if self.outcome == 'restart':
+                if self.outcome in ['death','failure']:
                     self.window.gameview.setup(self.current_level,restart=True)
                     self.window.show_view(self.window.gameview)
                 else:

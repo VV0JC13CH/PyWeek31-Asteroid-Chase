@@ -29,42 +29,66 @@ class AsteroidManager(object):
         self.density = density
         self.space = self.parent.space
         self.sector_len = 1200
-        self.previous_sector = floor(self.parent.player_sprite.center_x/self.sector_len)
-        
+        #self.previous_sector = math.floor(self.parent.player_sprite.center_x/self.sector_len)
+        self.previous_sector = -1
+    
+    def PopulateSector(self, sector):
+        for i in range(self.density):
+            x = sector*self.sector_len + random.randrange(self.sector_len)
+            y = random.randrange(self.parent.level_height)
+            vx = random.randrange(100)-50
+            vy = random.randrange(100)-50
+            type=['small','large'][int(random.random()>0.5)]
+            if type == 'small' and random.random()>0.8:
+                type = 'broken_sat'
+            sprite = Asteroid(self.parent,self.space,x,y,vx,vy,type=type)
+            self.parent.asteroid_sprite_list.append(sprite)
+            
+            # get rid of asteroids floating inside structures
+            structures_hit_list = arcade.check_for_collision_with_list(sprite, self.parent.structures_sprite_list)
+            if len(structures_hit_list) > 0:
+                self.space.remove(sprite.shape, sprite.body)
+                sprite.remove_from_sprite_lists()
+    
     def Update(self):
         
-        current_sector = floor(self.parent.player_sprite.center_x/self.sector_len)
+        current_sector = math.floor(self.parent.player_sprite.center_x/self.sector_len)
         if current_sector == self.previous_sector:
             return
         else:
+            #print('moving: %d -> %d'%(self.previous_sector, current_sector))
             # remove asteroids outside of range
+            c = 0
             for asteroid in self.parent.asteroid_sprite_list:
                 prevsect_bound = (current_sector-1)*self.sector_len
                 nextsect_bound = (current_sector+2)*self.sector_len
                 if asteroid.center_x < prevsect_bound or asteroid.center_x > nextsect_bound:
                     self.space.remove(asteroid.shape, asteroid.body)
                     asteroid.remove_from_sprite_lists()
+                    #print('x: ',asteroid.center_x)
+                    c += 1
+                else:
+                    pass
+                    #print('xkeep: ',asteroid.center_x)
+            #print('removed: %d'%(c))
         
             # Populate asteroids in next sector
             if current_sector > self.previous_sector:
                 approaching_sector = current_sector+1
             else:
                 approaching_sector = current_sector-1
-            n_sectors = floor(self.parent.level_width/self.sector_len)
+            n_sectors = math.floor(self.parent.level_width/self.sector_len)
             if approaching_sector >= 0 and approaching_sector < n_sectors: # inside level width
-                for i in range(self.density):
-                    x = approaching_sector*self.sector_len + random.randrange(self.sector_len)
-                    y = random.randrange(self.parent.level_height)
-                    vx = random.randrange(100)-50
-                    vy = random.randrange(100)-50
-                    type=['small','large'][int(random.random()>0.5)]
-                    if type == 'small' and random.random()>0.8:
-                        type = 'broken_sat'
-                    sprite = Asteroid(self,self.space,x,y,vx,vy,type=type)
-                    self.parent.asteroid_sprite_list.append(sprite)
-                
+                self.PopulateSector(approaching_sector)
+                #print('adding: %d'%(approaching_sector))
+            
+            if self.previous_sector == -1: # init level, so populate the current sector too
+                self.PopulateSector(current_sector)
+                #print('adding: %d'%(current_sector))
+            
             # reset for next update
             self.previous_sector = current_sector
+            #print('num: ',len(self.parent.asteroid_sprite_list))
             
 
 class Asteroid(arcade.Sprite):

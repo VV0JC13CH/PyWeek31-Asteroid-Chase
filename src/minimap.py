@@ -5,6 +5,7 @@ Place for MiniMap functions.
 """
 import arcade
 import data
+import assets
 import developer
 # --- Constants ---
 param = data.load_parameters()
@@ -63,14 +64,12 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
                                   width=100, height=10,
                                   color=arcade.color.WHITE)
     
-    if game_view.player_sprite.health == 0:
+    if game_view.outcome == 'death':
         arcade.draw_text("Police Ship\nOut of Action", game_view.view_left+game_view.window.width/2-450, game_view.view_bottom+game_view.window.height/2, arcade.color.ORANGE, 56, width=900, align="center")
-    
-    if len(game_view.badguys_sprite_list) > 0:
-        if all([(bg.health == 0) for bg in game_view.badguys_sprite_list]):
-            arcade.draw_text("Mission Complete!", game_view.view_left+game_view.window.width/2-450, game_view.view_bottom+game_view.window.height/2, arcade.color.GREEN, 56, width=900, align="center")
-        if any([bg.fraction > 1.0 for bg in game_view.badguys_sprite_list]):
-            arcade.draw_text("Mission Failed!", game_view.view_left+game_view.window.width/2-450, game_view.view_bottom+game_view.window.height/2, arcade.color.RED, 56, width=900, align="center")
+    elif game_view.outcome == 'failure':
+        arcade.draw_text("Mission Failed!", game_view.view_left+game_view.window.width/2-450, game_view.view_bottom+game_view.window.height/2, arcade.color.RED, 56, width=900, align="center")
+    elif game_view.outcome == 'victory':
+        arcade.draw_text("Mission Complete!", game_view.view_left+game_view.window.width/2-450, game_view.view_bottom+game_view.window.height/2, arcade.color.GREEN, 56, width=900, align="center")
     
     # draw player on mini map
     x = hor_offset + game_view.view_left + map_width*(game_view.player_sprite.center_x/level_width)
@@ -91,5 +90,10 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
     game_view.window.music_manager.on_draw(screen_height=game_view.view_bottom+game_view.window.height-80,
                                            developer_mode=game_view.window.developer_mode,
                                            screen_beginning=game_view.view_left+40)
-
+    
+    """
+    # draw lanes for bad guy path planning (Debug only)
+    for lane in assets.leveldata[game_view.current_level].lanes:
+        arcade.draw_line(lane[0], lane[2], lane[1], lane[2], arcade.color.PURPLE, 2)
+    """
 

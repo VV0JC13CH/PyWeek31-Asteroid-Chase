@@ -7,6 +7,8 @@ Let's gather all resources from gfx/sfx here, like sprites and sounds.
 import arcade
 from button import SimpleButton
 
+import math
+
 # we love Windows users:
 from pathlib import Path
 # we love Ubuntu users (bug fix):
@@ -237,12 +239,64 @@ for x in range(1,9,1):
 
 
 # Static Structures Data
+
+# utility function for planetoids
+def CreatePlanetoid(xc,yc,r,nface,rot=0,sx=1.0,sy=1.0):
+    dang = (2*math.pi)/nface
+    offrad = rot*math.pi/180.0
+    verts = []
+    for i in range(nface):
+        x1 = sx*r*math.cos(i*dang)
+        y1 = sy*r*math.sin(i*dang)
+        x2 = x1*math.cos(offrad)-y1*math.sin(offrad)
+        y2 = x1*math.sin(offrad)+y1*math.cos(offrad)
+        verts.append([x2+xc,y2+yc])
+    return verts
+
 class Collection(object):
     pass
 static_structure = {}
+
+# level 3 big structures
+
+static_structure['rock9'] = Collection()
+static_structure['rock9'].verts = CreatePlanetoid(2550,50,150,11)
+static_structure['rock9'].type = 'rock'
 static_structure['rock1'] = Collection()
-static_structure['rock1'].verts = [[600,600],[600,700],[1000,700],[1200,650],[800,550]]
+static_structure['rock1'].verts = CreatePlanetoid(3000,1000,250,7,sx=1.5)
 static_structure['rock1'].type = 'rock'
+static_structure['rock2'] = Collection()
+static_structure['rock2'].verts = CreatePlanetoid(3600,1000,250,6,sx=1.9)
+static_structure['rock2'].type = 'rock'
+static_structure['rock3'] = Collection()
+static_structure['rock3'].verts = CreatePlanetoid(4250,1000,220,9,sx=1.3)
+static_structure['rock3'].type = 'rock'
+static_structure['rock4'] = Collection()
+static_structure['rock4'].verts = CreatePlanetoid(4900,1000,400,13,rot=-55,sx=1.2)
+static_structure['rock4'].type = 'rock'
+static_structure['rock8'] = Collection()
+static_structure['rock8'].verts = CreatePlanetoid(5700,700,300,11,sx=1.9)
+static_structure['rock8'].type = 'rock'
+
+static_structure['rock5'] = Collection()
+static_structure['rock5'].verts = CreatePlanetoid(3000,300,250,9,sx=1.9)
+static_structure['rock5'].type = 'rock'
+static_structure['rock6'] = Collection()
+static_structure['rock6'].verts = CreatePlanetoid(3700,200,270,8,rot=-35,sx=1.7)
+static_structure['rock6'].type = 'rock'
+static_structure['rock7'] = Collection()
+static_structure['rock7'].verts = CreatePlanetoid(4250,0,220,7)
+static_structure['rock7'].type = 'rock'
+
+static_structure['rock10'] = Collection()
+static_structure['rock10'].verts = CreatePlanetoid(8000,750,300,24,sx=3.0)
+static_structure['rock10'].type = 'rock'
+static_structure['rock11'] = Collection()
+static_structure['rock11'].verts = CreatePlanetoid(8820,430,195,7,sx=1.1)
+static_structure['rock11'].type = 'rock'
+static_structure['rock12'] = Collection()
+static_structure['rock12'].verts = CreatePlanetoid(8900,0,220,9,sx=1.2)
+static_structure['rock12'].type = 'rock'
 
 # Bad Guy Archetypes
 bad_guydata = {}
@@ -254,7 +308,7 @@ bad_guydata['green1'].action_data = [('boost',0.5)]
 bad_guydata['green2'] = Collection()
 bad_guydata['green2'].type = 0
 bad_guydata['green2'].start_pos = (300,300)
-bad_guydata['green2'].action_data = [('boost',0.5)]
+bad_guydata['green2'].action_data = [('boost',0.55)]
 
 bad_guydata['purple1'] = Collection()
 bad_guydata['purple1'].type = 1
@@ -262,25 +316,53 @@ bad_guydata['purple1'].start_pos = (700,600)
 bad_guydata['purple1'].action_data = action_data = [('bomb',0.2),('bomb',0.4),('bomb',0.6),('bomb',0.8),('bomb',0.9),
             ('boost',0.3),('boost',0.6)]
 
+bad_guydata['green1_3'] = Collection()
+bad_guydata['green1_3'].type = 0
+bad_guydata['green1_3'].start_pos = (900,900)
+bad_guydata['green1_3'].action_data = [('boost',0.08),('boost',0.5)]
+
+bad_guydata['green2_3'] = Collection()
+bad_guydata['green2_3'].type = 0
+bad_guydata['green2_3'].start_pos = (300,300)
+bad_guydata['green2_3'].action_data = [('boost',0.08),('boost',0.55)]
+
+bad_guydata['purple1_3'] = Collection()
+bad_guydata['purple1_3'].type = 1
+bad_guydata['purple1_3'].start_pos = (700,600)
+bad_guydata['purple1_3'].action_data = action_data = [('bomb',0.2),('bomb',0.25),('bomb',0.6),('bomb',0.8),('bomb',0.9),
+            ('boost',0.07),('boost',0.1),('boost',0.25),('boost',0.6)]
+
 # Level Data (it's sort of like an asset :) )
 class LevelData(object):
     pass
 
 leveldata = {}
+
 leveldata['level1'] = LevelData()
 leveldata['level1'].music = 'space_chase'
-leveldata['level1'].size = (15000,3000) # level_width, level_height
+leveldata['level1'].size = (25000,2000) # level_width, level_height
 leveldata['level1'].player_start = (400,400) # position
-leveldata['level1'].asteroid_density = 100 # asteroids per screen width
-leveldata['level1'].badguy_ids = ['green1']
+leveldata['level1'].asteroid_density = 10 # asteroids per screen width
+leveldata['level1'].badguy_ids = ['green1','green2']
 leveldata['level1'].static_structures = []
+leveldata['level1'].lanes = [] # each lane is [start-x, finish-x, ypos]
 
 leveldata['level2'] = LevelData()
-leveldata['level2'].music = 'the_drop'
-leveldata['level2'].size = (20000,3000) # level_width, level_height
+leveldata['level2'].music = 'space_chase'
+leveldata['level2'].size = (25000,3000) # level_width, level_height
 leveldata['level2'].player_start = (400,400) # position
-leveldata['level2'].asteroid_density = 100 # asteroids per screen width
+leveldata['level2'].asteroid_density = 20 # asteroids per screen width
 leveldata['level2'].badguy_ids = ['green1','green2','purple1']
 leveldata['level2'].static_structures = []
+leveldata['level2'].lanes = []
 
-# etc ....
+leveldata['level3'] = LevelData()
+leveldata['level3'].music = 'space_chase'
+leveldata['level3'].size = (30000,1500) # level_width, level_height
+leveldata['level3'].player_start = (200,600) # position
+leveldata['level3'].asteroid_density = 10 # asteroids per screen width
+leveldata['level3'].badguy_ids = ['green1_3','green2_3','purple1_3']
+leveldata['level3'].static_structures = ['rock1','rock2','rock3','rock4','rock5','rock6',
+                                        'rock7','rock8','rock9','rock10','rock11','rock12']
+leveldata['level3'].lanes = [[1500,4100,600],[4300,5000,200],[6500,9000,230]] # each lane is [start-x, finish-x, ypos]
+
