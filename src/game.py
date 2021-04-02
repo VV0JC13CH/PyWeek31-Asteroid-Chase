@@ -61,6 +61,11 @@ class GameView(arcade.View):
         self.structures_sprite_list = None
         self.badguys_sprite_list = None
         self.bomb_sprite_list = None
+
+        self.left_pressed = None
+        self.right_pressed = None
+        self.up_pressed = None
+        self.down_pressed = None
         
         # Set up the player info
         self.player_sprite = None
@@ -329,6 +334,14 @@ class GameView(arcade.View):
             if self.player_sprite.health > 0:
                 bullet = Bullet(self.player_sprite)
                 self.bullet_sprite_list.append(bullet)
+        elif key == arcade.key.W:
+            self.up_pressed = True
+        elif key == arcade.key.S:
+            self.down_pressed = True
+        elif key == arcade.key.A:
+            self.left_pressed = True
+        elif key == arcade.key.D:
+            self.right_pressed = True
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
@@ -339,4 +352,12 @@ class GameView(arcade.View):
         elif key == arcade.key.LEFT:
             self.left_pressed = False
         elif key == arcade.key.RIGHT:
+            self.right_pressed = False
+        elif key == arcade.key.W:
+            self.up_pressed = False
+        elif key == arcade.key.S:
+            self.down_pressed = False
+        elif key == arcade.key.A:
+            self.left_pressed = False
+        elif key == arcade.key.D:
             self.right_pressed = False
