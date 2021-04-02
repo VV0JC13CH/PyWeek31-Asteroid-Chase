@@ -306,7 +306,6 @@ class GameView(arcade.View):
                     self.window.show_view(self.window.gameview)
                 else:
                     pass # TODO: switch to campaign view
-                
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -314,6 +313,7 @@ class GameView(arcade.View):
             self.reset_viewport()
             self.window.pause_view = pause.PauseView(self)
             log('Scene switched to ' + str(self.window.pause_view))
+            self.window.current_view_name = 'pause_view_after_game'
             self.window.scenes.append(self.window.pause_view)
             self.window.show_view(self.window.pause_view)
         elif key == arcade.key.UP:
@@ -332,7 +332,6 @@ class GameView(arcade.View):
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
-
         if key == arcade.key.UP:
             self.up_pressed = False
         elif key == arcade.key.DOWN:

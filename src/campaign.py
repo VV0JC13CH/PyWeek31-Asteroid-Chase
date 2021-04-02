@@ -189,9 +189,6 @@ class CampaignView(arcade.View):
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
-            #new_game = game.GameView(level_width=self.window.width,
-            #                         level_height=self.window.height)
-            #self.window.show_view(new_game)
             self.window.gameview.setup('level1')
             self.window.show_view(self.window.gameview)
 
@@ -200,6 +197,7 @@ class CampaignView(arcade.View):
         if key == arcade.key.ESCAPE:
             self.window.pause_view = pause.PauseView(self)
             log('Scene switched to ' + str(self.window.pause_view))
+            self.window.current_view_name = 'pause_view_after_campaign'
             self.window.scenes.append(self.window.pause_view)
             self.window.show_view(self.window.pause_view)
         if key == arcade.key.F5 and self.window.developer_mode:

@@ -17,13 +17,12 @@ from developer import log
 class PauseView(arcade.View):
     def __init__(self, game_view):
         super().__init__()
-        self.window.current_view_name = 'pause_view'
         self.game_view = game_view
 
         self.button_back_game = Button(x=self.window.width / 6 * 4, y=self.window.height * 5 / 6,
                                        width=500, height=100,
                                        texture_idle='back_game', texture_hover='back_game_hover')
-        self.button_back_camp = Button(x=self.window.width / 2, y=self.window.height / 2,
+        self.button_back_camp = Button(x=self.window.width / 6 * 4, y=self.window.height * 5 / 6,
                                        width=500, height=100,
                                        texture_idle='back_camp', texture_hover='back_camp_hover')
         self.button_back_menu = Button(x=self.window.width / 6 * 2, y=self.window.height * 1 / 6,
@@ -46,8 +45,10 @@ class PauseView(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             self.window.width, self.window.height,
                                             assets.bg_menu)
-        self.button_back_game.draw()
-        self.button_back_camp.draw()
+        if self.window.current_view_name == 'pause_view_after_game':
+            self.button_back_game.draw()
+        if self.window.current_view_name == 'pause_view_after_campaign':
+            self.button_back_camp.draw()
         self.button_back_menu.draw()
 
         self.window.developer_tool.on_draw_finish()
