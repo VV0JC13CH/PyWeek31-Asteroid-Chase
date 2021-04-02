@@ -174,11 +174,6 @@ bomb_textures = [arcade.load_texture(path_to_string('gfx', 'bomb001.png')),
 
 # Music paths
 
-songs = [path_to_string('music', 'asteroid_chase_menu.ogg'),
-         path_to_string('music', 'the_drop.oggt'),
-         path_to_string('music', 'he_chase.ogg')]
-
-
 music_list = {'menu': path_to_string('music', 'asteroid_chase_menu.ogg'),
               'space_chase': path_to_string('music', 'space_chase.ogg'),
               'the_drop': path_to_string('music', 'the_drop.ogg')}

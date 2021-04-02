@@ -3,9 +3,12 @@ music.py
 Let's play music!
 """
 
-import arcade
 import assets
 import time
+import pygame
+import arcade
+pygame.mixer.pre_init(44100, -16, 1, 512)
+pygame.mixer.init()
 
 
 class MusicManager:
@@ -28,9 +31,10 @@ class MusicManager:
         # Stop what is currently playing.
         # Play the next song
         if self.music and self.music_enabled:
-            self.music.stop(self.current_player)
-        self.music = arcade.Sound(self.music_list[self.current_song], streaming=True)
-        self.current_player = self.music.play(self.volume)
+            self.music.stop()
+        self.music = pygame.mixer.music
+        self.music.load(self.music_list[self.current_song])
+        self.music.play()
         self.music_enabled = True
         time.sleep(0.03)
 
@@ -64,15 +68,12 @@ class MusicManager:
     def on_draw(self, screen_height, developer_mode, screen_beginning=0):
         """ Render the screen. """
         if developer_mode:
-            position = self.music.get_stream_position(self.current_player)
-            length = self.music.get_length()
-            text_position = f"Currently playing: {int(position) // 60}:{int(position) % 60:02} of {int(length) // 60}:{int(length) % 60:02}"
             text_song = f" {self.music_list[self.current_song]}"
-            arcade.draw_text(text_position + ' ' + text_song, screen_beginning + 20, screen_height - 20,
+            arcade.draw_text(text_song, screen_beginning + 20, screen_height - 20,
                              arcade.color.WHITE_SMOKE, 18)
 
     def on_update(self, dt):
-        position = self.music.get_stream_position()
+        position = self.music.get_pos()
         if position == 0.0:
             self.advance_song()
             self.start_song()

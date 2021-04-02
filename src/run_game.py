@@ -79,6 +79,7 @@ class GlobalWindow(arcade.Window):
     def on_update(self, delta_time: float):
         self.developer_tool.on_update(delta_time=delta_time, enable_tools=self.developer_mode)
         self.cursor.update()
+        self.music_manager.on_update(delta_time)
 
     def on_mouse_motion(self, x, y, _dx, _dy):
         """
