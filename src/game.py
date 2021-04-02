@@ -299,10 +299,11 @@ class GameView(arcade.View):
         # Shoot out a bullet/laser
         if self.player_sprite.health > 0:
             if self.space_pressed and self.lshift_pressed and not self.basic_laser_in_use:
-                bullet = Bullet(self.player_sprite)
-                if len(self.bullet_sprite_list) < 8:
+                if len(self.bullet_sprite_list) < 8 and not self.player_sprite.laser_disabled:
+                    bullet = Bullet(self.player_sprite)
                     self.bullet_sprite_list.append(bullet)
-        
+                    self.player_sprite.overheat += 0.03
+
         # Update scrolling background
         self.background_list.update_scroll(self.view_left, self.view_bottom)
 
@@ -342,10 +343,11 @@ class GameView(arcade.View):
             self.right_pressed = True
         elif key == arcade.key.SPACE:
             self.space_pressed = True
-            if self.player_sprite.health > 0:
+            if self.player_sprite.health > 0 and not self.player_sprite.laser_disabled:
                 self.basic_laser_in_use = True
                 bullet = Bullet(self.player_sprite)
                 self.bullet_sprite_list.append(bullet)
+                self.player_sprite.overheat += 0.01
                 self.basic_laser_in_use = False
         elif key == arcade.key.W:
             self.up_pressed = True

@@ -19,6 +19,7 @@ LEVEL_HEIGHT = int(param['LEVEL']['DEFAULT_HEIGHT'])
 MINIMAP_HEIGHT = int(param['MAP']['HEIGHT'])
 PLAYERHEALTH = float(param['PLAYER']['HEALTH'])
 
+
 def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, level_height=LEVEL_HEIGHT):
     
     map_width = game_view.window.width * 0.8
@@ -54,12 +55,24 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
     
     # Player health
     meter_x = 100*(game_view.player_sprite.health/PLAYERHEALTH)
-    arcade.draw_text("Shield", game_view.view_left+40, game_view.view_bottom+game_view.window.height-30, arcade.color.WHITE, 18)
+    arcade.draw_text("Shield", game_view.view_left+18, game_view.view_bottom+game_view.window.height-30, arcade.color.WHITE, 18)
     x = game_view.view_left+70
     y = game_view.view_bottom+game_view.window.height-45
     arcade.draw_rectangle_filled(center_x=x-(50-meter_x/2), center_y=y,
                                   width=meter_x, height=10,
                                   color=arcade.color.ORANGE)
+    arcade.draw_rectangle_outline(center_x=x, center_y=y,
+                                  width=100, height=10,
+                                  color=arcade.color.WHITE)
+    # Laser overheat self.overheat = 0.0
+    meter_x = 100 * (game_view.player_sprite.overheat / 1)
+    arcade.draw_text("Laser", game_view.view_left + 18, game_view.view_bottom + game_view.window.height - 100,
+                     arcade.color.WHITE, 18)
+    x = game_view.view_left + 70
+    y = game_view.view_bottom + game_view.window.height - 115
+    arcade.draw_rectangle_filled(center_x=x - (50 - meter_x / 2), center_y=y,
+                                 width=meter_x, height=10,
+                                 color=arcade.color.ORANGE)
     arcade.draw_rectangle_outline(center_x=x, center_y=y,
                                   width=100, height=10,
                                   color=arcade.color.WHITE)

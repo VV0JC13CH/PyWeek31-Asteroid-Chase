@@ -44,6 +44,8 @@ class Player(arcade.Sprite):
         radius = 40
         mass = 2.0
         self.health = HEALTH
+        # Overheat of laser
+        self.overheat = 0.0
         
         vs_body = [(-50,-25),(-50,0),(-20,25),(20,25),(50,0),(50,-25)]
         inertia = pymunk.moment_for_poly(mass, vs_body)
@@ -67,6 +69,9 @@ class Player(arcade.Sprite):
         self.siren_ani = 0
         self.texture = assets.police_textures[0][0]
         self.scale = 1.0
+
+        # Weapons
+        self.laser_disabled = False
     
     def accelerate_up(self):
         if self.health == 0:
@@ -156,7 +161,15 @@ class Player(arcade.Sprite):
             righting = gain_ang*angle_diff + gain_angdot*self.body.angular_velocity
             self.body.apply_impulse_at_world_point((0.0,righting),(self.center_x-10, self.center_y))
             self.body.apply_impulse_at_world_point((0.0,-righting),(self.center_x+10, self.center_y))
-        
+        if self.overheat > 0 and not self.laser_disabled:
+            self.overheat -= 0.002
+        if self.overheat >= 1 and not self.laser_disabled:
+            self.laser_disabled = True
+        if self.overheat > 0 and self.laser_disabled:
+            self.overheat -= 0.003
+        if self.overheat <= 0 and self.laser_disabled:
+            self.laser_disabled = False
+
         # Update sprite/animations
         self.center_x = self.shape.body.position.x
         self.center_y = self.shape.body.position.y
