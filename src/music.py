@@ -19,6 +19,7 @@ class MusicManager:
         self.current_song = 0
         self.music = None
         self.music_enabled = False
+        self.common_name_of_song = 'Kiss me babe one more time! - Santana'
 
     def advance_song(self):
         """ Advance our pointer to the next song. This does NOT start the song. """
@@ -45,6 +46,7 @@ class MusicManager:
                 for known_song in self.music_list:
                     if known_song == path:
                         self.current_song = self.music_list.index(known_song)
+                        self.common_name_of_song = song_to_play
         if self.music_enabled:
             # Play the song
             self.start_song()
@@ -68,7 +70,7 @@ class MusicManager:
     def on_draw(self, screen_height, developer_mode, screen_beginning=0):
         """ Render the screen. """
         if developer_mode:
-            text_song = f" {self.music_list[self.current_song]}"
+            text_song = f"Current song: {self.common_name_of_song} ({self.music_list[self.current_song]})"
             arcade.draw_text(text_song, screen_beginning + 20, screen_height - 20,
                              arcade.color.WHITE_SMOKE, 18)
 
