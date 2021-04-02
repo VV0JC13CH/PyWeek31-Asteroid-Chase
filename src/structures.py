@@ -54,6 +54,7 @@ def make_polyrock_texture(vertices,name,type):
     img.paste(textimg, (0,0), img)
     draw.line([(v[0]-minx,res_y-(v[1]-miny)) for v in vertices]+[(vertices[0][0]-minx,res_y-(vertices[0][1]-miny))], fill=outline_colour, width=10)
     # name must be unique for caching
+    img = img.resize((int(res_x/4),int(res_y/4))) # memory saving :)
     return (Texture(name, img), center)
 
 class Structure(arcade.Sprite):
@@ -65,6 +66,7 @@ class Structure(arcade.Sprite):
         self.parent = parent
         self.space = space
         self.type = type
+        self.scale = 4.0 # memory saving :)
         
         # create static pymunk bodies for walls
         for i in range(len(verticies)):

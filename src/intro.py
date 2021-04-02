@@ -168,11 +168,11 @@ class IntroView(arcade.View):
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         if self.button_skip.current_state == 'hover':
             log('View switched to ' + str(self.window.gameview))
-            self.window.gameview.setup('level1')
+            self.window.gameview.setup('level3')
             self.window.show_view(self.window.gameview)
         elif self.button_play_game.current_state == 'hover':
             log('View switched to ' + str(self.window.gameview))
-            self.window.gameview.setup('level1')
+            self.window.gameview.setup('level3')
             self.window.show_view(self.window.gameview)
 
     def on_key_press(self, key, modifiers):

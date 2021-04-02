@@ -190,6 +190,19 @@ class BadGuy(arcade.Sprite):
                     self.track_y = 30
                 elif self.track_y > (self.level_height-30):
                     self.track_y = (self.level_height-30)
+            impacts2 = arcade.check_for_collision_with_list(self, self.parent.structures_sprite_list)
+            if len(impacts2) > 0 and self.bump_to == 0:
+                self.bump_to = 30
+                coll_x = 0.5*(impacts2[0].center_x+self.center_x)
+                for i in range(8):
+                    particle = Particle(4, 4, arcade.color.YELLOW)
+                    while particle.change_y == 0 and particle.change_x == 0:
+                        particle.change_y = random.randrange(-2, 3)
+                        particle.change_x = random.randrange(-2, 3)
+                    particle.center_x = coll_x
+                    particle.center_y = self.center_y
+                    self.parent.particle_sprite_list.append(particle)
+                #assets.game_sfx['crashsmall'][int(random.random()>0.5)].play()
                 
         else:
             self.bump_to -= 1
