@@ -6,6 +6,7 @@ Place for Pointer class.
 # --- Import external modules ---
 import arcade
 import math
+import random
 # --- Import internal classes ---
 import data
 import assets
