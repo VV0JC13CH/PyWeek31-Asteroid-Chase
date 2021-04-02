@@ -11,9 +11,9 @@ from button import SimpleButton
 from pathlib import Path
 # we love Ubuntu users (bug fix):
 import pygame
-pygame.mixer.pre_init(44100,-16,1,512)
+pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.mixer.init()
-#pygame.init()
+
 
 def path_to_string(directory, file):
     return str(Path.cwd().joinpath(directory, file).resolve())
@@ -102,8 +102,7 @@ cursor_idle = arcade.Sprite(filename=path_to_string('gfx', 'cursor_idle.png'))
 cursor_no = arcade.Sprite(filename=path_to_string('gfx', 'cursor_no.png'))
 
 # Player Police Car
-police_textures = []
-police_textures.append([])
+police_textures = [[]]
 police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship001.png')))
 police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship001.png'),flipped_horizontally=True))
 police_textures.append([])
@@ -114,9 +113,8 @@ police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_shi
 police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_ship003.png'),flipped_horizontally=True))
 
 # Bad guys
-bad_guys = []
+bad_guys = [[]]
 
-bad_guys.append([]) # first green dude
 bad_guys[-1].append([])
 bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandit001.png')))
 bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandit001.png'),flipped_horizontally=True))
@@ -139,32 +137,28 @@ bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita003.pn
 bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita003.png'),flipped_horizontally=True))
 
 # laser explosion sprites
-explode_textures = []
-explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast001.png')))
-explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast002.png')))
-explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast003.png')))
-explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast004.png')))
-explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast005.png')))
-explode_textures.append(arcade.load_texture(path_to_string('gfx', 'blast006.png')))
+explode_textures = [arcade.load_texture(path_to_string('gfx', 'blast001.png')),
+                    arcade.load_texture(path_to_string('gfx', 'blast002.png')),
+                    arcade.load_texture(path_to_string('gfx', 'blast003.png')),
+                    arcade.load_texture(path_to_string('gfx', 'blast004.png')),
+                    arcade.load_texture(path_to_string('gfx', 'blast005.png')),
+                    arcade.load_texture(path_to_string('gfx', 'blast006.png'))]
 
 # bomb explosion
-explodeb_textures = []
-explodeb_textures.append(arcade.load_texture(path_to_string('gfx', 'explode001.png')))
-explodeb_textures.append(arcade.load_texture(path_to_string('gfx', 'explode002.png')))
-explodeb_textures.append(arcade.load_texture(path_to_string('gfx', 'explode003.png')))
-explodeb_textures.append(arcade.load_texture(path_to_string('gfx', 'explode004.png')))
+explodeb_textures = [arcade.load_texture(path_to_string('gfx', 'explode001.png')),
+                     arcade.load_texture(path_to_string('gfx', 'explode002.png')),
+                     arcade.load_texture(path_to_string('gfx', 'explode003.png')),
+                     arcade.load_texture(path_to_string('gfx', 'explode004.png'))]
 
 # bullet/laser textures
-bullet_textures = []
-bullet_textures.append(arcade.load_texture(path_to_string('gfx', 'laser001.png')))
-bullet_textures.append(arcade.load_texture(path_to_string('gfx', 'laser001.png'),flipped_horizontally=True))
+bullet_textures = [arcade.load_texture(path_to_string('gfx', 'laser001.png')),
+                   arcade.load_texture(path_to_string('gfx', 'laser001.png'), flipped_horizontally=True)]
 
 # Background texture
 background_texture = arcade.load_texture(path_to_string('gfx', 'background.png'))
 
 # Asteroid Textures
-asteroid_textures = {}
-asteroid_textures['small'] = []
+asteroid_textures = {'small': []}
 asteroid_textures['small'].append(arcade.load_texture(path_to_string('gfx', 'asteroid_small.png')))
 asteroid_textures['small'].append(arcade.load_texture(path_to_string('gfx', 'asteroid_small_f.png')))
 asteroid_textures['large'] = []
@@ -175,25 +169,22 @@ asteroid_textures['broken_sat'].append(arcade.load_texture(path_to_string('gfx',
 asteroid_textures['broken_sat'].append(arcade.load_texture(path_to_string('gfx', 'broken_sat_f.png')))
 
 # Bomb textures
-bomb_textures = []
-bomb_textures.append(arcade.load_texture(path_to_string('gfx', 'bomb001.png')))
-bomb_textures.append(arcade.load_texture(path_to_string('gfx', 'bomb002.png')))
+bomb_textures = [arcade.load_texture(path_to_string('gfx', 'bomb001.png')),
+                 arcade.load_texture(path_to_string('gfx', 'bomb002.png'))]
 
 # Music paths
-"""
-songs = [path_to_string('music', 'the_drop.ogg'),
-         path_to_string('music', 'the_chase.ogg'),
-         path_to_string('music', 'asteroid_chase_menu.ogg')]
-"""
 
-music_list = {}
-music_list['menu'] = path_to_string('music', 'asteroid_chase_menu.ogg')
-music_list['space_chase'] = path_to_string('music', 'space_chase.ogg')
-music_list['the_drop'] = path_to_string('music', 'the_drop.ogg')
+songs = [path_to_string('music', 'asteroid_chase_menu.ogg'),
+         path_to_string('music', 'the_drop.oggt'),
+         path_to_string('music', 'he_chase.ogg')]
+
+
+music_list = {'menu': path_to_string('music', 'asteroid_chase_menu.ogg'),
+              'space_chase': path_to_string('music', 'space_chase.ogg'),
+              'the_drop': path_to_string('music', 'the_drop.ogg')}
 
 # Sounds
-game_sfx = {}
-game_sfx['crashsmall'] = []
+game_sfx = {'crashsmall': []}
 game_sfx['crashsmall'].append(pygame.mixer.Sound(path_to_string('sound', 'crashsmall.ogg')))
 game_sfx['crashsmall'].append(pygame.mixer.Sound(path_to_string('sound', 'crashsmall2.ogg')))
 game_sfx['crashbig'] = pygame.mixer.Sound(path_to_string('sound', 'crashbig.ogg'))
@@ -211,8 +202,7 @@ game_sfx['scumbag'] = pygame.mixer.Sound(path_to_string('sound', 'scumbag.ogg'))
 game_sfx['hehheh'] = pygame.mixer.Sound(path_to_string('sound', 'hehheh.ogg'))
 
 # Structure textures
-structure_textures = {}
-structure_textures['asteroid'] = arcade.load_texture(path_to_string('gfx', 'asteroid_texture.png'))
+structure_textures = {'asteroid': arcade.load_texture(path_to_string('gfx', 'asteroid_texture.png'))}
 
 # Planets
 planets_filenames = []
