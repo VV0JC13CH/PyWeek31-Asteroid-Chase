@@ -13,8 +13,7 @@ import random
 import game
 import planet
 from developer import log
-from pointer import Pointer
-
+import pointer
 # --- Constants ---
 param = data.load_parameters()
 RADIANS_PER_FRAME = float(param['CAMPAIGN']['RADIANS_PER_FRAME'])
@@ -33,6 +32,7 @@ class CampaignView(arcade.View):
             self.selected_level = self.window.levels_unlocked
         else:
             self.selected_level = 5
+        self.level_badguy = self.selected_level
         self.selected_level_string = 'level' + str(self.selected_level)
         self.sweep_length = self.window.height * 0.4
         self.mouse_position = (0, 0)
@@ -65,11 +65,22 @@ class CampaignView(arcade.View):
             sprite.center_y = random.randrange(self.window.height)
             self.star_sprite_list.append(sprite)
 
+        # Bad guys
+        self.bad_guys_list = arcade.SpriteList()
+        # Bad guys / Level 2:
+        self.bad_guy_a = pointer.BadCampaignPointer(self.window.width, self.window.height, 0)
+        # Bad guys / Level 3:
+        self.bad_guy_b = pointer.BadCampaignPointer(self.window.width, self.window.height, 1)
+        # Bad guys / Level 4:
+        self.bad_guy_c = pointer.BadCampaignPointer(self.window.width, self.window.height, 2)
+        self.bad_guys_list.append(self.bad_guy_a)
+        self.bad_guys_list.append(self.bad_guy_b)
+        self.bad_guys_list.append(self.bad_guy_c)
         # Variables that will hold sprite lists
         self.player_list = arcade.SpriteList()
         # Set up the player
-        self.player_sprite = Pointer(level_width=self.window.width,
-                                     level_height=self.window.height)
+        self.player_sprite = pointer.Pointer(level_width=self.window.width,
+                                             level_height=self.window.height)
         if self.selected_level > 1:
             self.player_sprite.center_x = self.levels[self.selected_level-2][0]+self.player_sprite.width/2
             self.player_sprite.center_y = self.levels[self.selected_level-2][1]+self.player_sprite.height/2
@@ -77,12 +88,23 @@ class CampaignView(arcade.View):
             self.vector_y = self.levels[self.selected_level - 1][1] - self.levels[self.selected_level - 2][1]
             if self.vector_x < 0:
                 self.player_sprite.face_right = False
+                for sprite in self.bad_guys_list:
+                    sprite.face_right = False
         else:
             self.player_sprite.center_x = self.levels[self.selected_level - 1][0] + self.player_sprite.width / 2
             self.player_sprite.center_y = self.levels[self.selected_level - 1][1] + self.player_sprite.height / 2
+
             self.vector_x = 0
             self.vector_y = 0
+        self.player_sprite.scale = 0.5
         self.player_list.append(self.player_sprite)
+        # Bad guys starts in halfway:
+        for sprite in self.bad_guys_list:
+            sprite.scale = 0.3
+            sprite.center_x = self.player_sprite.center_x + 0.5 *\
+                              (self.levels[self.selected_level - 1][0] - self.levels[self.selected_level - 2][0])
+            sprite.center_y = self.player_sprite.center_y + 0.5 *\
+                              (self.levels[self.selected_level - 1][1] - self.levels[self.selected_level - 2][1])
 
     def on_show_view(self):
         self.window.cursor.change_state(state='idle')
@@ -90,11 +112,21 @@ class CampaignView(arcade.View):
     def on_update(self, delta_time: float):
         # Call update to move the sprite
         self.player_list.update()
+        if abs(self.levels[self.selected_level - 1][0] - self.bad_guys_list[2].center_x) > 15:
+            if abs(self.levels[self.selected_level - 1][1] - self.bad_guys_list[2].center_y) > 15:
+                self.bad_guys_list.move(self.vector_x * self.player_speed, self.vector_y * self.player_speed)
+                if self.selected_level == 4:
+                    self.bad_guys_list.update()
+                elif self.selected_level == 3:
+                    self.bad_guys_list.update()
+                elif self.selected_level == 2:
+                    self.bad_guys_list.update()
 
         if self.selected_level > 1:
-            if abs(self.levels[self.selected_level - 1][0] - self.player_sprite.center_x) > 5:
-                if abs(self.levels[self.selected_level - 1][1] - self.player_sprite.center_y) > 5:
+            if abs(self.levels[self.selected_level - 1][0] - self.player_sprite.center_x) > 50:
+                if abs(self.levels[self.selected_level - 1][1] - self.player_sprite.center_y) > 50:
                     self.player_list.move(self.vector_x*self.player_speed, self.vector_y*self.player_speed)
+
         if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
             self.window.cursor.change_state(state='no')
         else:
@@ -133,46 +165,34 @@ class CampaignView(arcade.View):
         # Representation of levels:
         # Level 5:
         if self.window.levels_unlocked >= 5:
-            if self.selected_level >= 4:
-                arcade.draw_line(self.level_5[0], self.level_5[1],
+            arcade.draw_line(self.level_5[0], self.level_5[1],
                                  self.level_4[0], self.level_4[1], arcade.color.ROMAN_SILVER,
                                  1)
-            arcade.draw_circle_filled(self.level_5[0], self.level_5[1], 10,
-                                      arcade.color.BROWN, 3)
         if self.window.levels_unlocked >= 4:
             # Level 4:
             if self.selected_level in range(2, 5):
                 arcade.draw_line(self.level_4[0], self.level_4[1],
                                  self.level_3[0], self.level_3[1], arcade.color.ROMAN_SILVER,
                                  1)
-            arcade.draw_circle_filled(self.level_4[0], self.level_4[1], 5,
-                                      arcade.color.DARK_BYZANTIUM, 3)
-            arcade.draw_circle_filled(self.level_4[0], self.level_4[1], 3,
-                                      arcade.color.GREEN_YELLOW, 3)
+                if self.window.levels_unlocked == 4:
+                    self.bad_guys_list[2].draw()
         if self.window.levels_unlocked >= 3:
             # Level 3: Kingdom End
             if self.selected_level in range(1, 4):
                 arcade.draw_line(self.level_3[0], self.level_3[1],
                                  self.level_2[0], self.level_2[1], arcade.color.ROMAN_SILVER,
                                  1)
-            arcade.draw_circle_filled(self.level_3[0], self.level_3[1], 14,
-                                      arcade.color.DARK_BYZANTIUM, 3)
-            arcade.draw_circle_filled(self.level_3[0], self.level_3[1], 12,
-                                      arcade.color.RED_DEVIL, 3)
+                if self.window.levels_unlocked == 3:
+                    self.bad_guys_list[1].draw()
         if self.window.levels_unlocked >= 2:
             # Level 2: Tartolyyn
             if self.selected_level in range(0, 3):
                 arcade.draw_line(self.level_2[0], self.level_2[1],
                                  self.level_1[0], self.level_1[1], arcade.color.ROMAN_SILVER,
                                  1)
-            arcade.draw_circle_filled(self.level_2[0], self.level_2[1], 8,
-                                      arcade.color.DARK_BYZANTIUM, 3)
-            arcade.draw_circle_filled(self.level_2[0], self.level_2[1], 5,
-                                      arcade.color.BROWN_NOSE, 3)
+                if self.window.levels_unlocked == 2:
+                    self.bad_guys_list[0].draw()
         # Level 1: Imperial City (tutorial)
-        arcade.draw_circle_filled(self.level_1[0], self.level_1[1], 20,
-                                  arcade.color.SILVER_LAKE_BLUE, 3)
-
         # Draw the radar line
         arcade.draw_line(self.window.width // 2, self.window.height // 2, x, y, arcade.color.ROMAN_SILVER, 4)
 
@@ -194,8 +214,6 @@ class CampaignView(arcade.View):
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
-            #self.window.gameview.setup(self.selected_level_string)
-            #self.window.show_view(self.window.gameview)
             if self.selected_level_string == 'level5':
                 self.window.finalcutscene.setup()
                 self.window.show_view(self.window.finalcutscene)
@@ -212,8 +230,6 @@ class CampaignView(arcade.View):
             self.window.scenes.append(self.window.pause_view)
             self.window.show_view(self.window.pause_view)
         elif key == arcade.key.SPACE:
-            #self.window.gameview.setup(self.selected_level_string)
-            #self.window.show_view(self.window.gameview)
             if self.selected_level_string == 'level5':
                 self.window.finalcutscene.setup()
                 self.window.show_view(self.window.finalcutscene)

@@ -85,6 +85,68 @@ class Pointer(arcade.Sprite):
         self.texture = assets.police_textures[siren_ani_fram][heading_ind]
 
 
+class BadCampaignPointer(arcade.Sprite):
+    """ Player ship """
+
+    def __init__(self, level_width, level_height, type=0):
+        """ Set up player """
+        super().__init__()
+        self.face_right = True
+        self.level_width = level_width
+        self.level_height = level_height
+        self.type = type
+
+        self.animation_frame = 0
+        self.texture = assets.bad_guys[self.type][0][0]
+        self.scale = 1.0
+
+    def update(self):
+        """ Move the player """
+        # Move
+        self.center_x += self.change_x
+        self.center_y += self.change_y
+
+        # Drag
+        if self.change_x > 0:
+            self.change_x -= MOVEMENT_DRAG
+        if self.change_x < 0:
+            self.change_x += MOVEMENT_DRAG
+        if abs(self.change_x) < MOVEMENT_DRAG:
+            self.change_x = 0
+
+        if self.change_y > 0:
+            self.change_y -= MOVEMENT_DRAG
+        if self.change_y < 0:
+            self.change_y += MOVEMENT_DRAG
+        if abs(self.change_y) < MOVEMENT_DRAG:
+            self.change_y = 0
+
+        # Check bounds
+        if self.left < 0:
+            self.left = 0
+        elif self.right > self.level_width - 1:
+            self.right = self.level_width - 1
+
+        if self.bottom < 0:
+            self.bottom = 0
+        elif self.top > self.level_height - 1:
+            self.top = self.level_height - 1
+
+        # update textures
+        self.animation_frame += 1
+        if self.animation_frame > 10:
+            self.animation_frame = 0
+        if self.animation_frame < 5:
+            animation_frame_item = 0
+        else:
+            animation_frame_item = 1
+        if self.face_right:
+            heading_ind = 0
+        else:
+            heading_ind = 1
+        self.texture = assets.bad_guys[self.type][animation_frame_item][heading_ind]
+
+
 class BadPointer(arcade.Sprite):
     """ Bad Guy """
 
