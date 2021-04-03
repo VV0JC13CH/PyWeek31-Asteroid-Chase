@@ -70,6 +70,11 @@ class BadGuy(arcade.Sprite):
         
         self.bump = False
         self.bump_to = 0
+        
+        if self.type == 2:
+            self.laser = DeathLaser(self.parent, self)
+        else:
+            self.laser = None
     
     def hit(self, damage=1):
         self.track_y += 400*random.random()-200 # dodge vertically
@@ -82,11 +87,17 @@ class BadGuy(arcade.Sprite):
         if self.health <= 0:
             return
         self.health -= damage
+        if self.health in [45,40,35,30,25,20,15,10,5] and self.type == 2: # boss fires laser
+            if self.laser.frame_to == 0:
+                self.laser.frame_to = 240
+                assets.game_sfx['hehheh'].play()
         if self.health < 0:
             self.health = 0
         self.flash_ani = 10
         if self.health == 0:
             assets.game_sfx['scumbag'].play()
+            if self.type == 2:
+                self.laser.frame_to = 0 # turn off laser    
     
     def update(self):
         
@@ -276,6 +287,10 @@ class BadGuy(arcade.Sprite):
             heading_ind = 1
         self.texture = assets.bad_guys[self.type][ani_fram][heading_ind]
         
+        # update laser for boss
+        if self.type == 2:
+            self.laser.update()
+        
     def postdraw(self):
         if self.health > 0:
             meter_x = 100*(self.health/self.maxhealth)
@@ -288,6 +303,10 @@ class BadGuy(arcade.Sprite):
                                       color=arcade.color.WHITE)
             if self.boost_to > 0:
                 arcade.draw_text("Boost!", self.center_x-100, self.center_y, arcade.color.YELLOW, 18)
+            
+            if self.type == 2:
+                self.laser.draw()
+                
         else:
             arcade.draw_text("Disabled", self.center_x-50, self.center_y+75, arcade.color.WHITE, 18)
 
@@ -416,3 +435,31 @@ class BombExplosion(arcade.Sprite):
         self.death_to -= 1
         if self.death_to == 0:
             self.remove_from_sprite_lists()
+
+class DeathLaser(object):
+    """ DeathLaser: fired by boss """
+
+    def __init__(self, parent, boss):
+        
+        self.parent = parent
+        self.boss = boss
+        
+        self.frame_to = 0
+    
+    def update(self):
+        
+        if self.frame_to > 60 and self.frame_to < 180:
+            if math.fabs(self.parent.player_sprite.center_y-self.boss.center_y) < 30:
+                self.parent.player_sprite.hit(damage=5)
+            for asteroid in self.parent.asteroid_sprite_list:
+                if math.fabs(asteroid.center_y-self.boss.center_y) < 30 and asteroid.center_x < (self.boss.center_x-50):
+                    asteroid.hitlaser()
+        
+        if self.frame_to > 0:
+            self.frame_to -= 1
+        
+    def draw(self):
+        if self.frame_to > 60 and self.frame_to < 180:
+            arcade.draw_line(self.boss.center_x-50, self.boss.center_y, 0, self.boss.center_y, arcade.color.CYAN, 30)
+    
+    

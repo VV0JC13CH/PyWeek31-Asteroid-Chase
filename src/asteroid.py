@@ -161,6 +161,18 @@ class Asteroid(arcade.Sprite):
                 particle.center_y = self.center_y
                 self.parent.particle_sprite_list.append(particle)
     
+    def hitlaser(self):
+        self.space.remove(self.shape, self.body)
+        self.remove_from_sprite_lists()
+        for i in range(10):
+            particle = Particle(8, 8, arcade.color.GRAY)
+            while particle.change_y == 0 and particle.change_x == 0:
+                particle.change_y = random.randrange(-2, 3)
+                particle.change_x = random.randrange(-2, 3)
+            particle.center_x = self.center_x
+            particle.center_y = self.center_y
+            self.parent.particle_sprite_list.append(particle)
+    
     def update(self):
         self.center_x = self.shape.body.position.x
         self.center_y = self.shape.body.position.y
