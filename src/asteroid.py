@@ -24,9 +24,10 @@ SOUND_VOL = int(settings['AUDIO']['SOUND_VOL'])
 # AsteroidManager: dynamically creates/deletes asteroids based on current player position
 class AsteroidManager(object):
     
-    def __init__(self, parent, density=50):
+    def __init__(self, parent, density=10):
         self.parent = parent
         self.density = density
+        self.store_density = density
         self.space = self.parent.space
         self.sector_len = 1200
         #self.previous_sector = math.floor(self.parent.player_sprite.center_x/self.sector_len)
@@ -49,6 +50,7 @@ class AsteroidManager(object):
             if len(structures_hit_list) > 0:
                 self.space.remove(sprite.shape, sprite.body)
                 sprite.remove_from_sprite_lists()
+        self.density = self.store_density # resets density if changed by other entities (i.e. final boss)
     
     def Update(self):
         

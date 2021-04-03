@@ -75,6 +75,7 @@ class BadGuy(arcade.Sprite):
             self.laser = DeathLaser(self.parent, self)
         else:
             self.laser = None
+        self.density_xtrack = -1000
     
     def hit(self, damage=1):
         self.track_y += 400*random.random()-200 # dodge vertically
@@ -87,7 +88,9 @@ class BadGuy(arcade.Sprite):
         if self.health <= 0:
             return
         self.health -= damage
-        if self.health in [45,40,35,30,25,20,15,10,5] and self.type == 2: # boss fires laser
+        if self.health == 25:
+            self.parent.asteroid_manager.density = 60 # one sector increase in asteroids
+        if self.health in [40,30,20,15,10,5] and self.type == 2: # boss fires laser
             if self.laser.frame_to == 0:
                 self.laser.frame_to = 240
                 assets.game_sfx['giant_laser_charge'].play()
@@ -169,12 +172,18 @@ class BadGuy(arcade.Sprite):
                 if self.fraction > action[1]:
                     self.boost_to = 300
                     action[2] = True
-                    assets.game_sfx['boost'].play()
+                    if self.type == 2:
+                        assets.game_sfx['boost_boss'].play()
+                    else:
+                        assets.game_sfx['boost'].play()
             elif action[0] == 'bomb':
                 if self.fraction > action[1]:
                     self.bomblaunch_to = 60
                     action[2] = True
-                    assets.game_sfx['hehheh'].play()
+                    if self.type == 2:
+                        assets.game_sfx['hehheh_boss'].play()
+                    else:
+                        assets.game_sfx['hehheh'].play()
         if self.boost_to > 0:
             self.boost_to -= 1
         if self.bomblaunch_to > 0:
@@ -461,7 +470,7 @@ class DeathLaser(object):
         
         if self.frame_to > 60 and self.frame_to < 180:
             if math.fabs(self.parent.player_sprite.center_y-self.boss.center_y) < 50:
-                self.parent.player_sprite.hitlaser(damage=3)
+                self.parent.player_sprite.hitlaser(damage=1)
             for asteroid in self.parent.asteroid_sprite_list:
                 if math.fabs(asteroid.center_y-self.boss.center_y) < 50 and asteroid.center_x < (self.boss.center_x-50):
                     asteroid.hitlaser()

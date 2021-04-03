@@ -213,6 +213,9 @@ game_sfx['hehheh'] = pygame.mixer.Sound(path_to_string('sound', 'hehheh.ogg'))
 game_sfx['giant_laser_charge'] = pygame.mixer.Sound(path_to_string('sound', 'giant_laser_charge.ogg'))
 game_sfx['giant_laser'] = pygame.mixer.Sound(path_to_string('sound', 'giant_laser.ogg'))
 game_sfx['getaway'] = pygame.mixer.Sound(path_to_string('sound', 'getaway.ogg'))
+game_sfx['boost_boss'] = pygame.mixer.Sound(path_to_string('sound', 'boost_boss.ogg'))
+game_sfx['hehheh_boss'] = pygame.mixer.Sound(path_to_string('sound', 'hehheh_boss.ogg'))
+game_sfx['badda_boom'] = pygame.mixer.Sound(path_to_string('sound', 'badda_boom.ogg'))
 
 game_sfx['voice001'] = pygame.mixer.Sound(path_to_string('sound', 'voice001.ogg'))
 game_sfx['voice002'] = pygame.mixer.Sound(path_to_string('sound', 'voice002.ogg'))
@@ -354,8 +357,8 @@ bad_guydata['purple1_3'].action_data = action_data = [('bomb',0.2),('bomb',0.25)
 bad_guydata['boss'] = Collection()
 bad_guydata['boss'].type = 2
 bad_guydata['boss'].start_pos = (700,600)
-bad_guydata['boss'].action_data = action_data = [('bomb',0.2),('bomb',0.4),('bomb',0.6),('bomb',0.8),('bomb',0.9),
-            ('boost',0.3),('boost',0.6)]
+bad_guydata['boss'].action_data = [('bomb',0.1),('bomb',0.2),('bomb',0.3),('bomb',0.4),('bomb',0.5),
+                                ('bomb',0.6),('bomb',0.7),('bomb',0.8),('bomb',0.9),('boost',0.3),('boost',0.6)]
 
 # Level Data (it's sort of like an asset :) )
 class LevelData(object):
@@ -396,7 +399,7 @@ leveldata['level3'].lanes = [[1500,4100,600],[4300,5000,200],[6500,9000,230]] # 
 
 leveldata['level5'] = LevelData()
 leveldata['level5'].music = 'the_drop'
-leveldata['level5'].size = (45000,2000) # level_width, level_height
+leveldata['level5'].size = (65000,2000) # level_width, level_height
 leveldata['level5'].player_start = (400,400) # position
 leveldata['level5'].asteroid_density = 10 # asteroids per screen width
 leveldata['level5'].badguy_ids = ['boss']
