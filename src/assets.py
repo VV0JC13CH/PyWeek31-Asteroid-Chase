@@ -117,7 +117,7 @@ police_textures[-1].append(arcade.load_texture(path_to_string('gfx', 'police_shi
 # Bad guys
 bad_guys = [[]]
 
-bad_guys[-1].append([])
+bad_guys[-1].append([]) # green dude
 bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandit001.png')))
 bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandit001.png'),flipped_horizontally=True))
 bad_guys[-1].append([])
@@ -137,6 +137,17 @@ bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita002.pn
 bad_guys[-1].append([])
 bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita003.png')))
 bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'bandita003.png'),flipped_horizontally=True))
+
+bad_guys.append([]) # boss :)
+bad_guys[-1].append([])
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'boss001.png')))
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'boss001.png'),flipped_horizontally=True))
+bad_guys[-1].append([])
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'boss002.png')))
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'boss002.png'),flipped_horizontally=True))
+bad_guys[-1].append([])
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'boss003.png')))
+bad_guys[-1][-1].append(arcade.load_texture(path_to_string('gfx', 'boss003.png'),flipped_horizontally=True))
 
 # laser explosion sprites
 explode_textures = [arcade.load_texture(path_to_string('gfx', 'blast001.png')),
@@ -332,6 +343,12 @@ bad_guydata['purple1_3'].start_pos = (700,600)
 bad_guydata['purple1_3'].action_data = action_data = [('bomb',0.2),('bomb',0.25),('bomb',0.6),('bomb',0.8),('bomb',0.9),
             ('boost',0.07),('boost',0.1),('boost',0.25),('boost',0.6)]
 
+bad_guydata['boss'] = Collection()
+bad_guydata['boss'].type = 2
+bad_guydata['boss'].start_pos = (700,600)
+bad_guydata['boss'].action_data = action_data = [('bomb',0.2),('bomb',0.4),('bomb',0.6),('bomb',0.8),('bomb',0.9),
+            ('boost',0.3),('boost',0.6)]
+
 # Level Data (it's sort of like an asset :) )
 class LevelData(object):
     pass
@@ -365,4 +382,16 @@ leveldata['level3'].badguy_ids = ['green1_3','green2_3','purple1_3']
 leveldata['level3'].static_structures = ['rock1','rock2','rock3','rock4','rock5','rock6',
                                         'rock7','rock8','rock9','rock10','rock11','rock12']
 leveldata['level3'].lanes = [[1500,4100,600],[4300,5000,200],[6500,9000,230]] # each lane is [start-x, finish-x, ypos]
+
+
+
+
+leveldata['level5'] = LevelData()
+leveldata['level5'].music = 'the_drop'
+leveldata['level5'].size = (45000,2000) # level_width, level_height
+leveldata['level5'].player_start = (400,400) # position
+leveldata['level5'].asteroid_density = 10 # asteroids per screen width
+leveldata['level5'].badguy_ids = ['boss']
+leveldata['level5'].static_structures = []
+leveldata['level5'].lanes = [] # each lane is [start-x, finish-x, ypos]
 

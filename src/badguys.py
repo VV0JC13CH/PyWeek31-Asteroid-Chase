@@ -58,6 +58,8 @@ class BadGuy(arcade.Sprite):
             self.maxhealth = int(param['BADGUY1']['HEALTH'])
         elif type == 1:
             self.maxhealth = int(param['BADGUY2']['HEALTH'])
+        elif type == 2:
+            self.maxhealth = int(param['BOSS']['HEALTH'])
         else:
             self.maxhealth = int(param['BADGUY1']['HEALTH'])
         self.health = self.maxhealth
@@ -97,19 +99,26 @@ class BadGuy(arcade.Sprite):
             self.change_y = 0.0
         else: # still driving
             dist2p = self.center_x-self.parent.player_sprite.center_x
+            if self.type == 2:
+                target_dist = 450
+            else:
+                target_dist = 400
             if self.boost_to > 0:
                 vel_x = 600
             elif dist2p > 1200:
                 vel_x = 100
             elif dist2p > 700:
                 vel_x = 300
-            elif dist2p > 400:
-                vel_x = 400
+            elif dist2p > target_dist:
+                vel_x = target_dist
             else:
-                vel_x = 400+(400-dist2p)
+                vel_x = target_dist+(target_dist-dist2p)
             
             if self.bump_to > 0:
-                vel_x -= 150
+                if self.type == 2:
+                    vel_x -= 50
+                else:
+                    vel_x -= 150
             
             # Check not running into others
             for bg in self.parent.badguys_sprite_list:
@@ -159,7 +168,7 @@ class BadGuy(arcade.Sprite):
         if self.bomblaunch_to > 0:
             self.bomblaunch_to -= 1
             if self.bomblaunch_to == 0:
-                sprite = FloatingBomb(self.parent,self.parent.space,self.center_x,self.center_y,self.change_x/10,20*random.random()-10)
+                sprite = FloatingBomb(self.parent,self.parent.space,self.center_x,self.center_y,60*self.change_x/5,20*random.random()-10)
                 self.parent.bomb_sprite_list.append(sprite)
                 assets.game_sfx['bomblaunch'].play()
         
@@ -182,10 +191,14 @@ class BadGuy(arcade.Sprite):
                 dist = math.sqrt(dx*dx+dy*dy)
                 impacts[0].body.apply_impulse_at_world_point((200*dx/dist,200*dy/dist),(impacts[0].center_x,impacts[0].center_y))
                 assets.game_sfx['crashsmall'][int(random.random()>0.5)].play()
-                if dy > 0:
-                    self.track_y -= 100
+                if self.type == 2:
+                    bumpsize = 50
                 else:
-                    self.track_y += 100
+                    bumpsize = 100
+                if dy > 0:
+                    self.track_y -= bumpsize
+                else:
+                    self.track_y += bumpsize
                 if self.track_y < 30:
                     self.track_y = 30
                 elif self.track_y > (self.level_height-30):
