@@ -216,6 +216,7 @@ game_sfx['getaway'] = pygame.mixer.Sound(path_to_string('sound', 'getaway.ogg'))
 game_sfx['boost_boss'] = pygame.mixer.Sound(path_to_string('sound', 'boost_boss.ogg'))
 game_sfx['hehheh_boss'] = pygame.mixer.Sound(path_to_string('sound', 'hehheh_boss.ogg'))
 game_sfx['badda_boom'] = pygame.mixer.Sound(path_to_string('sound', 'badda_boom.ogg'))
+game_sfx['wallofdeath'] = pygame.mixer.Sound(path_to_string('sound', 'wallofdeath.ogg'))
 
 game_sfx['voice001'] = pygame.mixer.Sound(path_to_string('sound', 'voice001.ogg'))
 game_sfx['voice002'] = pygame.mixer.Sound(path_to_string('sound', 'voice002.ogg'))
@@ -320,6 +321,28 @@ static_structure['rock12'] = Collection()
 static_structure['rock12'].verts = CreatePlanetoid(8900,0,220,9,sx=1.2)
 static_structure['rock12'].type = 'rock'
 
+
+# Wall of death
+static_structure['wod1'] = Collection()
+static_structure['wod1'].verts = CreatePlanetoid(3000,750,400,7,sx=1.3)
+static_structure['wod1'].type = 'rock'
+
+static_structure['wod2'] = Collection()
+static_structure['wod2'].verts = CreatePlanetoid(6000,300,700,7,sx=1.4)
+static_structure['wod2'].type = 'rock'
+
+static_structure['wod3'] = Collection()
+static_structure['wod3'].verts = CreatePlanetoid(9000,1500,800,7,sx=1.7)
+static_structure['wod3'].type = 'rock'
+
+static_structure['wod4'] = Collection()
+static_structure['wod4'].verts = CreatePlanetoid(11000,400,400,9,sx=1.3)
+static_structure['wod4'].type = 'rock'
+
+static_structure['wod5'] = Collection()
+static_structure['wod5'].verts = CreatePlanetoid(13000,1100,500,9,sx=1.4)
+static_structure['wod5'].type = 'rock'
+
 # Bad Guy Archetypes
 bad_guydata = {}
 bad_guydata['green1'] = Collection()
@@ -405,4 +428,13 @@ leveldata['level5'].asteroid_density = 10 # asteroids per screen width
 leveldata['level5'].badguy_ids = ['boss']
 leveldata['level5'].static_structures = []
 leveldata['level5'].lanes = [] # each lane is [start-x, finish-x, ypos]
+
+leveldata['wallofdeath'] = LevelData()
+leveldata['wallofdeath'].music = 'the_drop'
+leveldata['wallofdeath'].size = (30000,2000) # level_width, level_height
+leveldata['wallofdeath'].player_start = (800,400) # position
+leveldata['wallofdeath'].asteroid_density = 10 # asteroids per screen width
+leveldata['wallofdeath'].badguy_ids = []
+leveldata['wallofdeath'].static_structures = ['wod1','wod2','wod3','wod4','wod5']
+leveldata['wallofdeath'].lanes = [] # each lane is [start-x, finish-x, ypos]
 

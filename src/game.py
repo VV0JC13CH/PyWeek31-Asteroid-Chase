@@ -20,7 +20,7 @@ from bullet import Bullet, Explosion
 from scroll_background import ScrollBackground
 from structures import Structure
 from asteroid import Asteroid, AsteroidManager
-from badguys import BadGuy, FloatingBomb
+from badguys import BadGuy, FloatingBomb, WallofDeath
 import campaign
 import assets
 
@@ -170,6 +170,9 @@ class GameView(arcade.View):
             bg_sprite = BadGuy(self, self.level_width, self.level_height, x=x, y=y, type=type, action_data=action_data)
             self.badguys_sprite_list.append(bg_sprite)
         
+        if self.current_level == 'wallofdeath':
+            self.wallofdeath = WallofDeath(self, self.level_width, self.level_height)
+        
         # scrolling background images
         self.background_list = ScrollBackground(self.window)
         
@@ -214,6 +217,9 @@ class GameView(arcade.View):
         for badguy in self.badguys_sprite_list:
             badguy.postdraw()
         
+        if self.current_level == 'wallofdeath':
+            self.wallofdeath.draw()
+        
         """
         # Draw walls (testing)
         for line in self.static_lines:
@@ -250,6 +256,8 @@ class GameView(arcade.View):
         self.asteroid_sprite_list.update()
         self.particle_sprite_list.update()
         self.badguys_sprite_list.update()
+        if self.current_level == 'wallofdeath':
+            self.wallofdeath.update()
         self.bomb_sprite_list.update()
         
         # check for asteroid updates needed
@@ -324,9 +332,15 @@ class GameView(arcade.View):
                 assets.game_sfx['getaway'].play()
             if any([bg.fraction > 1.0 for bg in self.badguys_sprite_list]):
                 self.outcome = 'failure'
-            if all([(bg.health == 0) for bg in self.badguys_sprite_list]):
-                self.outcome = 'victory'
-                self.window.levels_unlocked = self.window.levels_unlocked + 1
+            if len(self.badguys_sprite_list) > 0:
+                if all([(bg.health == 0) for bg in self.badguys_sprite_list]):
+                    self.outcome = 'victory'
+                    self.window.levels_unlocked = self.window.levels_unlocked + 1
+            else:
+                if self.player_sprite.center_x/self.level_width > 0.95:
+                    self.outcome = 'victory'
+                    assets.game_sfx['wallofdeath'].stop()
+                    self.window.levels_unlocked = self.window.levels_unlocked + 1
         elif self.outcome == 'victory' and self.space_pressed:
             """ Waiting for a player to press space in order to go to campaign view"""
             self.reset_viewport()

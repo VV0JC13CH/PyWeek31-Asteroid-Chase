@@ -412,7 +412,7 @@ class FloatingBomb(arcade.Sprite):
 class BombExplosion(arcade.Sprite):
     """ BombExplosion """
 
-    def __init__(self,parent,x,y):
+    def __init__(self,parent,x,y,damage=10):
         super().__init__()
         self.parent = parent
         self.center_x = x
@@ -435,7 +435,7 @@ class BombExplosion(arcade.Sprite):
         dist = math.sqrt(dx*dx+dy*dy)
         if dist < 200 and dist > 0:
             self.parent.player_sprite.body.apply_impulse_at_world_point((500*dx/dist,500*dy/dist),(self.parent.player_sprite.center_x,self.parent.player_sprite.center_y))
-            self.parent.player_sprite.hit(damage=10)
+            self.parent.player_sprite.hit(damage=damage)
     
     def update(self):
         if self.death_to >= 18:
@@ -492,4 +492,62 @@ class DeathLaser(object):
             arcade.draw_line(self.boss.center_x-70, self.boss.center_y, 0, self.boss.center_y, arcade.color.WHITE, 10)
             arcade.draw_circle_filled(self.boss.center_x-70, self.boss.center_y, 15, arcade.color.WHITE)
     
+class WallofDeath(object):
+    """ WallofDeath: riding the shockwave, ye-ha """
+
+    def __init__(self, parent, level_width, level_height, x=0):
+        
+        self.parent = parent
+        self.level_width = level_width
+        self.level_height = level_height
+        self.x = x
+        self.tic = 0
+        assets.game_sfx['wallofdeath'].play(-1)
     
+    def update(self):
+        
+        if self.parent.outcome == 'victory':
+            return
+        
+        # chasing player 
+        dist2p = self.parent.player_sprite.center_x-self.x
+        target_dist = 450
+        if dist2p < 0:
+            vel_x = 300
+        elif dist2p > 1200:
+            vel_x = 700
+        elif dist2p > 700:
+            vel_x = 600
+        elif dist2p > target_dist:
+            vel_x = target_dist
+        else:
+            vel_x = 100+350*(dist2p/450)
+        
+        if vel_x < 0:
+            vel_x = 0
+        self.x += vel_x/60.0
+        
+        if self.x/self.level_width > 0.5:
+            self.parent.asteroid_manager.density = 40 # one sector increase in asteroids
+        if self.x/self.level_width > 0.6:
+            self.parent.asteroid_manager.density = 10 # one sector increase in asteroids
+        if self.x/self.level_width > 0.7:
+            self.parent.asteroid_manager.density = 60 # one sector increase in asteroids
+        if self.x/self.level_width > 0.8:
+            self.parent.asteroid_manager.density = 10 # one sector increase in asteroids
+            
+        if self.parent.player_sprite.center_x < self.x:
+            self.parent.player_sprite.health = 0
+        
+        if (self.tic % 15) == 0:
+            explosion = BombExplosion(self.parent,self.x,1000*random.random()+self.parent.view_bottom,damage=3)
+            self.parent.bomb_sprite_list.append(explosion)
+        self.tic += 1
+        
+    def draw(self):
+        if self.parent.outcome == 'victory':
+            return
+        arcade.draw_xywh_rectangle_filled(self.parent.view_left-1000, 0, self.x-(self.parent.view_left-1000)-30, self.level_height, arcade.color.WHITE)
+        arcade.draw_xywh_rectangle_filled(self.x-30, 0, 30, self.level_height, (255,255,200,128))
+        
+        
