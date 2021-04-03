@@ -29,6 +29,7 @@ class CampaignView(arcade.View):
             self.selected_level = self.window.levels_unlocked
         else:
             self.selected_level = 1
+        self.selected_level_string = 'level' + str(self.selected_level)
         self.sweep_length = self.window.height * 0.4
         self.mouse_position = (0, 0)
         self.player_speed = 0.005
@@ -189,7 +190,7 @@ class CampaignView(arcade.View):
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
-            self.window.gameview.setup('level1')
+            self.window.gameview.setup(self.selected_level_string)
             self.window.show_view(self.window.gameview)
 
     def on_key_press(self, key, modifiers):
@@ -200,7 +201,10 @@ class CampaignView(arcade.View):
             self.window.current_view_name = 'pause_view_after_campaign'
             self.window.scenes.append(self.window.pause_view)
             self.window.show_view(self.window.pause_view)
-        if key == arcade.key.F5 and self.window.developer_mode:
+        elif key == arcade.key.SPACE:
+            self.window.gameview.setup(self.selected_level_string)
+            self.window.show_view(self.window.gameview)
+        elif key == arcade.key.F5 and self.window.developer_mode:
             if self.window.levels_unlocked < 5:
                 self.window.levels_unlocked += 1
             else:

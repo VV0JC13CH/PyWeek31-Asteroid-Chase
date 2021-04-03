@@ -21,7 +21,9 @@ from scroll_background import ScrollBackground
 from structures import Structure
 from asteroid import Asteroid, AsteroidManager
 from badguys import BadGuy, FloatingBomb
+import campaign
 import assets
+
 
 # --- Constants ---
 param = data.load_parameters()
@@ -319,8 +321,13 @@ class GameView(arcade.View):
                 self.outcome = 'victory'
                 self.window.levels_unlocked = self.window.levels_unlocked + 1
                 print(self.window.levels_unlocked)
-        elif self.outcome == 'victory' and self.player_sprite.center_x - 200 == self.level_width:
+        elif self.outcome == 'victory' and self.space_pressed:
+            """ Waiting for a player to press space in order to go to campaign view"""
             self.reset_viewport()
+            """ We are going to create campaign level from beginning"""
+            self.window.campaign_view = campaign.CampaignView()
+            self.window.scenes.append(self.window.campaign_view)
+            log('Scene switched to ' + str(self.window.campaign_view))
             self.window.show_view(self.window.campaign_view)
         if not self.outcome == None:
             self.level_to -= 1
