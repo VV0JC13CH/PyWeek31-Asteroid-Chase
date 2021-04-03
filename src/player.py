@@ -32,7 +32,7 @@ SOUND_VOL = int(settings['AUDIO']['SOUND_VOL'])
 
 class Player(arcade.Sprite):
     """ Player ship """
-    def __init__(self, level_width, level_height, particle_sprite_list=[], space=None, x=0, y=0):
+    def __init__(self, level_width, level_height, particle_sprite_list=[], space=None, x=0, y=0, health_bonus=0):
         """ Set up player """
         super().__init__()
         self.face_right = True
@@ -43,7 +43,7 @@ class Player(arcade.Sprite):
         
         radius = 40
         mass = 2.0
-        self.health = HEALTH
+        self.health = HEALTH + health_bonus * 3
         # Overheat of laser
         self.overheat = 0.0
         

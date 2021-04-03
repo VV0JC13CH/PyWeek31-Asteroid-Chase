@@ -136,7 +136,8 @@ class GameView(arcade.View):
         # Set up the player
         startx = assets.leveldata[level].player_start[0]
         starty = assets.leveldata[level].player_start[1]
-        self.player_sprite = Player(self.level_width, self.level_height, self.particle_sprite_list, self.space, startx, starty)
+        self.player_sprite = Player(self.level_width, self.level_height, self.particle_sprite_list, self.space, startx,
+                                    starty, health_bonus=self.window.levels_unlocked)
         self.player_list.append(self.player_sprite)
 
         # Weapons
