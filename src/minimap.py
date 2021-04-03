@@ -70,9 +70,13 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
                      arcade.color.WHITE, 18)
     x = game_view.view_left + 70
     y = game_view.view_bottom + game_view.window.height - 115
+    if game_view.player_sprite.laser_disabled:
+        laser_color = arcade.color.RED
+    else:
+        laser_color = arcade.color.ORANGE
     arcade.draw_rectangle_filled(center_x=x - (50 - meter_x / 2), center_y=y,
                                  width=meter_x, height=10,
-                                 color=arcade.color.ORANGE)
+                                 color=laser_color)
     arcade.draw_rectangle_outline(center_x=x, center_y=y,
                                   width=100, height=10,
                                   color=arcade.color.WHITE)

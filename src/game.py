@@ -384,7 +384,7 @@ class GameView(arcade.View):
                 self.basic_laser_in_use = True
                 bullet = Bullet(self.player_sprite)
                 self.bullet_sprite_list.append(bullet)
-                self.player_sprite.overheat += 0.01
+                self.player_sprite.overheat += 0.05
                 self.basic_laser_in_use = False
         elif key == arcade.key.W:
             self.up_pressed = True
