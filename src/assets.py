@@ -321,6 +321,9 @@ static_structure['rock12'] = Collection()
 static_structure['rock12'].verts = CreatePlanetoid(8900,0,220,9,sx=1.2)
 static_structure['rock12'].type = 'rock'
 
+static_structure['rock13'] = Collection()
+static_structure['rock13'].verts = CreatePlanetoid(13000,750,400,11,sx=3.0)
+static_structure['rock13'].type = 'rock'
 
 # Wall of death
 static_structure['wod1'] = Collection()
@@ -409,32 +412,33 @@ leveldata['level2'].lanes = []
 
 leveldata['level3'] = LevelData()
 leveldata['level3'].music = 'space_chase'
-leveldata['level3'].size = (30000,1500) # level_width, level_height
-leveldata['level3'].player_start = (200,600) # position
+leveldata['level3'].size = (35000,1500) # level_width, level_height
+leveldata['level3'].player_start = (10000,600) # position
 leveldata['level3'].asteroid_density = 10 # asteroids per screen width
 leveldata['level3'].badguy_ids = ['green1_3','green2_3','purple1_3']
 leveldata['level3'].static_structures = ['rock1','rock2','rock3','rock4','rock5','rock6',
-                                        'rock7','rock8','rock9','rock10','rock11','rock12']
+                                        'rock7','rock8','rock9','rock10','rock11','rock12',
+                                        'rock13']
 leveldata['level3'].lanes = [[1500,4100,600],[4300,5000,200],[6500,9000,230]] # each lane is [start-x, finish-x, ypos]
 
 
 
 
+leveldata['level4'] = LevelData()
+leveldata['level4'].music = 'the_drop'
+leveldata['level4'].size = (65000,2000) # level_width, level_height
+leveldata['level4'].player_start = (400,400) # position
+leveldata['level4'].asteroid_density = 10 # asteroids per screen width
+leveldata['level4'].badguy_ids = ['boss']
+leveldata['level4'].static_structures = []
+leveldata['level4'].lanes = [] # each lane is [start-x, finish-x, ypos]
+
 leveldata['level5'] = LevelData()
 leveldata['level5'].music = 'the_drop'
-leveldata['level5'].size = (65000,2000) # level_width, level_height
-leveldata['level5'].player_start = (400,400) # position
+leveldata['level5'].size = (30000,1500) # level_width, level_height
+leveldata['level5'].player_start = (800,400) # position
 leveldata['level5'].asteroid_density = 10 # asteroids per screen width
-leveldata['level5'].badguy_ids = ['boss']
-leveldata['level5'].static_structures = []
+leveldata['level5'].badguy_ids = []
+leveldata['level5'].static_structures = ['wod1','wod2','wod3','wod4','wod5']
 leveldata['level5'].lanes = [] # each lane is [start-x, finish-x, ypos]
-
-leveldata['wallofdeath'] = LevelData()
-leveldata['wallofdeath'].music = 'the_drop'
-leveldata['wallofdeath'].size = (30000,2000) # level_width, level_height
-leveldata['wallofdeath'].player_start = (800,400) # position
-leveldata['wallofdeath'].asteroid_density = 10 # asteroids per screen width
-leveldata['wallofdeath'].badguy_ids = []
-leveldata['wallofdeath'].static_structures = ['wod1','wod2','wod3','wod4','wod5']
-leveldata['wallofdeath'].lanes = [] # each lane is [start-x, finish-x, ypos]
 

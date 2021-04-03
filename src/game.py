@@ -170,7 +170,7 @@ class GameView(arcade.View):
             bg_sprite = BadGuy(self, self.level_width, self.level_height, x=x, y=y, type=type, action_data=action_data)
             self.badguys_sprite_list.append(bg_sprite)
         
-        if self.current_level == 'wallofdeath':
+        if self.current_level == 'level5': #wall of death
             self.wallofdeath = WallofDeath(self, self.level_width, self.level_height)
         
         # scrolling background images
@@ -217,7 +217,7 @@ class GameView(arcade.View):
         for badguy in self.badguys_sprite_list:
             badguy.postdraw()
         
-        if self.current_level == 'wallofdeath':
+        if self.current_level == 'level5':
             self.wallofdeath.draw()
         
         """
@@ -256,7 +256,7 @@ class GameView(arcade.View):
         self.asteroid_sprite_list.update()
         self.particle_sprite_list.update()
         self.badguys_sprite_list.update()
-        if self.current_level == 'wallofdeath':
+        if self.current_level == 'level5':
             self.wallofdeath.update()
         self.bomb_sprite_list.update()
         

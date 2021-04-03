@@ -179,14 +179,14 @@ class IntroView(arcade.View):
             self.window.music_manager.music.set_volume(1.0)
             if self.voice_channel.get_busy():
                 assets.game_sfx['voice001'].stop()
-            self.window.gameview.setup('wallofdeath')
+            self.window.gameview.setup('level5')
             self.window.show_view(self.window.gameview)
         elif self.button_play_game.current_state == 'hover':
             log('View switched to ' + str(self.window.gameview))
             self.window.music_manager.music.set_volume(1.0)
             if self.voice_channel.get_busy():
                 assets.game_sfx['voice001'].stop()
-            self.window.gameview.setup('wallofdeath')
+            self.window.gameview.setup('level5')
             self.window.show_view(self.window.gameview)
 
     def on_key_press(self, key, modifiers):

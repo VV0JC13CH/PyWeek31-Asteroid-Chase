@@ -528,11 +528,11 @@ class WallofDeath(object):
         self.x += vel_x/60.0
         
         if self.x/self.level_width > 0.5:
-            self.parent.asteroid_manager.density = 40 # one sector increase in asteroids
+            self.parent.asteroid_manager.density = 30 # one sector increase in asteroids
         if self.x/self.level_width > 0.6:
             self.parent.asteroid_manager.density = 10 # one sector increase in asteroids
         if self.x/self.level_width > 0.7:
-            self.parent.asteroid_manager.density = 60 # one sector increase in asteroids
+            self.parent.asteroid_manager.density = 40 # one sector increase in asteroids
         if self.x/self.level_width > 0.8:
             self.parent.asteroid_manager.density = 10 # one sector increase in asteroids
             
