@@ -71,6 +71,7 @@ class GameView(arcade.View):
         self.down_pressed = None
         self.lshift_pressed = None
         self.space_pressed = None
+        self.enter_pressed = False
         
         # Set up the player info
         self.player_sprite = None
@@ -341,8 +342,8 @@ class GameView(arcade.View):
                     self.outcome = 'victory'
                     assets.game_sfx['wallofdeath'].stop()
                     self.window.levels_unlocked = self.window.levels_unlocked + 1
-        elif self.outcome == 'victory' and self.space_pressed:
-            """ Waiting for a player to press space in order to go to campaign view"""
+        elif self.outcome == 'victory' and self.enter_pressed:
+            """ Waiting for a player to press enter in order to go to campaign view"""
             self.reset_viewport()
             """ We are going to create campaign level from beginning"""
             self.window.campaign_view = campaign.CampaignView()
@@ -396,6 +397,8 @@ class GameView(arcade.View):
             self.right_pressed = True
         elif key == arcade.key.LSHIFT:
             self.lshift_pressed = True
+        elif key == arcade.key.ENTER:
+            self.enter_pressed = True
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
@@ -419,3 +422,5 @@ class GameView(arcade.View):
             self.lshift_pressed = False
         elif key == arcade.key.SPACE:
             self.space_pressed = False
+        elif key == arcade.key.ENTER:
+            self.enter_pressed = False
