@@ -37,7 +37,7 @@ class GlobalWindow(arcade.Window):
         # Call the parent class initializer
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, full_resolution, resizable=screen_resizeable)
         # If levels_unlocked = 0 - play intro and add +1:
-        self.levels_unlocked = 5
+        self.levels_unlocked = 0
         self.music_manager = music.MusicManager(init_volume=MUSIC_VOL)
         self.music_manager.setup(music_enabled)
         self.music_manager.play_song('menu')

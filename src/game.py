@@ -335,7 +335,7 @@ class GameView(arcade.View):
                     self.window.gameview.setup(self.current_level,restart=True)
                     self.window.show_view(self.window.gameview)
                 else:
-                    pass # TODO: switch to campaign view
+                    pass
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """

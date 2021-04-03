@@ -83,7 +83,8 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
         arcade.draw_text("Mission Failed!", game_view.view_left+game_view.window.width/2-450, game_view.view_bottom+game_view.window.height/2, arcade.color.RED, 56, width=900, align="center")
     elif game_view.outcome == 'victory':
         arcade.draw_text("Mission Complete!", game_view.view_left+game_view.window.width/2-450, game_view.view_bottom+game_view.window.height/2, arcade.color.GREEN, 56, width=900, align="center")
-    
+        arcade.draw_text("Press [space] button.", game_view.view_left+game_view.window.width/2-450, game_view.view_bottom+game_view.window.height/2-100, arcade.color.GREEN, 40, width=900, align="center")
+
     # draw player on mini map
     x = hor_offset + game_view.view_left + map_width*(game_view.player_sprite.center_x/level_width)
     y = vert_offset + game_view.view_bottom + map_height*(game_view.player_sprite.center_y/level_height)
