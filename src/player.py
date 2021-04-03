@@ -180,7 +180,7 @@ class Player(arcade.Sprite):
             self.laser_disabled = True
         if self.overheat > 0 and self.laser_disabled:
             self.overheat -= 0.003
-        if self.overheat <= 0 and self.laser_disabled:
+        if self.overheat <= 0.3 and self.laser_disabled:
             self.laser_disabled = False
 
         # Update sprite/animations
