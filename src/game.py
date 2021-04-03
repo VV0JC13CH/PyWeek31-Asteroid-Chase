@@ -113,7 +113,7 @@ class GameView(arcade.View):
         self.lshift_pressed = False
         self.space_pressed = False
 
-        self.view_bottom = 5
+        self.view_bottom = 0
         self.view_left = 0
 
         """ Set up the game and initialize the variables. """
