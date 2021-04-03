@@ -213,6 +213,9 @@ game_sfx['hehheh'] = pygame.mixer.Sound(path_to_string('sound', 'hehheh.ogg'))
 game_sfx['giant_laser_charge'] = pygame.mixer.Sound(path_to_string('sound', 'giant_laser_charge.ogg'))
 game_sfx['giant_laser'] = pygame.mixer.Sound(path_to_string('sound', 'giant_laser.ogg'))
 
+game_sfx['voice001'] = pygame.mixer.Sound(path_to_string('sound', 'voice001.ogg'))
+game_sfx['voice002'] = pygame.mixer.Sound(path_to_string('sound', 'voice002.ogg'))
+
 # Structure textures
 structure_textures = {'asteroid': arcade.load_texture(path_to_string('gfx', 'asteroid_texture.png'))}
 

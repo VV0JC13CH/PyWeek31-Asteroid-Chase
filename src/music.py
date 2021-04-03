@@ -35,7 +35,7 @@ class MusicManager:
             self.music.stop()
         self.music = pygame.mixer.music
         self.music.load(self.music_list[self.current_song])
-        self.music.play()
+        self.music.play(-1)
         self.music_enabled = True
         time.sleep(0.03)
 
@@ -77,5 +77,6 @@ class MusicManager:
     def on_update(self, dt):
         position = self.music.get_pos()
         if position == 0.0:
-            self.advance_song()
-            self.start_song()
+            pass
+            #self.advance_song()
+            #self.start_song()

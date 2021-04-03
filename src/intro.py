@@ -73,6 +73,10 @@ class IntroView(arcade.View):
         self.escape_pressed = False
         self.keyboard_int = 8
         self.keyboard_image = assets.keyboard_hints_paths[7]
+        
+        # start dialogue
+        self.window.music_manager.music.set_volume(0.3) # turn down just for dialogue
+        self.voice_channel = assets.game_sfx['voice001'].play()
 
     def on_show_view(self):
         self.window.cursor.change_state(state='off')
@@ -89,14 +93,18 @@ class IntroView(arcade.View):
             self.background_move_left_change_pos += 1
             if self.background_move_left_change_pos_speed < 5:
                 self.background_move_left_change_pos_speed += 0.1
-            if self.background_move_left_change_pos_speed < 15:
-                self.background_move_left_change_pos_speed += 0.01
+            #if self.background_move_left_change_pos_speed < 15:
+            if self.voice_channel.get_busy(): # check now if dialogue still playing before flying up
+                if self.background_move_left_change_pos_speed < 15:
+                    self.background_move_left_change_pos_speed += 0.01
                 if self.background_move_left_change_pos_speed > 7:
                     self.bad_guys_came_in = True
                 if self.background_move_left_change_pos_speed > 10:
                     self.player_sirens_on = True
 
             else:
+                if not self.background_goes_down: # start second part of dialogue as ship flies up
+                    assets.game_sfx['voice002'].play()
                 self.background_goes_down = True
         if self.background_goes_down and self.background_position > 0:
             self.background_position -= 5
@@ -138,13 +146,13 @@ class IntroView(arcade.View):
         # In order to count FPS in proper way, add objects below:
 
         # Draw the background texture
-        for x in range(0, 30, 1):
+        for x in range(0, 60, 1):
             arcade.draw_lrwh_rectangle_textured(0-self.background_move_left_change_pos *
                                                 self.background_move_left_change_pos_speed+
                                                 self.window.width*x,
                                                 self.background_position-self.window.height,
                                                 self.window.width, self.window.height*2,
-                                                assets.intro_bg_paths[(x // 5)])
+                                                assets.intro_bg_paths[(x // 10)])
 
         self.player_list.draw()
         self.bad_guys_list.draw()
@@ -168,10 +176,16 @@ class IntroView(arcade.View):
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         if self.button_skip.current_state == 'hover':
             log('View switched to ' + str(self.window.gameview))
+            self.window.music_manager.music.set_volume(1.0)
+            if self.voice_channel.get_busy():
+                assets.game_sfx['voice001'].stop()
             self.window.gameview.setup('level1')
             self.window.show_view(self.window.gameview)
         elif self.button_play_game.current_state == 'hover':
             log('View switched to ' + str(self.window.gameview))
+            self.window.music_manager.music.set_volume(1.0)
+            if self.voice_channel.get_busy():
+                assets.game_sfx['voice001'].stop()
             self.window.gameview.setup('level1')
             self.window.show_view(self.window.gameview)
 

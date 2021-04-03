@@ -83,7 +83,8 @@ class GameView(arcade.View):
         self.level_to = 180
         
         if not restart:
-            self.window.music_manager.play_song(assets.leveldata[level].music)
+            if not self.window.music_manager.common_name_of_song == assets.leveldata[level].music:
+                self.window.music_manager.play_song(assets.leveldata[level].music)
         
         # Set up level
         self.level_width = assets.leveldata[level].size[0]
