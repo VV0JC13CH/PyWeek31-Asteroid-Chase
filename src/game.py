@@ -320,7 +320,6 @@ class GameView(arcade.View):
             if all([(bg.health == 0) for bg in self.badguys_sprite_list]):
                 self.outcome = 'victory'
                 self.window.levels_unlocked = self.window.levels_unlocked + 1
-                print(self.window.levels_unlocked)
         elif self.outcome == 'victory' and self.space_pressed:
             """ Waiting for a player to press space in order to go to campaign view"""
             self.reset_viewport()
