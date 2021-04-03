@@ -116,6 +116,7 @@ class GameView(arcade.View):
         self.down_pressed = False
         self.lshift_pressed = False
         self.space_pressed = False
+        self.enter_pressed = False
 
         self.view_bottom = 0
         self.view_left = 0
