@@ -199,6 +199,8 @@ class GameView(arcade.View):
         self.structures_sprite_list.draw()
         self.asteroid_sprite_list.draw()
         self.badguys_sprite_list.draw()
+        for badguy in self.badguys_sprite_list:
+            badguy.postdraw2()
         self.bomb_sprite_list.draw()
         self.bullet_sprite_list.draw()
         self.particle_sprite_list.draw()

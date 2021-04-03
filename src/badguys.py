@@ -304,11 +304,15 @@ class BadGuy(arcade.Sprite):
             if self.boost_to > 0:
                 arcade.draw_text("Boost!", self.center_x-100, self.center_y, arcade.color.YELLOW, 18)
             
-            if self.type == 2:
-                self.laser.draw()
+            #if self.type == 2:
+            #    self.laser.draw()
                 
         else:
             arcade.draw_text("Disabled", self.center_x-50, self.center_y+75, arcade.color.WHITE, 18)
+    
+    def postdraw2(self):
+        if self.health > 0 and self.type == 2:
+            self.laser.draw()
 
 class FloatingBomb(arcade.Sprite):
     """ FloatingBomb: dropped by some bad guys """
@@ -449,10 +453,10 @@ class DeathLaser(object):
     def update(self):
         
         if self.frame_to > 60 and self.frame_to < 180:
-            if math.fabs(self.parent.player_sprite.center_y-self.boss.center_y) < 30:
+            if math.fabs(self.parent.player_sprite.center_y-self.boss.center_y) < 50:
                 self.parent.player_sprite.hitlaser(damage=5)
             for asteroid in self.parent.asteroid_sprite_list:
-                if math.fabs(asteroid.center_y-self.boss.center_y) < 30 and asteroid.center_x < (self.boss.center_x-50):
+                if math.fabs(asteroid.center_y-self.boss.center_y) < 50 and asteroid.center_x < (self.boss.center_x-50):
                     asteroid.hitlaser()
         
         if self.frame_to > 0:
