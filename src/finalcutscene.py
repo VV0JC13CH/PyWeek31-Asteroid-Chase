@@ -20,9 +20,10 @@ class FinalCutScene(arcade.View):
         self.tic = 0
         #self.type = 1
 
+
     def on_show_view(self):
-        pass
-    
+        self.levels_unlocked = 0
+
     def setup(self,type=0):
         self.tic = 0
         self.type = type
