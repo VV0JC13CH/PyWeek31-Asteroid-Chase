@@ -325,6 +325,37 @@ static_structure['rock13'] = Collection()
 static_structure['rock13'].verts = CreatePlanetoid(13000,750,400,11,sx=3.0)
 static_structure['rock13'].type = 'rock'
 
+static_structure['rock14'] = Collection()
+static_structure['rock14'].verts = CreatePlanetoid(16000,450,200,11,sx=3.0)
+static_structure['rock14'].type = 'rock'
+static_structure['rock15'] = Collection()
+static_structure['rock15'].verts = CreatePlanetoid(16000,1050,200,11,sx=3.0)
+static_structure['rock15'].type = 'rock'
+
+
+static_structure['rock16'] = Collection()
+static_structure['rock16'].verts = CreatePlanetoid(19000,750,200,7,sx=1.4)
+static_structure['rock16'].type = 'rock'
+static_structure['rock17'] = Collection()
+static_structure['rock17'].verts = CreatePlanetoid(19500,1000,200,7,sx=1.2)
+static_structure['rock17'].type = 'rock'
+static_structure['rock18'] = Collection()
+static_structure['rock18'].verts = CreatePlanetoid(20000,300,200,7,sx=1.3)
+static_structure['rock18'].type = 'rock'
+static_structure['rock19'] = Collection()
+static_structure['rock19'].verts = CreatePlanetoid(20500,750,200,7,sx=1.1)
+static_structure['rock19'].type = 'rock'
+
+static_structure['rock20'] = Collection()
+static_structure['rock20'].verts = CreatePlanetoid(22000,0,400,7,sy=2.5)
+static_structure['rock20'].type = 'rock'
+static_structure['rock21'] = Collection()
+static_structure['rock21'].verts = CreatePlanetoid(23000,1400,400,7,sy=2.4)
+static_structure['rock21'].type = 'rock'
+static_structure['rock22'] = Collection()
+static_structure['rock22'].verts = CreatePlanetoid(24000,0,400,7,sy=2.6)
+static_structure['rock22'].type = 'rock'
+
 # Wall of death
 static_structure['wod1'] = Collection()
 static_structure['wod1'].verts = CreatePlanetoid(3000,750,400,7,sx=1.3)
@@ -374,11 +405,16 @@ bad_guydata['green2_3'].type = 0
 bad_guydata['green2_3'].start_pos = (300,300)
 bad_guydata['green2_3'].action_data = [('boost',0.08),('boost',0.55)]
 
+bad_guydata['green3_3'] = Collection()
+bad_guydata['green3_3'].type = 0
+bad_guydata['green3_3'].start_pos = (9100,1400)
+bad_guydata['green3_3'].action_data = [('boost',0.08),('boost',0.55)]
+
 bad_guydata['purple1_3'] = Collection()
 bad_guydata['purple1_3'].type = 1
 bad_guydata['purple1_3'].start_pos = (700,600)
-bad_guydata['purple1_3'].action_data = action_data = [('bomb',0.2),('bomb',0.25),('bomb',0.6),('bomb',0.8),('bomb',0.9),
-            ('boost',0.07),('boost',0.1),('boost',0.25),('boost',0.6)]
+bad_guydata['purple1_3'].action_data = action_data = [('bomb',0.2),('bomb',0.25),('bomb',0.50),('bomb',0.6),('bomb',0.8),('bomb',0.9),
+            ('boost',0.07),('boost',0.1),('boost',0.25),('boost',0.4),('boost',0.6)]
 
 bad_guydata['boss'] = Collection()
 bad_guydata['boss'].type = 2
@@ -413,14 +449,18 @@ leveldata['level2'].lanes = []
 leveldata['level3'] = LevelData()
 leveldata['level3'].music = 'space_chase'
 leveldata['level3'].size = (35000,1500) # level_width, level_height
-leveldata['level3'].player_start = (10000,600) # position
+leveldata['level3'].player_start = (400,600) # position
 leveldata['level3'].asteroid_density = 10 # asteroids per screen width
-leveldata['level3'].badguy_ids = ['green1_3','green2_3','purple1_3']
+leveldata['level3'].badguy_ids = ['green1_3','green2_3','green3_3','purple1_3']
 leveldata['level3'].static_structures = ['rock1','rock2','rock3','rock4','rock5','rock6',
                                         'rock7','rock8','rock9','rock10','rock11','rock12',
-                                        'rock13']
-leveldata['level3'].lanes = [[1500,4100,600],[4300,5000,200],[6500,9000,230]] # each lane is [start-x, finish-x, ypos]
-
+                                        'rock13','rock14','rock15',
+                                        'rock16','rock17','rock18','rock19',
+                                        'rock20','rock21','rock22']
+leveldata['level3'].lanes = [[1500,4100,600],[4300,5000,200],[6500,9000,230],
+                            [11500,14000,200],[11500,14000,1300],
+                            [14000,16600,750],[14000,16600,1300]] 
+# each lane is [start-x, finish-x, ypos]
 
 
 
