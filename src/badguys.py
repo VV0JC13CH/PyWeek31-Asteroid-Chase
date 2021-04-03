@@ -90,14 +90,15 @@ class BadGuy(arcade.Sprite):
         if self.health in [45,40,35,30,25,20,15,10,5] and self.type == 2: # boss fires laser
             if self.laser.frame_to == 0:
                 self.laser.frame_to = 240
-                assets.game_sfx['hehheh'].play()
+                assets.game_sfx['giant_laser_charge'].play()
         if self.health < 0:
             self.health = 0
         self.flash_ani = 10
         if self.health == 0:
             assets.game_sfx['scumbag'].play()
             if self.type == 2:
-                self.laser.frame_to = 0 # turn off laser    
+                self.laser.frame_to = 0 # turn off laser
+                assets.game_sfx['giant_laser'].stop()   
     
     def update(self):
         
@@ -452,9 +453,15 @@ class DeathLaser(object):
     
     def update(self):
         
+        if self.frame_to == 180:
+            assets.game_sfx['giant_laser'].play()
+        
+        if self.frame_to == 1:
+            assets.game_sfx['giant_laser'].stop()
+        
         if self.frame_to > 60 and self.frame_to < 180:
             if math.fabs(self.parent.player_sprite.center_y-self.boss.center_y) < 50:
-                self.parent.player_sprite.hitlaser(damage=5)
+                self.parent.player_sprite.hitlaser(damage=3)
             for asteroid in self.parent.asteroid_sprite_list:
                 if math.fabs(asteroid.center_y-self.boss.center_y) < 50 and asteroid.center_x < (self.boss.center_x-50):
                     asteroid.hitlaser()
