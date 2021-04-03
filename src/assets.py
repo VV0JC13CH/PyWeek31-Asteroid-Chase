@@ -189,7 +189,8 @@ bomb_textures = [arcade.load_texture(path_to_string('gfx', 'bomb001.png')),
 
 # final scene textures
 finalscene_textures = [arcade.load_texture(path_to_string('gfx', 'final_scene001.png')),
-                 arcade.load_texture(path_to_string('gfx', 'final_scene002.png'))]
+                 arcade.load_texture(path_to_string('gfx', 'final_scene002.png')),
+                 arcade.load_texture(path_to_string('gfx', 'victory.png'))]
 
 # Music paths
 

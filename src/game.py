@@ -346,11 +346,15 @@ class GameView(arcade.View):
         elif self.outcome == 'victory' and self.enter_pressed:
             """ Waiting for a player to press enter in order to go to campaign view"""
             self.reset_viewport()
-            """ We are going to create campaign level from beginning"""
-            self.window.campaign_view = campaign.CampaignView()
-            self.window.scenes.append(self.window.campaign_view)
-            log('Scene switched to ' + str(self.window.campaign_view))
-            self.window.show_view(self.window.campaign_view)
+            if self.current_level == 'level5': # go to victory scene
+                self.window.finalcutscene.setup(type=1)
+                self.window.show_view(self.window.finalcutscene)
+            else:
+                """ We are going to create campaign level from beginning"""
+                self.window.campaign_view = campaign.CampaignView()
+                self.window.scenes.append(self.window.campaign_view)
+                log('Scene switched to ' + str(self.window.campaign_view))
+                self.window.show_view(self.window.campaign_view)
         if not self.outcome == None:
             self.level_to -= 1
             if self.level_to == 0:
