@@ -450,7 +450,7 @@ class DeathLaser(object):
         
         if self.frame_to > 60 and self.frame_to < 180:
             if math.fabs(self.parent.player_sprite.center_y-self.boss.center_y) < 30:
-                self.parent.player_sprite.hit(damage=5)
+                self.parent.player_sprite.hitlaser(damage=5)
             for asteroid in self.parent.asteroid_sprite_list:
                 if math.fabs(asteroid.center_y-self.boss.center_y) < 30 and asteroid.center_x < (self.boss.center_x-50):
                     asteroid.hitlaser()
@@ -459,7 +459,13 @@ class DeathLaser(object):
             self.frame_to -= 1
         
     def draw(self):
-        if self.frame_to > 60 and self.frame_to < 180:
-            arcade.draw_line(self.boss.center_x-50, self.boss.center_y, 0, self.boss.center_y, arcade.color.CYAN, 30)
+        if self.frame_to > 190:
+            alpha = 0 + 128*((240-self.frame_to)/50)
+            arcade.draw_line(self.boss.center_x-70, self.boss.center_y, 0, self.boss.center_y, (255,255,255,alpha), 5)
+        elif self.frame_to > 60 and self.frame_to < 180:
+            arcade.draw_line(self.boss.center_x-70, self.boss.center_y, 0, self.boss.center_y, arcade.color.BLUE, 30)
+            arcade.draw_line(self.boss.center_x-70, self.boss.center_y, 0, self.boss.center_y, arcade.color.CYAN, 25)
+            arcade.draw_line(self.boss.center_x-70, self.boss.center_y, 0, self.boss.center_y, arcade.color.WHITE, 10)
+            arcade.draw_circle_filled(self.boss.center_x-70, self.boss.center_y, 15, arcade.color.WHITE)
     
     

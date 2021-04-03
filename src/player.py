@@ -139,10 +139,23 @@ class Player(arcade.Sprite):
         if self.health < 0:
             self.health = 0
         self.flash_ani = 10
-        if self.health == 0:
-            pass # TODO: handle player death
-            #self.space.remove(self.shape, self.body)
-            #self.remove_from_sprite_lists()
+    
+    def hitlaser(self, damage=1):
+        if self.flash_ani > 0:
+            return
+        self.health -= damage
+        if self.health < 0:
+            self.health = 0
+        self.flash_ani = 10
+        assets.game_sfx['crashbig'].play()
+        for i in range(10):
+            particle = Particle(4, 4, arcade.color.YELLOW)
+            while particle.change_y == 0 and particle.change_x == 0:
+                particle.change_y = random.randrange(-2, 3)
+                particle.change_x = random.randrange(-2, 3)
+            particle.center_x = self.center_x
+            particle.center_y = self.center_y
+            self.particle_sprite_list.append(particle)
     
     def update(self):
         
