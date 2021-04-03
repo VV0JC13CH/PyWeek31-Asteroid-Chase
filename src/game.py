@@ -80,6 +80,8 @@ class GameView(arcade.View):
         
         self.current_level = level
         self.outcome = None
+        self.hurry_msg = False
+        self.hurry_msg_to = 0
         self.level_to = 180
         
         if not restart:
@@ -316,6 +318,10 @@ class GameView(arcade.View):
         if self.outcome == None:
             if self.player_sprite.health == 0:
                 self.outcome = 'death'
+            if any([bg.fraction > 0.8 for bg in self.badguys_sprite_list]) and not self.hurry_msg:
+                self.hurry_msg = True
+                self.hurry_msg_to = 90
+                assets.game_sfx['getaway'].play()
             if any([bg.fraction > 1.0 for bg in self.badguys_sprite_list]):
                 self.outcome = 'failure'
             if all([(bg.health == 0) for bg in self.badguys_sprite_list]):
@@ -337,6 +343,9 @@ class GameView(arcade.View):
                     self.window.show_view(self.window.gameview)
                 else:
                     pass
+        
+        if self.hurry_msg_to > 0:
+            self.hurry_msg_to -= 1
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """

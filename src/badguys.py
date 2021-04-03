@@ -474,7 +474,11 @@ class DeathLaser(object):
             alpha = 0 + 128*((240-self.frame_to)/50)
             arcade.draw_line(self.boss.center_x-70, self.boss.center_y, 0, self.boss.center_y, (255,255,255,alpha), 5)
         elif self.frame_to > 60 and self.frame_to < 180:
-            arcade.draw_line(self.boss.center_x-70, self.boss.center_y, 0, self.boss.center_y, arcade.color.BLUE, 30)
+            if (self.frame_to % 10) < 5:
+                thick = 30
+            else:
+                thick = 40
+            arcade.draw_line(self.boss.center_x-70, self.boss.center_y, 0, self.boss.center_y, arcade.color.BLUE, thick)
             arcade.draw_line(self.boss.center_x-70, self.boss.center_y, 0, self.boss.center_y, arcade.color.CYAN, 25)
             arcade.draw_line(self.boss.center_x-70, self.boss.center_y, 0, self.boss.center_y, arcade.color.WHITE, 10)
             arcade.draw_circle_filled(self.boss.center_x-70, self.boss.center_y, 15, arcade.color.WHITE)

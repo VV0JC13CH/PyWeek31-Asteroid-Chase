@@ -212,6 +212,7 @@ game_sfx['scumbag'] = pygame.mixer.Sound(path_to_string('sound', 'scumbag.ogg'))
 game_sfx['hehheh'] = pygame.mixer.Sound(path_to_string('sound', 'hehheh.ogg'))
 game_sfx['giant_laser_charge'] = pygame.mixer.Sound(path_to_string('sound', 'giant_laser_charge.ogg'))
 game_sfx['giant_laser'] = pygame.mixer.Sound(path_to_string('sound', 'giant_laser.ogg'))
+game_sfx['getaway'] = pygame.mixer.Sound(path_to_string('sound', 'getaway.ogg'))
 
 game_sfx['voice001'] = pygame.mixer.Sound(path_to_string('sound', 'voice001.ogg'))
 game_sfx['voice002'] = pygame.mixer.Sound(path_to_string('sound', 'voice002.ogg'))
