@@ -187,6 +187,10 @@ asteroid_textures['broken_sat'].append(arcade.load_texture(path_to_string('gfx',
 bomb_textures = [arcade.load_texture(path_to_string('gfx', 'bomb001.png')),
                  arcade.load_texture(path_to_string('gfx', 'bomb002.png'))]
 
+# final scene textures
+finalscene_textures = [arcade.load_texture(path_to_string('gfx', 'final_scene001.png')),
+                 arcade.load_texture(path_to_string('gfx', 'final_scene002.png'))]
+
 # Music paths
 
 music_list = {'menu': path_to_string('music', 'asteroid_chase_menu.ogg'),

@@ -14,6 +14,7 @@ from menu import MenuView
 from intro import IntroView
 from campaign import CampaignView
 from game import GameView
+from finalcutscene import FinalCutScene
 from developer import DeveloperTool, log
 from cursor import Cursor
 # --- Constants ---
@@ -60,6 +61,9 @@ class GlobalWindow(arcade.Window):
         
         self.gameview = GameView()
         self.scenes.append(self.gameview)
+        
+        self.finalcutscene = FinalCutScene()
+        self.scenes.append(self.finalcutscene)
 
     def on_resize(self, width, height):
         """ This method is automatically called when the window is resized. """
