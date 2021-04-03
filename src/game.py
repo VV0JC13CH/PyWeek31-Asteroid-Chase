@@ -319,6 +319,9 @@ class GameView(arcade.View):
                 self.outcome = 'victory'
                 self.window.levels_unlocked = self.window.levels_unlocked + 1
                 print(self.window.levels_unlocked)
+        elif self.outcome == 'victory' and self.player_sprite.center_x - 200 == self.level_width:
+            self.reset_viewport()
+            self.window.show_view(self.window.campaign_view)
         if not self.outcome == None:
             self.level_to -= 1
             if self.level_to == 0:
