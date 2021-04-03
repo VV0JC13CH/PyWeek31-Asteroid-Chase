@@ -37,6 +37,7 @@ class CampaignView(arcade.View):
         self.sweep_length = self.window.height * 0.4
         self.mouse_position = (0, 0)
         self.player_speed = 0.005
+        self.chase_over = False
         # Add stars
         self.star_sprite_list = arcade.SpriteList()
         # Setup levels coordinates:
@@ -126,7 +127,12 @@ class CampaignView(arcade.View):
             if abs(self.levels[self.selected_level - 1][0] - self.player_sprite.center_x) > 50:
                 if abs(self.levels[self.selected_level - 1][1] - self.player_sprite.center_y) > 50:
                     self.player_list.move(self.vector_x*self.player_speed, self.vector_y*self.player_speed)
-
+                else:
+                    self.chase_over = True
+            else:
+                self.chase_over = True
+        else:
+            self.chase_over = True
         if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
             self.window.cursor.change_state(state='no')
         else:
@@ -194,11 +200,11 @@ class CampaignView(arcade.View):
                     self.bad_guys_list[0].draw()
         # Level 1: Imperial City (tutorial)
         # Draw the radar line
-        arcade.draw_line(self.window.width // 2, self.window.height // 2, x, y, arcade.color.ROMAN_SILVER, 4)
+        arcade.draw_line(self.window.width // 2, self.window.height // 2, x, y, arcade.color.GREEN, 1)
 
         # Draw the outline of the radar
         arcade.draw_circle_outline(self.window.width // 2, self.window.height // 2, self.sweep_length,
-                                   arcade.color.OLD_SILVER, 8)
+                                   arcade.color.GREEN, 1)
         # Planets:
         self.planet_8.on_draw()
         self.planet_7.on_draw()
@@ -210,6 +216,10 @@ class CampaignView(arcade.View):
         self.planet_1.on_draw()
 
         self.player_list.draw()
+        if self.chase_over:
+            arcade.draw_text("Press [enter] button.", self.window.width / 2 - 450,
+                             self.window.height / 2 - 100, arcade.color.GREEN, 40,
+                             width=900, align="center")
         self.window.developer_tool.on_draw_finish()
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
@@ -230,6 +240,13 @@ class CampaignView(arcade.View):
             self.window.scenes.append(self.window.pause_view)
             self.window.show_view(self.window.pause_view)
         elif key == arcade.key.SPACE:
+            if self.selected_level_string == 'level5':
+                self.window.finalcutscene.setup()
+                self.window.show_view(self.window.finalcutscene)
+            else:
+                self.window.gameview.setup(self.selected_level_string)
+                self.window.show_view(self.window.gameview)
+        elif key == arcade.key.ENTER:
             if self.selected_level_string == 'level5':
                 self.window.finalcutscene.setup()
                 self.window.show_view(self.window.finalcutscene)
