@@ -27,8 +27,8 @@ class ScrollBackground(arcade.SpriteList):
         self.append(arcade.Sprite())
         """I go with a clock, center one"""
         self.sprite_list[0].texture = assets.background_texture
-        self.sprite_list[0].center_x = self.width // 2
-        self.sprite_list[0].center_y = self.height // 2
+        self.sprite_list[0].center_x = self.width / 2
+        self.sprite_list[0].center_y = self.height / 2
         self.sprite_list[0].change_x = 0
         self.sprite_list[0].width = self.width
         self.sprite_list[0].height = self.height
@@ -36,8 +36,8 @@ class ScrollBackground(arcade.SpriteList):
         self.append(arcade.Sprite())
         """ upper, center """
         self.sprite_list[1].texture = assets.background_texture
-        self.sprite_list[1].center_x = self.width // 2
-        self.sprite_list[1].center_y = self.height // 2 + self.height
+        self.sprite_list[1].center_x = self.width / 2
+        self.sprite_list[1].center_y = self.height / 2 + self.height
         self.sprite_list[1].change_x = 0
         self.sprite_list[1].width = self.width
         self.sprite_list[1].height = self.height
@@ -45,8 +45,8 @@ class ScrollBackground(arcade.SpriteList):
         self.append(arcade.Sprite())
         """ upper, right"""
         self.sprite_list[2].texture = assets.background_texture
-        self.sprite_list[2].center_x = self.width // 2 + self.width
-        self.sprite_list[2].center_y = self.height // 2 + self.height
+        self.sprite_list[2].center_x = self.width / 2 + self.width
+        self.sprite_list[2].center_y = self.height / 2 + self.height
         self.sprite_list[2].change_x = 0
         self.sprite_list[2].width = self.width
         self.sprite_list[2].height = self.height
@@ -54,8 +54,8 @@ class ScrollBackground(arcade.SpriteList):
         self.append(arcade.Sprite())
         """ center, right """
         self.sprite_list[3].texture = assets.background_texture
-        self.sprite_list[3].center_x = self.width // 2 + self.width
-        self.sprite_list[3].center_y = self.height // 2
+        self.sprite_list[3].center_x = self.width / 2 + self.width
+        self.sprite_list[3].center_y = self.height / 2
         self.sprite_list[3].change_x = 0
         self.sprite_list[3].width = self.width
         self.sprite_list[3].height = self.height
@@ -63,8 +63,8 @@ class ScrollBackground(arcade.SpriteList):
         self.append(arcade.Sprite())
         """ below, right """
         self.sprite_list[4].texture = assets.background_texture
-        self.sprite_list[4].center_x = self.width // 2
-        self.sprite_list[4].center_y = self.height // 2 - self.height
+        self.sprite_list[4].center_x = self.width / 2
+        self.sprite_list[4].center_y = self.height / 2 - self.height
         self.sprite_list[4].change_x = 0
         self.sprite_list[4].width = self.width
         self.sprite_list[4].height = self.height
@@ -72,8 +72,8 @@ class ScrollBackground(arcade.SpriteList):
         self.append(arcade.Sprite())
         """ below, center """
         self.sprite_list[5].texture = assets.background_texture
-        self.sprite_list[5].center_x = self.width // 2
-        self.sprite_list[5].center_y = self.height // 2 - self.height
+        self.sprite_list[5].center_x = self.width / 2
+        self.sprite_list[5].center_y = self.height / 2 - self.height
         self.sprite_list[5].change_x = 0
         self.sprite_list[5].width = self.width
         self.sprite_list[5].height = self.height
@@ -90,4 +90,3 @@ class ScrollBackground(arcade.SpriteList):
             if sprite.bottom >= (view_bottom+self.height):
                 sprite.center_y -= 2*self.height
         self.update()
-        
