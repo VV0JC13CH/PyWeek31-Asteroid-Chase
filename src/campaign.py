@@ -18,6 +18,7 @@ from pointer import Pointer
 # --- Constants ---
 param = data.load_parameters()
 RADIANS_PER_FRAME = float(param['CAMPAIGN']['RADIANS_PER_FRAME'])
+LEVELS = float(param['CAMPAIGN']['LEVELS'])
 
 
 class CampaignView(arcade.View):
@@ -25,10 +26,13 @@ class CampaignView(arcade.View):
         super().__init__()
         self.window.current_view_name = 'campaign_view'
         self.angle = 0
-        if self.window.levels_unlocked != 0:
+        if self.window.levels_unlocked == 0:
+            """ When levels_unlocked == 0 intro plays"""
+            self.selected_level = 1
+        elif 0 < self.window.levels_unlocked <= LEVELS:
             self.selected_level = self.window.levels_unlocked
         else:
-            self.selected_level = 1
+            self.selected_level = 5
         self.selected_level_string = 'level' + str(self.selected_level)
         self.sweep_length = self.window.height * 0.4
         self.mouse_position = (0, 0)
