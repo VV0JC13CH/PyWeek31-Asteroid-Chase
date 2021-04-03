@@ -21,6 +21,9 @@ class MusicManager:
         self.music_enabled = False
         self.common_name_of_song = 'Kiss me babe one more time! - Santana'
 
+    def change_volume(self, new_volume):
+        self.volume = new_volume
+
     def advance_song(self):
         """ Advance our pointer to the next song. This does NOT start the song. """
         self.current_song += 1
@@ -53,7 +56,7 @@ class MusicManager:
 
     def stop_song(self):
         time.sleep(0.03)
-        self.music.stop(self.current_player)
+        self.music.stop()
         self.music_enabled = False
 
     def setup(self, music_enabled):
