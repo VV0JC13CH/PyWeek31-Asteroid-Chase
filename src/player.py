@@ -40,10 +40,11 @@ class Player(arcade.Sprite):
         self.level_height = level_height
         self.particle_sprite_list = particle_sprite_list
         self.space = space
+        self.health_bonus = health_bonus
         
         radius = 40
         mass = 2.0
-        self.health = HEALTH + health_bonus * 3
+        self.health = HEALTH + self.health_bonus * 3
         # Overheat of laser
         self.overheat = 0.0
         

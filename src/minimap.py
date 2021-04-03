@@ -54,13 +54,13 @@ def draw_minimap(game_view, map_height=MINIMAP_HEIGHT, level_width=LEVEL_WIDTH, 
     # Other HUD stuff
     
     # Player health
-    meter_x = 100*(game_view.player_sprite.health/PLAYERHEALTH)
+    meter_x = 100*game_view.player_sprite.health/(PLAYERHEALTH + game_view.player_sprite.health_bonus * 3)
     arcade.draw_text("Shield", game_view.view_left+18, game_view.view_bottom+game_view.window.height-30, arcade.color.WHITE, 18)
     x = game_view.view_left+70
     y = game_view.view_bottom+game_view.window.height-45
     arcade.draw_rectangle_filled(center_x=x-(50-meter_x/2), center_y=y,
-                                  width=meter_x, height=10,
-                                  color=arcade.color.ORANGE)
+                                 width=meter_x, height=10,
+                                 color=arcade.color.ORANGE)
     arcade.draw_rectangle_outline(center_x=x, center_y=y,
                                   width=100, height=10,
                                   color=arcade.color.WHITE)
