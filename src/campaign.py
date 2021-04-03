@@ -194,8 +194,14 @@ class CampaignView(arcade.View):
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         if arcade.check_for_collision_with_list(self.player_sprite, self.window.cursor):
-            self.window.gameview.setup(self.selected_level_string)
-            self.window.show_view(self.window.gameview)
+            #self.window.gameview.setup(self.selected_level_string)
+            #self.window.show_view(self.window.gameview)
+            if self.selected_level_string == 'level5':
+                self.window.finalcutscene.setup()
+                self.window.show_view(self.window.finalcutscene)
+            else:
+                self.window.gameview.setup(self.selected_level_string)
+                self.window.show_view(self.window.gameview)
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -206,8 +212,14 @@ class CampaignView(arcade.View):
             self.window.scenes.append(self.window.pause_view)
             self.window.show_view(self.window.pause_view)
         elif key == arcade.key.SPACE:
-            self.window.gameview.setup(self.selected_level_string)
-            self.window.show_view(self.window.gameview)
+            #self.window.gameview.setup(self.selected_level_string)
+            #self.window.show_view(self.window.gameview)
+            if self.selected_level_string == 'level5':
+                self.window.finalcutscene.setup()
+                self.window.show_view(self.window.finalcutscene)
+            else:
+                self.window.gameview.setup(self.selected_level_string)
+                self.window.show_view(self.window.gameview)
         elif key == arcade.key.F5 and self.window.developer_mode:
             if self.window.levels_unlocked < 5:
                 self.window.levels_unlocked += 1

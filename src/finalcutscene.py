@@ -20,6 +20,7 @@ class FinalCutScene(arcade.View):
         self.tic = 0
 
     def on_show_view(self):
+        self.window.cursor.change_state(state='off')
         self.window.music_manager.play_song('menu')
         assets.game_sfx['scumbag'].play()
         self.tic = 0
