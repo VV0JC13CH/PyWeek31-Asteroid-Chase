@@ -41,23 +41,23 @@ Help him catch the thieves of the imperial crown!
 
 ![AsteroidChase](gameplay.gif)
 
-### Copyright attributions (eg. CC-BY resources you have used)
+### Credits:
+Game Design: VV0JCIECH, mit-mit
+Programming: VV0JCIECH, mit-mit
+Artwork: mit-mit, VV0JCIECH
+Music, voice and sfx: mit-mit
+
+### Copyright attributions (eg. CC-BY external resources we have used)
 ```
-File: asteroid_chase_menu.ogg
-Title: 
-Author: 
-License: 
-Source: 
+"Police Siren" by MultiMax2121 (CC0)
+https://freesound.org/people/MultiMax2121/sounds/156869/
 
-File: space_chase.ogg
-Title: 
-Author: 
-License: 
-Source: 
+"Car Crash" by Squareal (CC0)
+https://freesound.org/people/squareal/sounds/237375/
 
-File: the_drop.ogg
-Title: 
-Author: 
-License: 
-Source: 
+"Explode001" by mitchelk (CC0)
+https://freesound.org/people/mitchelk/sounds/136765/
+
+"laser sounds" by chipfork71 (CC-BY-3.0)
+https://freesound.org/people/chipfork71/sounds/72639/
 ```
