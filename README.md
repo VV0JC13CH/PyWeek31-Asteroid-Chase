@@ -60,4 +60,8 @@ https://freesound.org/people/mitchelk/sounds/136765/
 
 "laser sounds" by chipfork71 (CC-BY-3.0)
 https://freesound.org/people/chipfork71/sounds/72639/
+
+Planet spritesheets generated proceduraly using script by Deep-Fold (MIT license):
+https://deep-fold.itch.io/pixel-planet-generator
+https://github.com/Deep-Fold/PixelPlanets
 ```
