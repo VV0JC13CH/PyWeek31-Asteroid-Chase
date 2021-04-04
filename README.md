@@ -42,10 +42,10 @@ Help him catch the thieves of the imperial crown!
 ![AsteroidChase](gameplay.gif)
 
 ### Credits:
-Game Design: VV0JCIECH, mit-mit
-Programming: VV0JCIECH, mit-mit
-Artwork: mit-mit, VV0JCIECH
-Music, voice and sfx: mit-mit
+Game Design: VV0JCIECH, mit-mit \
+Programming: VV0JCIECH, mit-mit \
+Artwork: mit-mit, VV0JCIECH \
+Music, voice and sfx: mit-mit \
 
 ### Copyright attributions (eg. CC-BY external resources we have used)
 ```
