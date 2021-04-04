@@ -1,7 +1,5 @@
 ## PyWeek31 competition entry. 
 ![PyWeek31-Asteroid-Chase](logo.gif)
-![AsteroidChase](gameplay.gif)
-
 
 ### What dependencies your game requires to run
 Game uses:
@@ -40,6 +38,8 @@ You play as Jake. He is a police officer from the Outer Ring.
 He has just arrived in the capital to repair his rusty police ship. 
 His plans change when he hears about a grand theft on the police radio. 
 Help him catch the thieves of the imperial crown!
+
+![AsteroidChase](gameplay.gif)
 
 ### Copyright attributions (eg. CC-BY resources you have used)
 ```
