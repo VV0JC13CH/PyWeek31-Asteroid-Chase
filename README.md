@@ -1,5 +1,5 @@
-# PyWeek31-Asteroid-Chase
-PyWeek31 competition entry. 
+![PyWeek31-Asteroid-Chase](logo.gif)
+## PyWeek31 competition entry. 
 
 ![AsteroidChase](gameplay.gif)
 
@@ -31,8 +31,7 @@ data/settings.ini
 
 
 ### The controls
-W \ S \ A \ D - change direction \
-UP \ DOWN \ LEFT \ RIGHT arrow keys - change direction (alternative) \
+![Controls](keyboard.gif)
 SPACE - Laser \
 SHIFT + SPACE - Super laser
 
