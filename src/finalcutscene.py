@@ -53,6 +53,7 @@ class FinalCutScene(arcade.View):
             self.window.gameview.setup('level5')
             self.window.show_view(self.window.gameview)
         else:
+            self.window.levels_unlocked = 0
             self.window.show_view(self.window.start_view)
 
     def on_key_press(self, key, modifiers):
@@ -60,4 +61,5 @@ class FinalCutScene(arcade.View):
             self.window.gameview.setup('level5')
             self.window.show_view(self.window.gameview)
         else:
+            self.window.levels_unlocked = 0
             self.window.show_view(self.window.start_view)
