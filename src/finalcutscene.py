@@ -50,14 +50,14 @@ class FinalCutScene(arcade.View):
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         if self.type == 0:
-            self.window.gameview.setup('level1')
+            self.window.gameview.setup('level5')
             self.window.show_view(self.window.gameview)
         else:
             self.window.show_view(self.window.start_view)
 
     def on_key_press(self, key, modifiers):
         if self.type == 0:
-            self.window.gameview.setup('level1')
+            self.window.gameview.setup('level5')
             self.window.show_view(self.window.gameview)
         else:
             self.window.show_view(self.window.start_view)
