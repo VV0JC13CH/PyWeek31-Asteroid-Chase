@@ -1,6 +1,5 @@
-![PyWeek31-Asteroid-Chase](logo.gif)
 ## PyWeek31 competition entry. 
-
+![PyWeek31-Asteroid-Chase](logo.gif)
 ![AsteroidChase](gameplay.gif)
 
 
