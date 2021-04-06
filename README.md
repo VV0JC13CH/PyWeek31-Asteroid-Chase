@@ -26,7 +26,6 @@ To change screen resolution or sound settings, go to:
 data/settings.ini
 ```
 
-
 ### The controls
 ![Controls](keyboard.gif)
 SPACE - Laser \
@@ -47,6 +46,7 @@ Programming: VV0JCIECH, mit-mit \
 Artwork: mit-mit, VV0JCIECH \
 Music, voice and sfx: mit-mit (additional voice by "Em")
 
+
 ### Copyright attributions (eg. CC-BY external resources we have used)
 ```
 "Police Siren" by MultiMax2121 (CC0)
@@ -65,3 +65,6 @@ Planet spritesheets generated proceduraly using script by Deep-Fold (MIT license
 https://deep-fold.itch.io/pixel-planet-generator
 https://github.com/Deep-Fold/PixelPlanets
 ```
+### Watch game on YouTube:
+[![AsteroidChase](youtube.png)]((https://youtu.be/b31-toqAYNI))
+
