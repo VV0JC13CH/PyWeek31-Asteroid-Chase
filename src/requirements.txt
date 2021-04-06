@@ -1,13 +1,2 @@
 arcade==2.5.3
 pygame==2.0.1
-Pillow==8.2.0
-PyYAML==5.4.1
-Shapely==1.7.1
-attrs==20.3.0
-cffi==1.14.5
-dataclasses==0.8
-numpy==1.19.2
-pycparser==2.20
-pyglet==1.5.15
-pymunk==5.7.0
-pytiled-parser==0.9.4a3
